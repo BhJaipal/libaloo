@@ -41,5 +41,7 @@ jobs:
               # Execute tests defined by the CMake configuration.
               # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
               run: |
+                  cd gtest && cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} && cd build && make all
+                  cd ../..
                   cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
                   ./bin/test.exe
