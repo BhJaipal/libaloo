@@ -57,6 +57,6 @@ target_link_libraries(aloo
 add_executable(test.exe "test/main.c")
 target_link_libraries(test.exe aloo)
 
-set(CMAKE_BUILD_TYPE Release)
-add_test(AlooTest "bin/test.exe")
+set(CMAKE_BUILD_TYPE "$ENV{Release}")
+add_test(AlooTest "../bin/test.exe")
 enable_testing(AlooTest)
