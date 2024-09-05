@@ -26,6 +26,7 @@ jobs:
               run: |
                   sudo apt install libgtk-4-dev
                   sudo apt install libsqlite3-dev
+                  sudo apt install libgtest-dev
 
             - name: GTest Install
               run: |
