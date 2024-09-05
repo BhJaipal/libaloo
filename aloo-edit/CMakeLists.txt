@@ -7,8 +7,7 @@ set(CMAKE_BINARY_DIR build/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 
 include_directories(../include)
-target_link_libraries(run.exe ${CMAKE_SOURCE_DIR}/../lib/libaloo.a)
-
+target_link_libraries(run.exe /home/jaipal001/Desktop/files/c-use/libaloo/lib/libaloo.a)
 
 include_directories(
 	"/usr/include/gtk-4.0"

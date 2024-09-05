@@ -2,7 +2,7 @@
 	"project": "aloo-project",
 	"app": "Example App",
 	"description": "An default template for aloo App",
-	"$schema": "/home/jaipal001/Desktop/files/c-use/Programming/gtk-use/cli/aloo.schema.json",
+	"$schema": "/home/jaipal001/Desktop/files/c-use/libaloo/cli/aloo.schema.json",
 	"models": [
 		{
 			"modelName": "Human",

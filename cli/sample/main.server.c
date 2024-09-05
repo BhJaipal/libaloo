@@ -27,13 +27,12 @@ void create$modelNameTable(sqlite3 *db) {
 	if (err) printf("%s\n", err);
 }
 
-$modelName *select$modelName(sqlite3 *db, int col_count, char **cols,
-							 char *where) {
+$modelName *select$modelName(sqlite3 *db char *where) {
 	out = malloc(sizeof($modelName) * 0);
 	char errmsg[1024];
 	char cols = {"ID", $cols$};
 	int result =
-		__select(db, "Human", $col_count, cols, where, callback, &errmsg);
+		SQLite.select(db, "Human", $col_count, cols, where, callback, &errmsg);
 	if (result != SQLITE_OK) {
 		fprintf(stderr, "Error: %s\n", errmsg);
 		return NULL;
@@ -45,7 +44,7 @@ void insert$modelName(sqlite3 *db, int column_count, char **values,
 	SQLite.insert(db, "$modelName", column_count, "$cols", values, errmsg);
 }
 
-int *callback(void *data, int col_count, char **values, char **column_names) {
+int callback(void *data, int col_count, char **values, char **column_names) {
 	$modelName val;
 	int i = 0;
 	val.$member = values[i++];

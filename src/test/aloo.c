@@ -68,8 +68,10 @@ void __testRes(struct _Test *t) {
 			"\n\033[1m%s Results:\033[0m\n"
 			"\t\033[1mTotal Tests: %d\033[0m\n"
 			"\t\t\033[1;32m%d Passed\033[0m\n"
-			"\t\t\033[1;31m%d Failed\033[0m\t\t",
+			"\t\t\033[1;31m%d Failed\033[0m",
 			t->label, t->testCount, t->testPassed, t->testFailed);
+	printf("\n");
+	if (t->testFailed) { exit(1); }
 }
 
 Test *createTest(const char *name) {
