@@ -21,6 +21,8 @@ add_library(aloo
 )
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib/)
 
+set(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/gtk-4.0" ${CMAKE_PREFIX_PATH})
+
 include_directories(
 	"/usr/include/gtk-4.0"
 	"/usr/include/glib-2.0"
@@ -36,6 +38,7 @@ include_directories(
 	"/usr/include/tirpc"
 )
 target_link_libraries(aloo
+	${GTK4_LIBRARIES}
 	"/lib/x86_64-linux-gnu/libgtk-4.so.1"
 	"/lib/x86_64-linux-gnu/libglib-2.0.so.0"
 	"/lib/x86_64-linux-gnu/libsqlite3.so"

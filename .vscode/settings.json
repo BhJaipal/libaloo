@@ -69,7 +69,7 @@
 		"sstream": "cpp",
 		"cstdbool": "c"
 	},
-	"cmake.sourceDirectory": "/home/jaipal001/Desktop/files/c-use/Programming/gtk-use",
+	"cmake.sourceDirectory": "/home/jaipal001/Desktop/files/c-use/libaloo",
 	"cmake.buildDirectory": "${workspaceFolder}/build",
 	"cmake.configureOnOpen": true,
 	"cmake.cmakePath": "/home/linuxbrew/.linuxbrew/bin/cmake",
