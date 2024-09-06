@@ -1,20 +1,21 @@
 /**
  * @file macros.h
  * @author Jaipal001
- * @brief Aloo Project Macros related functions
+ * @brief It contains Macros of Aloo Project
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_MACROS_H
 #define ALOO_MACROS_H
 #include "types.h"
 
 /**
- * @brief Returns GTK_GRID of AlooWidget
- * @param x AlooWidget with ALOO_GRID type
+ * @brief Returns `GTK_GRID` of Aloo Widget
+ * @param widget AlooWidget with `ALOO_GRID` type
  */
-#define ALOO_GRID_TO_GTK(x) GTK_GRID(x->child)
-GtkWidget *ALOO_BOX_WIDGET(AlooWidget *x);
-#define ALOO_BOX_TO_GTK_BOX(x) GTK_BOX(ALOO_BOX_WIDGET(x))
-gboolean ALOO_IS_BOX(AlooWidget *x);
+#define ALOO_GRID_TO_GTK(widget) GTK_GRID(widget->child)
 
 /**
  * @brief generates app options with APP_FLAGS_NONE

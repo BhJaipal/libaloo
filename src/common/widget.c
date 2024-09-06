@@ -3,16 +3,16 @@
 #include <glib-2.0/glib.h>
 #include <gtk/gtk.h>
 
-GtkWidget *__WidtoGtk(AlooWidget *wid) { return wid->child; }
+GtkWidget *__Widget_Aloo_to_Gtk(AlooWidget *wid) { return wid->child; }
 
-AlooWidget *__NewWidget(WidgetType type, GtkWidget *child) {
+AlooWidget *__Widget_new(WidgetType type, GtkWidget *child) {
 	AlooWidget *widget = malloc(sizeof(AlooWidget));
 	widget->child = child;
 	widget->type = type;
 	return widget;
 }
 
-AlooWidget *__OBJECT_TO_ALOO(GObject *obj) {
+AlooWidget *__Widget_Obj_to_Aloo(GObject *obj) {
 	WidgetType type;
 	GtkWidget *widget = GTK_WIDGET(obj);
 	if (GTK_IS_BOX(widget)) {
@@ -36,7 +36,7 @@ AlooWidget *__OBJECT_TO_ALOO(GObject *obj) {
 	return wid;
 }
 
-AlooWidget *__GTK_TO_ALOO(GtkWidget *widget) {
+AlooWidget *__Widget_Gtk_to_Aloo(GtkWidget *widget) {
 	WidgetType type;
 	if (GTK_IS_BOX(widget)) {
 		type = ALOO_BOX;
@@ -55,30 +55,39 @@ AlooWidget *__GTK_TO_ALOO(GtkWidget *widget) {
 	return wid;
 }
 
-GtkWidget *__OBJECT_TO_GTK_WIDGET(AlooBuilder *builder, const char *name) {
+GtkWidget *__Widget_Obj_to_Gtk(AlooBuilder *builder, const char *name) {
 	return GTK_WIDGET(gtk_builder_get_object(builder->builder, name));
 }
-AlooWidget *__alooHorizontalAlign(AlooWidget *widget, GtkAlign alignment) {
-	gtk_widget_set_halign(widget->child, alignment);
-	return widget;
-}
-AlooWidget *__alooVerticalAlign(AlooWidget *widget, GtkAlign alignment) {
-	gtk_widget_set_valign(widget->child, alignment);
-	return widget;
-}
-AlooWidget *__alooSetOrientation(AlooWidget *widget, GtkOrientation orien) {
-	gtk_orientable_set_orientation(GTK_ORIENTABLE(widget->child), orien);
-	return widget;
-}
 
-AlooWidget *__setWidgetName(AlooWidget *widget, const char *name) {
+AlooWidget *__Widget_setName(AlooWidget *widget, const char *name) {
 	gtk_widget_set_name(Widget.to_gtk(widget), name);
 	return widget;
 }
 
-AlooWidget *__alooAddEventListener(AlooWidget *widget_instance,
-								   char *event_name, GCallback CallbackFn,
-								   gpointer data) {
+AlooWidget *__Widget_AlooFromBuilder(AlooBuilder *builder, const char *name) {
+	AlooWidget *wid =
+		__Widget_Obj_to_Aloo(gtk_builder_get_object(builder->builder, name));
+	return wid;
+}
+
+AlooWidget *__Widget_setHorizontalAlign(AlooWidget *widget,
+										GtkAlign alignment) {
+	gtk_widget_set_halign(widget->child, alignment);
+	return widget;
+}
+AlooWidget *__Widget_setVerticalAlign(AlooWidget *widget, GtkAlign alignment) {
+	gtk_widget_set_valign(widget->child, alignment);
+	return widget;
+}
+
+AlooWidget *__Widget_SetOrientation(AlooWidget *widget, GtkOrientation orien) {
+	gtk_orientable_set_orientation(GTK_ORIENTABLE(widget->child), orien);
+	return widget;
+}
+
+AlooWidget *__Widget_AddEventListener(AlooWidget *widget_instance,
+									  char *event_name, GCallback CallbackFn,
+									  gpointer data) {
 	g_signal_connect(widget_instance->child, event_name, G_CALLBACK(CallbackFn),
 					 data);
 	return widget_instance;
@@ -99,31 +108,43 @@ int is_widget_of_type(AlooWidget *widget, enum WidgetType type) {
 			G_TYPE_CHECK_INSTANCE_TYPE((widget->child), checker));
 }
 
-int __isBox(AlooWidget *wid) { return is_widget_of_type(wid, ALOO_BOX); }
-int __isButton(AlooWidget *wid) { return is_widget_of_type(wid, ALOO_BUTTON); }
-int __isGrid(AlooWidget *wid) { return is_widget_of_type(wid, ALOO_GRID); }
-int __isLabel(AlooWidget *wid) { return is_widget_of_type(wid, ALOO_LABEL); }
-int __isWindow(AlooWidget *wid) { return is_widget_of_type(wid, ALOO_WINDOW); }
-int __isInput(AlooWidget *wid) { return is_widget_of_type(wid, ALOO_INPUT); }
+int __WidgetCheck_isBox(AlooWidget *wid) {
+	return is_widget_of_type(wid, ALOO_BOX);
+}
+int __WidgetCheck_isButton(AlooWidget *wid) {
+	return is_widget_of_type(wid, ALOO_BUTTON);
+}
+int __WidgetCheck_isGrid(AlooWidget *wid) {
+	return is_widget_of_type(wid, ALOO_GRID);
+}
+int __WidgetCheck_isLabel(AlooWidget *wid) {
+	return is_widget_of_type(wid, ALOO_LABEL);
+}
+int __WidgetCheck_isWindow(AlooWidget *wid) {
+	return is_widget_of_type(wid, ALOO_WINDOW);
+}
+int __WidgetCheck_isInput(AlooWidget *wid) {
+	return is_widget_of_type(wid, ALOO_INPUT);
+}
 
 struct _aloo_widget Widget = {
-	.new = __NewWidget,
-	.gtk_to_aloo = __GTK_TO_ALOO,
-	.obj_to_aloo = __OBJECT_TO_ALOO,
-	.setName = __setWidgetName,
-	.setOrientation = __alooSetOrientation,
-	.obj_to_gtk = __OBJECT_TO_GTK_WIDGET,
-	.verticalAlign = __alooVerticalAlign,
-	.horizontalAlign = __alooHorizontalAlign,
-	.addEventListener = __alooAddEventListener,
+	.new = __Widget_new,
+	.gtk_to_aloo = __Widget_Gtk_to_Aloo,
+	.obj_to_aloo = __Widget_Obj_to_Aloo,
+	.setName = __Widget_setName,
+	.setOrientation = __Widget_SetOrientation,
+	.obj_to_gtk = __Widget_Obj_to_Gtk,
+	.verticalAlign = __Widget_setVerticalAlign,
+	.horizontalAlign = __Widget_setHorizontalAlign,
+	.addEventListener = __Widget_AddEventListener,
 	.check =
 		{
-			.isBox = __isBox,
-			.isButton = __isButton,
-			.isGrid = __isGrid,
-			.isLabel = __isLabel,
-			.isInput = __isInput,
-			.isWindow = __isWindow,
+			.isBox = __WidgetCheck_isBox,
+			.isButton = __WidgetCheck_isButton,
+			.isGrid = __WidgetCheck_isGrid,
+			.isLabel = __WidgetCheck_isLabel,
+			.isInput = __WidgetCheck_isInput,
+			.isWindow = __WidgetCheck_isWindow,
 		},
-	.to_gtk = __WidtoGtk,
+	.to_gtk = __Widget_Aloo_to_Gtk,
 };

@@ -2,6 +2,10 @@
  * @file button.h
  * @author Jaipal001
  * @brief Aloo Button related functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_BUTTON_H
 #define ALOO_BUTTON_H

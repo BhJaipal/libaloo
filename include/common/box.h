@@ -2,6 +2,10 @@
  * @file box.h
  * @author Jaipal001
  * @brief Aloo Box functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_BOX_H
 #define ALOO_BOX_H

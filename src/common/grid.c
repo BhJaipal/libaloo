@@ -63,7 +63,7 @@ AlooWidget *__setGridRowSpacing(AlooWidget *grid, int space) {
 GtkGrid *__toGridGtk(AlooWidget *wid) {
 	if (!Widget.check.isGrid(wid)) {
 		throw_error("Invalid grid");
-		return GTK_GRID(Grid.new()->child);
+		return ALOO_GRID_TO_GTK(Grid.new());
 	}
 	return GTK_GRID(wid->child);
 }

@@ -2,6 +2,10 @@
  * @file grid.h
  * @author Jaipal001
  * @brief Aloo Grid related functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_GRID_H
 #define ALOO_GRID_H

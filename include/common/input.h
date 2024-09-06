@@ -1,3 +1,12 @@
+/**
+ * @file input.h
+ * @author Jaipal001
+ * @brief Aloo Input related functions
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
+ */
+
 #ifndef ALOO_INPUT_H
 #define ALOO_INPUT_H
 #include "types.h"

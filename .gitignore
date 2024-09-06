@@ -18,3 +18,5 @@ bin/
 
 node_modules/
 .cache/
+*.log
+!gtest/build/

@@ -1,57 +1,101 @@
+---
+Name: common/style.h
+Brief: Aloo CSS related functions
+---
+
 # widget.h
 
 ## Functions
 
-### `GTK_TO_ALOO`
+### `__Widget_New`
 
-- **Resturns**: `AlooWidget *`
-- **Description**: Creates AlooWidget from GtkWidget.
-- **Parameters**:
-- - `GtkWidget *widget`
+| Brief            | Returns       |
+| ---------------- | ------------- |
+| Create a widget. | `AlooWidget*` |
 
-### `OBJECT_TO_ALOO`
+| Parameters | Type         | Brief                                     |
+| ---------- | ------------ | ----------------------------------------- |
+| type       | `WidgetType` | Type of new Widget                        |
+| widget     | `GtkWidget*` | `GtkWidget` to be set on new `AlooWidget` |
 
-- **Resturns**: `AlooWidget *`
-- **Description**: Create AlooWidget from GObject.
-- **Parameters**:
-- - `GObject *obj`
+### `__Widget_Gtk_to_Aloo`
 
-### `OBJECT_TO_GTK_WIDGET`
+| Brief                              | Returns       |
+| ---------------------------------- | ------------- |
+| Creates AlooWidget from GtkWidget. | `AlooWidget*` |
 
-- **Resturns**: `GtkWidget *`
-- **Description**: Creates GtkWidget from builder.
-- **Parameters**:
-- - `AlooBuilder *builder`
-- - `const char *name`
+| Parameters | Type         | Brief                                        |
+| ---------- | ------------ | -------------------------------------------- |
+| widget     | `GtkWidget*` | Widget whose `AlooWidget` has to be obtained |
 
-### `AlooWidgetFromBuilder`
+### `__Widget_Obj_to_Aloo`
 
-- **Resturns**: `AlooWidget *`
-- **Description**: Creates AlooWidget from builder.
-- **Parameters**:
-- - `AlooBuilder *builder`
-- - `const char *name`
+| Brief                           | Returns       |
+| ------------------------------- | ------------- |
+| Create AlooWidget from GObject. | `AlooWidget*` |
 
-### `alooSetOrientation`
+| Parameters | Type       | Brief                                   |
+| ---------- | ---------- | --------------------------------------- |
+| obj        | `GObject*` | `GObject` from which has to be obtained |
 
-- **Resturns**: `AlooWidget *`
-- **Description**: Sets orientation of AlooWidget.
-- **Parameters**:
-- - `AlooWidget *widget`
-- - `GtkOrientation orien`
+### `__Widget_Obj_to_Gtk`
 
-### `NewWidget`
+| Brief                           | Returns      |
+| ------------------------------- | ------------ |
+| Creates GtkWidget from builder. | `GtkWidget*` |
 
-- **Resturns**: `AlooWidget *`
-- **Description**: Create a widget.
-- **Parameters**:
-- - `WidgetType type`
-- - `GtkWidget *child`
+| Parameters | Type           | Brief                                   |
+| ---------- | -------------- | --------------------------------------- |
+| builder    | `AlooBuilder*` | Builder from which  To obtain GtkWidget |
+| name       | `const char*`  | ID of UI object                         |
 
-### `setWidgetName`
+### `__Widget_AlooFromBuilder`
 
-- **Resturns**: `AlooWidget *`
-- **Description**: Set the Name of widget.
-- **Parameters**:
-- - `AlooWidget *widget`
-- - `const char *name`
+| Brief                            | Returns       |
+| -------------------------------- | ------------- |
+| Creates AlooWidget from builder. | `AlooWidget*` |
+
+| Parameters | Type           | Brief                                                    |
+| ---------- | -------------- | -------------------------------------------------------- |
+| builder    | `AlooBuilder*` | `AlooBuilder` from which `AlooWidget` has to be obtained |
+| name       | `const char*`  | ID of UI object                                          |
+
+### `__Widget_SetOrientation`
+
+| Brief                           | Returns       |
+| ------------------------------- | ------------- |
+| Sets orientation of AlooWidget. | `AlooWidget*` |
+
+| Parameters  | Type             | Brief                                  |
+| ----------- | ---------------- | -------------------------------------- |
+| widget      | `AlooWidget*`    | widget whose orientation has to be set |
+| orientation | `GtkOrientation` | new orientation of widget              |
+
+### `__Widget_setName`
+
+| Brief                   | Returns       |
+| ----------------------- | ------------- |
+| Set the Name of widget. | `AlooWidget*` |
+
+| Parameters | Type          | Brief                                    |
+| ---------- | ------------- | ---------------------------------------- |
+| widget     | `AlooWidget*` | `AlooWidget` on which name has to be set |
+| name       | `const char*` | Name to be set on `AlooWidget`           |
+
+### `__Widget_setHorizontalAlign`
+
+| Brief | Returns |
+| Set Horizontal alignment of `AlooWIdget` | `AlooWIdget*` |
+
+| Parameters | Type | Briefs |
+| widget | `AlooWidget*` | Widget whose alignment has to be changed |
+| alignment | `GtkALign` | alignment type |
+
+### `__Widget_setVerticalAlign`
+
+| Brief | Returns |
+| Set Vertical alignment of `AlooWIdget` | `AlooWIdget*` |
+
+| Parameters | Type | Briefs |
+| widget | `AlooWidget*` | Widget whose alignment has to be changed |
+| alignment | `GtkALign` | alignment type |

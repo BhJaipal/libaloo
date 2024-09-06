@@ -1,3 +1,8 @@
+---
+Name: common/style.h
+Brief: Aloo CSS related functions
+---
+
 # style.h
 
 ## Functions

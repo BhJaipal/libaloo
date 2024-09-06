@@ -2,9 +2,9 @@
 #include "common/macros.h"
 
 struct AlooApplication *__CreateApp(const char *appName,
-									struct alooAppOptions gAppOptions) {
+									struct AlooAppOptions AppOptions) {
 	GApplicationFlags flags;
-	switch (gAppOptions.appFlags) {
+	switch (AppOptions.appFlags) {
 	case APP_FLAGS_NONE: flags = G_APPLICATION_FLAGS_NONE; break;
 	case APP_FLAGS_IS_SERVICE: flags = G_APPLICATION_IS_SERVICE; break;
 	case APP_FLAGS_IS_LAUNCHER: flags = G_APPLICATION_IS_LAUNCHER; break;
@@ -14,8 +14,8 @@ struct AlooApplication *__CreateApp(const char *appName,
 	AlooApplication *out = malloc(sizeof(AlooApplication));
 	out->app = gtkApp;
 	out->status = 0;
-	out->argc = gAppOptions.argc;
-	out->argv = gAppOptions.argv;
+	out->argc = AppOptions.argc;
+	out->argv = AppOptions.argv;
 	return out;
 }
 int __RunApp(AlooApplication *application) {

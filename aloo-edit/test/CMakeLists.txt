@@ -9,7 +9,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../bin/)
 target_link_libraries(test-run.exe /home/jaipal001/Desktop/files/c-use/libaloo/lib/libaloo.a)
 
 include_directories(
-	"/home/jaipal001/Desktop/files/c-use/Programming/gtk-use/include"
+	"/home/jaipal001/Desktop/files/c-use/libaloo/include"
 	"/usr/include/gtk-4.0"
 	"/usr/include/glib-2.0"
 	"/usr/include/glib-2.0/gobject"

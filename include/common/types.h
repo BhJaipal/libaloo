@@ -2,6 +2,10 @@
  * @file types.h
  * @author Jaipal001
  * @brief Aloo Project Types related functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_TYPES_H
 #define ALOO_TYPES_H

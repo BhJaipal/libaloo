@@ -2,6 +2,10 @@
  * @file widget.h
  * @author Jaipal001
  * @brief Aloo Widget related functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_WIDGET_H
 #define ALOO_WIDGET_H
@@ -9,29 +13,13 @@
 #include <gtk/gtk.h>
 
 /******************** Private Funcs ********************/
-
-/**
- * @brief Creates AlooWidget from GtkWidget
- */
-AlooWidget *__GTK_TO_ALOO(GtkWidget *widget);
-
-/**
- * @brief Create AlooWidget from GObject
- */
-AlooWidget *__OBJECT_TO_ALOO(GObject *obj);
-
-/**
- * @brief Sets orientation of AlooWidget
- */
-AlooWidget *__alooSetOrientation(AlooWidget *widget, GtkOrientation orien);
-
 /**
  * @brief Create a widget
  * @param type type of widget
  * @param child actual GtkWidget
  * @return AlooWidget*
  */
-AlooWidget *__NewWidget(WidgetType type, GtkWidget *child);
+AlooWidget *__Widget_new(WidgetType type, GtkWidget *child);
 
 /**
  * @brief Set the Name of widget
@@ -39,21 +27,47 @@ AlooWidget *__NewWidget(WidgetType type, GtkWidget *child);
  * @param name string for name of widget
  * @return returns the widget
  */
-AlooWidget *__setWidgetName(AlooWidget *widget, const char *name);
+AlooWidget *__Widget_setName(AlooWidget *widget, const char *name);
 
 /**
- * @brief Creates GtkWidget from builder
+ * @brief Creates AlooWidget from GtkWidget
+ * @param widget Widget whose `AlooWidget` has to be obtained
  */
-GtkWidget *__OBJECT_TO_GTK_WIDGET(AlooBuilder *builder, const char *name);
+AlooWidget *__Widget_Gtk_to_Aloo(GtkWidget *widget);
 
 /**
- * @brief Sets horizontal alignment of AlooWidget
+ * @brief Create `AlooWidget` from GObject
+ * @param obj `GObject` from which has to be obtained
  */
-AlooWidget *__alooHorizontalAlign(AlooWidget *widget, GtkAlign alignment);
+AlooWidget *__Widget_Obj_to_Aloo(GObject *obj);
+
 /**
- * @brief Sets vertical alignment of AlooWidget
+ * @brief Creates `AlooWidget` from builder
+ * @param builder `AlooBuilder` from which `AlooWidget` has to be obtained
+ * @param name ID of UI object
+ * @return `AlooWidget*`
  */
-AlooWidget *__alooVerticalAlign(AlooWidget *widget, GtkAlign alignment);
+AlooWidget *__Widget_AlooFromBuilder(AlooBuilder *builder, const char *name);
+
+/**
+ * @brief Sets orientation of `AlooWidget`
+ * @param widget widget whose orientation has to be set
+ * @param orientation new orientation of widget
+ */
+AlooWidget *__Widget_SetOrientation(AlooWidget *widget, GtkOrientation orien);
+
+/**
+ * @brief Sets horizontal alignment of `AlooWidget`
+ * @param widget Widget whose alignment has to be changed
+ * @param alignment alignment type
+ */
+AlooWidget *__Widget_setHorizontalAlign(AlooWidget *widget, GtkAlign alignment);
+/**
+ * @brief Sets vertical alignment of `AlooWidget`
+ * @param widget Widget whose alignment has to be changed
+ * @param alignment alignment type
+ */
+AlooWidget *__Widget_setVerticalAlign(AlooWidget *widget, GtkAlign alignment);
 
 /**
  * @brief Adds event listener to a widget
@@ -62,17 +76,17 @@ AlooWidget *__alooVerticalAlign(AlooWidget *widget, GtkAlign alignment);
  * @param CallbackFn Event Callback function
  * @param data parameters for event listener
  */
-AlooWidget *__alooAddEventListener(AlooWidget *widget_instance,
-								   char *event_name, GCallback CallbackFn,
-								   gpointer data);
+AlooWidget *__Widget_AddEventListener(AlooWidget *widget_instance,
+									  char *event_name, GCallback CallbackFn,
+									  gpointer data);
 
-int __isBox(AlooWidget *wid);
-int __isButton(AlooWidget *wid);
-int __isGrid(AlooWidget *wid);
-int __isLabel(AlooWidget *wid);
-int __isInput(AlooWidget *wid);
-int __isWindow(AlooWidget *wid);
-GtkWidget *__WidtoGtk(AlooWidget *wid);
+int __WidgetCheck_isBox(AlooWidget *wid);
+int __WidgetCheck_isButton(AlooWidget *wid);
+int __WidgetCheck_isGrid(AlooWidget *wid);
+int __WidgetCheck_isLabel(AlooWidget *wid);
+int __WidgetCheck_isInput(AlooWidget *wid);
+int __WidgetCheck_isWindow(AlooWidget *wid);
+GtkWidget *__Widget_Aloo_to_Gtk(AlooWidget *wid);
 
 /******************** Private Types ********************/
 

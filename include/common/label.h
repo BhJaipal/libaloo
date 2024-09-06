@@ -9,17 +9,38 @@
 
 /******************** Private Funcs ********************/
 
-AlooWidget *__newLabel(const char *val);
+AlooWidget *__Label_new(const char *val);
+GtkLabel *__Label_toGtk(AlooWidget *wid);
 
 /******************** Private Types ********************/
 
+/**
+ * @brief `AlooLabel` for using `GtkLabel` utilities
+ */
 struct __alooLabel {
-	/// @brief Creates new Aloo label
-	/// @param  val label text
-	/// @return Aloo Label
-	AlooWidget *(*new)(const char *val);
-	/// @brief Converts Aloo label to Gtk label
-	GtkLabel *(*toGtk)(AlooWidget *wid);
+	/**
+	 * @brief Creates new Aloo label
+	 * @param  label text shown on label
+	 *
+	 * * Details:
+	 * It calls `Widget.new` from `widget.h` with `ALOO_LABEL` and
+	 *
+	 * `gtk_label_new` with out label parameter
+	 */
+	AlooWidget *(*new)(const char *label);
+	/**
+	 * @brief Converts Aloo label to GtkLabel and return it
+	 * @param widget AlooWidget whose GtkLabel you want to obtain
+	 *
+	 * * Details:
+	 * It checks if child of AlooWidget is a GtkLabel or not,
+	 * by using `GTK_LABEL`
+	 *
+	 * if yes, returns it
+	 *
+	 * Else creates a New AlooWidget Label and return `GtkLabel` of it
+	 */
+	GtkLabel *(*toGtk)(AlooWidget *widget);
 };
 
 /******************** Public ********************/

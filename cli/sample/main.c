@@ -13,7 +13,7 @@ static void activate() {
 }
 
 int main(int argc, char *argv[]) {
-	struct alooAppOptions opts = NONE_FLAGS_OPTIONS(argc, argv);
+	struct AlooAppOptions opts = NONE_FLAGS_OPTIONS(argc, argv);
 	app = Application.create("com.aloo-use.$project", opts);
 	Application.add_event_listener(app, "activate", activate);
 	int status = Application.run(app);

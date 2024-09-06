@@ -2,6 +2,10 @@
  * @file window.h
  * @author Jaipal001
  * @brief Contains aloo Window related functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 
 #ifndef ALOO_WINDOW_H

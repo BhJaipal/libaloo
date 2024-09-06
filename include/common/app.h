@@ -2,6 +2,10 @@
  * @file app.h
  * @author Jaipal001
  * @brief Aloo Application related functions
+ *
+ * @version 0.1
+ * @date 2024-09-06
+ * @copyright Copyright (c) 2024
  */
 #ifndef ALOO_APP_H
 #define ALOO_APP_H
@@ -36,7 +40,7 @@ typedef struct AlooApplication {
 /**
  * @brief Takes GApplicationFlags, argc and argv
  */
-struct alooAppOptions {
+struct AlooAppOptions {
 	enum alooAppFlags appFlags;
 	int argc;
 	char **argv;
@@ -47,11 +51,11 @@ struct alooAppOptions {
 /**
  * @brief Create a App object
  * @param app_id App Id are like com.google.Chrome, dev.zed.Zed
- * @param gAppOptions It takes GApplicationFlags, argc and argv
+ * @param AppOptions It takes GApplicationFlags, argc and argv
  * @return It returns Aloo Application
  */
 AlooApplication *__CreateApp(const char *app_id,
-							 struct alooAppOptions gAppOptions);
+							 struct AlooAppOptions AppOptions);
 
 /// @brief Runs aloo App
 /// @return status on exiting app
@@ -78,7 +82,7 @@ struct _alooApp {
 	/// @param gAppOptions It takes GApplicationFlags, argc and argv
 	/// @return It returns Aloo Application
 	AlooApplication *(*create)(const char *app_id,
-							   struct alooAppOptions gAppOptions);
+							   struct AlooAppOptions gAppOptions);
 	/// @brief Runs aloo App
 	/// @return status on exiting app
 	int (*run)(AlooApplication *application);
