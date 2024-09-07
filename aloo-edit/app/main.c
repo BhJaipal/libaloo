@@ -1,10 +1,10 @@
-#include "../../include/aloo.h"
-#include <fontconfig/fontconfig.h>
+#include "aloo.h"
 
 AlooWidget *labelGrid;
 AlooWidget *navbar;
 AlooWidget *navMenu;
 AlooWidget *nothingLabel = 0;
+AlooWidget *tabs;
 AlooWidget *input;
 AlooApplication *app;
 struct _logger *lg;
@@ -14,6 +14,16 @@ struct _labelList {
 	AlooWidget *labels[10];
 	int len;
 } labelList;
+
+void changeView() {
+	char **classes = CSS.getClasses(tabs);
+	if (!strcmp(classes[0], "")) {
+		classes[0] = "switch";
+	} else {
+		classes[0] = "";
+	}
+	CSS.setClasses(tabs, classes);
+}
 
 static void toggleNav() {
 	char **classes = CSS.getClasses(navbar);
@@ -86,12 +96,13 @@ static void activate() {
 	Builder.addFile(builder, "builder.ui", NULL);
 	AlooWidget *appBody = Builder.alooFromBuilder(builder, "app");
 	AlooWidget *box = Builder.alooFromBuilder(builder, "box");
+	tabs = Builder.alooFromBuilder(builder, "tabs");
 	AlooWidget *window = Builder.alooFromBuilder(builder, "gtk-window");
 	AlooWidget *buttonWidget = Builder.alooFromBuilder(builder, "add");
 	AlooWidget *rmLabelWidget = Builder.alooFromBuilder(builder, "remove");
 	AlooWidget *grid = Builder.alooFromBuilder(builder, "button-grid");
 	navbar = Builder.alooFromBuilder(builder, "navbar");
-	input = Builder.alooFromBuilder(builder, "file-content");
+	input = Builder.alooFromBuilder(builder, "label-name");
 	AlooWidget *menuBar = Builder.alooFromBuilder(builder, "menu-bar");
 	AlooWidget *boxBody = Builder.alooFromBuilder(builder, "box-body");
 
@@ -99,23 +110,12 @@ static void activate() {
 	Widget.setOrientation(navbar, GTK_ORIENTATION_VERTICAL);
 	Widget.setOrientation(appBody, GTK_ORIENTATION_VERTICAL);
 	Widget.setOrientation(boxBody, GTK_ORIENTATION_HORIZONTAL);
+	Widget.setOrientation(tabs, GTK_ORIENTATION_HORIZONTAL);
 	CSS.setSize(buttonWidget, 100, 50);
 	CSS.setSize(rmLabelWidget, 125, 50);
 
 	Button.label(buttonWidget, "add");
 	Button.label(rmLabelWidget, "remove");
-
-	GError *e = NULL;
-	GdkTexture *cursor = gdk_texture_new_from_filename("cursor.png", &e);
-	if (e != NULL) {
-		lg->err(lg, "Error %d: %s\n", e->code, e->message);
-		g_error_free(e);
-	} else {
-		lg->info(lg, "Cursor width: %d", gdk_texture_get_width(cursor));
-		lg->info(lg, "Cursor height: %d", gdk_texture_get_height(cursor));
-		gdk_cursor_new_from_texture(cursor, gdk_texture_get_width(cursor) - 1,
-									gdk_texture_get_height(cursor) - 1, NULL);
-	}
 
 	Window.setSize(window, 1904, 992);
 	Window.set_app_window(window, app);
@@ -139,12 +139,14 @@ static void activate() {
 	Grid.row_spacing(labelGrid, 5);
 	Grid.column_spacing(labelGrid, 5);
 
+	CSS.setWidth(box, 1904);
+	CSS.setHeight(box, 992);
+	// CSS.setWidth(Widget.alooFromBuilder(builder, "editor-box"), 1904);
+	// CSS.setHeight(Widget.alooFromBuilder(builder, "editor-box"), 992);
+
 	Widget.addEventListener(menuBar, "clicked", toggleNav, NULL);
-
-	gtk_widget_set_focusable(window->child, 1);
-
-	GtkEventController *key = gtk_event_controller_key_new();
-	gtk_widget_add_controller(window->child, key);
+	Widget.addEventListener(Widget.alooFromBuilder(builder, "view"), "clicked",
+							changeView, NULL);
 
 	navMenu = Grid.new();
 	Widget.setName(navMenu, "nav-menu");
@@ -158,7 +160,9 @@ static void activate() {
 	CSS.setSize(box, 1804, 992);
 	CSS.setSize(navMenu, 100, 992);
 	CSS.addClass(navMenu, "nav-menu-show");
-	CSS.setSize(Builder.alooFromBuilder(builder, "nav-show"), 1904, 70);
+
+	AlooWidget *navShow = Builder.alooFromBuilder(builder, "nav-show");
+	CSS.setSize(navShow, 1904, 70);
 	char **classes = CSS.getClasses(navMenu);
 	for (int i = 0; i < sizeof(classes) / sizeof(classes[0]); i++) {
 		printf("%s\n", classes[i]);

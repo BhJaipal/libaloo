@@ -41,6 +41,11 @@ AlooWidget *__alooSetWindowTitle(AlooWidget *window, const char *title);
 AlooWidget *__setWindowSize(AlooWidget *window, int width, int height);
 
 /**
+ * @brief Gets aloo Window size
+ */
+AlooWidget *__getWindowSize(AlooWidget *window, int *width, int *height);
+
+/**
  * @brief Set the Window for Application
  */
 AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app);
@@ -50,6 +55,7 @@ AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app);
  */
 AlooWidget *__app_add_window(AlooApplication *app, AlooWidget *window);
 
+GtkWindow *__Window_toGtk(AlooWidget *window);
 /**
  * @brief Shows Window
  */
@@ -82,6 +88,12 @@ struct _alooWindow {
 	/// @param height int
 	/// @return AlooWidget*
 	AlooWidget *(*setSize)(AlooWidget *window, int width, int height);
+	/// @brief Gets aloo Window size
+	/// @param window AlooWidget *
+	/// @param width int
+	/// @param height int
+	/// @return AlooWidget*
+	AlooWidget *(*getSize)(AlooWidget *window, int *width, int *height);
 	/// @brief Set the Window for Application
 	/// @param window AlooWidget*
 	/// @param app AlooApplication*
@@ -96,6 +108,8 @@ struct _alooWindow {
 	/// @param window AlooWidget*
 	/// @return void
 	void (*show)(AlooWidget *window);
+
+	GtkWindow *(*toGtk)(AlooWidget *window);
 };
 
 /******************** Public ********************/

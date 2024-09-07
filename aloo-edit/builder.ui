@@ -30,15 +30,40 @@
 									</object>
 								</child>
 								<child>
-									<object id="menu-label" class="GtkLabel">
+									<object id="file" class="GtkButton">
 										<property name="name"
-										>menu-label</property>
-										<property name="label"
-										>Gtk App</property>
+										>menu-bar-opt</property>
+										<property name="label">File</property>
 										<layout>
 											<property name="column-span"
-											>2</property>
+											>1</property>
 											<property name="column">1</property>
+											<property name="row">0</property>
+										</layout>
+									</object>
+								</child>
+								<child>
+									<object id="edit" class="GtkButton">
+										<property name="name"
+										>menu-bar-opt</property>
+										<property name="label">Edit</property>
+										<layout>
+											<property name="column-span"
+											>1</property>
+											<property name="column">2</property>
+											<property name="row">0</property>
+										</layout>
+									</object>
+								</child>
+								<child>
+									<object id="view" class="GtkButton">
+										<property name="name"
+										>menu-bar-opt</property>
+										<property name="label">View</property>
+										<layout>
+											<property name="column-span"
+											>1</property>
+											<property name="column">3</property>
 											<property name="row">0</property>
 										</layout>
 									</object>
@@ -51,38 +76,51 @@
 					<object id="box-body" class="GtkBox">
 						<property name="name">box-body</property>
 						<child>
-							<object id="box" class="GtkBox">
-								<property name="name">box</property>
+							<object id="tabs" class="GtkBox">
+								<property name="name">tabs</property>
 								<child>
-									<object id="file-content" class="GtkEntry">
-										<property name="name">file-content</property>
-										<attributes>
-										</attributes>
-									</object>
-								</child>
-								<child>
-									<object id="button-grid" class="GtkGrid">
-										<property name="name">button-grid</property>
+									<object id="box" class="GtkBox">
+										<property name="name">box</property>
 										<child>
-											<object id="add" class="GtkButton">
-												<property name="name">add</property>
-												<layout>
-													<property name="column-span"
-													>2</property>
-													<property name="column">0</property>
-													<property name="row">0</property>
-												</layout>
+											<object id="label-name" class="GtkEntry">
+												<property name="name">label-name</property>
 											</object>
 										</child>
 										<child>
-											<object id="remove" class="GtkButton">
-												<property name="name">remove</property>
-												<layout>
-													<property name="column-span"
-													>2</property>
-													<property name="column">2</property>
-													<property name="row">0</property>
-												</layout>
+											<object id="button-grid" class="GtkGrid">
+												<property name="name">button-grid</property>
+												<child>
+													<object id="add" class="GtkButton">
+														<property name="name">add</property>
+														<layout>
+															<property name="column-span"
+															>2</property>
+															<property name="column">0</property>
+															<property name="row">0</property>
+														</layout>
+													</object>
+												</child>
+												<child>
+													<object id="remove" class="GtkButton">
+														<property name="name">remove</property>
+														<layout>
+															<property name="column-span"
+															>2</property>
+															<property name="column">2</property>
+															<property name="row">0</property>
+														</layout>
+													</object>
+												</child>
+											</object>
+										</child>
+									</object>
+								</child>
+								<child>
+									<object id="editor-box" name="GtkBox">
+										<property name="name">editor-box</property>
+										<child>
+											<object id="editor" class="GtkEntry">
+												<property name="name">editor</property>
 											</object>
 										</child>
 									</object>

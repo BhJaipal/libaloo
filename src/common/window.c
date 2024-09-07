@@ -1,6 +1,7 @@
 #include "common/window.h"
 #include "common/macros.h"
 #include "common/widget.h"
+#include "utils/error.h"
 
 AlooWidget *__alooSetWindowChild(AlooWidget *window, AlooWidget *child) {
 	gtk_window_set_child(GTK_WINDOW(window->child), child->child);
@@ -22,6 +23,10 @@ AlooWidget *__setWindowSize(AlooWidget *window, int width, int height) {
 	gtk_window_set_default_size(GTK_WINDOW(window->child), width, height);
 	return window;
 }
+AlooWidget *__getWindowSize(AlooWidget *window, int *width, int *height) {
+	gtk_window_get_default_size(GTK_WINDOW(window->child), width, height);
+	return window;
+}
 
 AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app) {
 	gtk_window_set_application(GTK_WINDOW(window->child), app->app);
@@ -36,6 +41,14 @@ void __showWindow(AlooWidget *window) {
 	}
 }
 
+GtkWindow *__Window_toGtk(AlooWidget *window) {
+	if (!Widget.check.isWindow(window)) {
+		throw_error("Invalid button");
+		return GTK_WINDOW(gtk_window_new());
+	}
+	return GTK_WINDOW(window->child);
+}
+
 AlooWidget *__app_add_window(AlooApplication *app, AlooWidget *window) {
 	gtk_application_add_window(app->app, GTK_WINDOW(window->child));
 	return window;
@@ -48,6 +61,8 @@ struct _alooWindow Window = {
 	.setChild = __alooSetWindowChild,
 	.setTitle = __alooSetWindowTitle,
 	.setSize = __setWindowSize,
+	.getSize = __getWindowSize,
 	.app_add_window = __app_add_window,
 	.set_app_window = __setWindowApplication,
+	.toGtk = __Window_toGtk,
 };

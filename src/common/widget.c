@@ -131,6 +131,7 @@ struct _aloo_widget Widget = {
 	.new = __Widget_new,
 	.gtk_to_aloo = __Widget_Gtk_to_Aloo,
 	.obj_to_aloo = __Widget_Obj_to_Aloo,
+	.alooFromBuilder = __Widget_AlooFromBuilder,
 	.setName = __Widget_setName,
 	.setOrientation = __Widget_SetOrientation,
 	.obj_to_gtk = __Widget_Obj_to_Gtk,

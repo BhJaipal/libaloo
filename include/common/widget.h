@@ -93,6 +93,8 @@ GtkWidget *__Widget_Aloo_to_Gtk(AlooWidget *wid);
 struct _aloo_widget {
 	/// @brief Creates GtkWidget from builder
 	GtkWidget *(*obj_to_gtk)(AlooBuilder *builder, const char *name);
+	/// @brief Creates AlooWidget from builder
+	AlooWidget *(*alooFromBuilder)(AlooBuilder *builder, const char *name);
 	/// @brief Create AlooWidget from GObject
 	AlooWidget *(*obj_to_aloo)(GObject *obj);
 	/// @brief Creates AlooWidget from GtkWidget

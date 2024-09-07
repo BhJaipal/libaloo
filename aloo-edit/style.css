@@ -46,24 +46,19 @@
 	background-color: whitesmoke;
 }
 
-#menu-label {
-	margin-left: 20px;
-	font-size: 30px;
-	color: white;
-	font-weight: bold;
-}
 #nav-show {
 	background-color: rgb(20, 20, 20);
 }
 #menu-bar {
-	margin: 10px;
 	margin-left: 20px;
 	color: white;
 	border: 0px;
-	border-radius: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 5px;
 	background: rgb(20, 20, 20);
 	font-weight: bold;
-	font-size: 35px;
+	font-size: 25px;
 	animation: hoverOutTransition 0.1s;
 }
 @keyframes hoverInTransition {
@@ -103,6 +98,58 @@
 	}
 }
 #menu-bar:hover {
+	animation: hoverInTransition 0.1s;
+	background: rgb(34, 34, 34);
+}
+#menu-bar-opt {
+	margin-left: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: white;
+	border: 0px;
+	border-radius: 5px;
+	background: rgb(20, 20, 20);
+	font-weight: bold;
+	font-size: 15px;
+	animation: hoverOutTransition 0.1s;
+}
+@keyframes hoverInTransition {
+	from {
+		background-color: transparent;
+		background-image: radial-gradient(
+			circle at center,
+			rgb(34, 34, 34) 0%,
+			rgb(20, 20, 20) 100%
+		);
+	}
+	to {
+		background-color: transparent;
+		background-image: radial-gradient(
+			circle at center,
+			rgb(34, 44, 34) 100%,
+			rgb(20, 20, 20) 0%
+		);
+	}
+}
+@keyframes hoverOutTransition {
+	from {
+		background-color: transparent;
+		background-image: radial-gradient(
+			circle at center,
+			rgb(34, 44, 34) 100%,
+			rgb(20, 20, 20) 0%
+		);
+	}
+	to {
+		background-color: transparent;
+		background-image: radial-gradient(
+			circle at center,
+			rgb(34, 34, 34) 0%,
+			rgb(20, 20, 20) 100%
+		);
+	}
+}
+#menu-bar-opt:hover {
 	animation: hoverInTransition 0.1s;
 	background: rgb(34, 34, 34);
 }
@@ -148,15 +195,32 @@
 	outline: 0px;
 	background-color: white;
 }
+
+#label-name {
+	background-color: rgb(22, 22, 22);
+	margin-left: 400px;
+	margin-right: 400px;
+	color: white;
+	font-size: 20px;
+}
+
+#tabs {
+	margin-left: 100px;
+}
 #box {
 	margin-top: 30px;
 	margin-right: 200px;
+	transform: translateX(0px);
+	transition: transform 0.5s ease-in-out;
 }
-
-#file-content {
-	background-color: rgb(22, 22, 22);
+#tabs.switch #box {
+	transform: translateX(-1900px);
+}
+#editor-box {
+	transform: translateX(1900px);
+	transition: transform 0.5s ease-in-out;
+}
+#editor {
 	margin-left: 100px;
-	margin-right: 100px;
-	color: white;
-	font-size: 20px;
+	background-color: rgb(70, 69, 69);
 }

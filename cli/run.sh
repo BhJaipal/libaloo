@@ -1,4 +1,3 @@
-clear
 if [ $2 = "app" ]; then
 	if [ -f bin/run.exe ]; then
 		./bin/run.exe
