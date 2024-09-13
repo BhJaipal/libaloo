@@ -27,39 +27,6 @@
 - - `int argc`
 - - `char **argv`
 
-## Macros
-
-### `ALOO_IS_WINDOW(X)`
-
-- **Description**: Checks if GtkWidget is a GtkWindow or not
-- **body**:
-- - `GTK_IS_WINDOW(X->child)`
-- **Returns**: 0 or 1
-
-### NONE_FLAGS_OPTIONS
-
-- **Description**: generates app options with APP_FLAGS_NONE
-- **body**: `{ APP_FLAGS_NONE, argc, argv }`
-- **Parameters**:
-- - `int argc`
-- - `char **argv`
-
-### LAUNCHER_FLAGS_OPTIONS
-
-- **Description**: generates app options with APP_FLAGS_IS_LAUNCHER
-- **body**: `{ APP_FLAGS_IS_LAUNCHER, argc, argv }`
-- **Parameters**:
-- - `int argc`
-- - `char **argv`
-
-### SERVICE_FLAGS_OPTIONS
-
-- **Description**: generates app options with APP_FLAGS_IS_SERVICE
-- **body**: `{ APP_FLAGS_IS_SERVICE, argc, argv }`
-- **Parameters**:
-- - `int argc`
-- - `char **argv`
-
 ## Functions
 
 ### CreateApp

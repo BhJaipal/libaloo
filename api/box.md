@@ -1,147 +1,191 @@
+---
+Name: common/button.h
+Brief: Aloo Button related functions
+---
+
 # box.h
 
-## Macros
+## Structs
 
-### `ALOO_BOX_TO_GTK_BOX(x)`
+### `_alooBox`
 
-- **body**: GTK_BOX(ALOO_BOX_WIDGET(x))
-- **Description**: Return GtkBox of widget
-- **Parameters**: `AlooWidget *x`
+#### `_alooBox::new`
 
-## Functions
+| Returns       | Brief                |
+| ------------- | -------------------- |
+| `AlooWidget*` | Creates new ALoo Box |
 
-### `ALOO_BOX_WIDGET`
+| Parameters Type  | Brief |
+| ---------------- | ----- |
+| `GtkOrientation` |       |
+| `int`            |       |
 
-- **Returns**: `GtkWidget *`
-- **Parameters**:
-- - `AlooWidget *x`
+#### `_alooBox::setOrientation`
 
-### `ALOO_IS_BOX`
+| Returns       | Brief                 |
+| ------------- | --------------------- |
+| `AlooWidget*` | Sets Box Orientation. |
 
-- **Returns**: `gboolean`
-- **Parameters**:
-- - `AlooWidget *x`
+| Parameters Type  | Brief |
+| ---------------- | ----- |
+| `AlooWidget*`    |       |
+| `GtkOrientation` |       |
 
-### `newAlooBox`
+#### `_alooBox::getOrientation`
 
-- **Returns**: `AlooWidget *`
-- **Parameters**:
-- - `GtkOrientation orientation`
-- - `int spacing`
+| Returns              | Brief                 |
+| -------------------- | --------------------- |
+| `**: GtkOrientation` | Gets Box Orientation. |
 
-### `setBoxOrientation`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Sets Box Orientation.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `GtkOrientation orientation`
+#### `_alooBox::appendGtk`
 
-### `getBoxOrientation`
+| Returns       | Brief                           |
+| ------------- | ------------------------------- |
+| `AlooWidget*` | Appends GtkWidget child to box. |
 
-- **Returns`**: GtkOrientation`
-- **Description**: Gets Box Orientation.
-- **Parameters**:
-- - `AlooWidget *box`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `GtkWidget*`    |       |
 
-### `boxAppendGtk`
+#### `_alooBox::prependGtk`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Appends GtkWidget child to box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `GtkWidget *widget`
+| Returns       | Brief                            |
+| ------------- | -------------------------------- |
+| `AlooWidget*` | Prepends GtkWidget child to box. |
 
-### `boxPrependGtk`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `GtkWidget*`    |       |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Prepends GtkWidget child to box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `GtkWidget *widget`
+#### `_alooBox::removeGtk`
 
-### `boxRemoveGtk`
+| Returns       | Brief                             |
+| ------------- | --------------------------------- |
+| `AlooWidget*` | Removes GtkWidget child from box. |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Removes GtkWidget child from box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `GtkWidget *widget`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `GtkWidget*`    |       |
 
-### `boxAppend`
+#### `_alooBox::append`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Appends AlooWidget child to box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `AlooWidget *widget`
+| Returns       | Brief                            |
+| ------------- | -------------------------------- |
+| `AlooWidget*` | Appends AlooWidget child to box. |
 
-### `boxPrepend`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `AlooWidget*`   |       |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Prepends AlooWidget child to box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `AlooWidget *widget`
+#### `_alooBox::prepend`
 
-### `boxRemove`
+| Returns       | Brief                             |
+| ------------- | --------------------------------- |
+| `AlooWidget*` | Prepends AlooWidget child to box. |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Removes AlooWidget child from box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `AlooWidget *widget`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `AlooWidget*`   |       |
 
-### `boxInsertChildAfter`
+#### `_alooBox::remove`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Adds child after a certain widget of box.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `AlooWidget *child`
-- - `AlooWidget *after`
+| Returns        | Brief                              |
+| -------------- | ---------------------------------- |
+| `AlooWidget *` | Removes AlooWidget child from box. |
 
-### `setBoxSpacing`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `AlooWidget*`   |       |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Set Box Spacing.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `int spacing`
+#### `_alooBox::insertChildAfter`
 
-### `getBoxSpacing`
+| Returns       | Brief                                     |
+| ------------- | ----------------------------------------- |
+| `AlooWidget*` | Adds child after a certain widget of box. |
 
-- **Returns**: `int`
-- **Description**: Gets box spacing.
-- **Parameters**:
-- - `AlooWidget *box`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `AlooWidget*`   |       |
+| `AlooWidget*`   |       |
 
-### `getBoxHomogeneous`
+#### `_alooBox::setSpacing`
 
-- **Returns**: `gboolean`
-- **Description**: Gets box homogeneous.
-- **Parameters**:
-- - `AlooWidget *box`
+| Returns       | Brief            |
+| ------------- | ---------------- |
+| `AlooWidget*` | Set Box Spacing. |
 
-### `setBoxHomogeneous`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `int`           |       |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Sets box homogeneous.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `gboolean homogeneous`
+#### `_alooBox::getSpacing`
 
-### `getBoxBaselinePosition`
+| Returns | Brief             |
+| ------- | ----------------- |
+| `int`   | Gets box spacing. |
 
-- **Returns**: `GtkBaselinePosition`
-- **Description**: Gets Box baseline position.
-- **Parameters**:
-- - `AlooWidget *box`
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
 
-### `setBoxBaselinePosition`
+#### `_alooBox::getHomogeneous`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Sets Box baseline position.
-- **Parameters**:
-- - `AlooWidget *box`
-- - `GtkBaselinePosition position`
+| Returns    | Brief                 |
+| ---------- | --------------------- |
+| `gboolean` | Gets box homogeneous. |
+
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+
+#### `_alooBox::setHomogeneous`
+
+| Returns       | Brief                 |
+| ------------- | --------------------- |
+| `AlooWidget*` | Sets box homogeneous. |
+
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+| `gboolean`      |       |
+
+#### `_alooBox::getBaselinePosition`
+
+| Returns               | Brief                       |
+| --------------------- | --------------------------- |
+| `GtkBaselinePosition` | Gets Box baseline position. |
+
+| Parameters Type | Brief |
+| --------------- | ----- |
+| `AlooWidget*`   |       |
+
+#### `_alooBox::setBaselinePosition`
+
+| Returns       | Brief                       |
+| ------------- | --------------------------- |
+| `AlooWidget*` | Sets Box baseline position. |
+
+| Parameters Type       | Brief |
+| --------------------- | ----- |
+| `AlooWidget*`         |       |
+| `GtkBaselinePosition` |       |
+
+## Variables
+
+### Box
+
+| Key  | Value             |
+| ---- | ----------------- |
+| type | `struct _alooBox` |

@@ -5,82 +5,122 @@ Brief: Aloo CSS related functions
 
 # style.h
 
-## Functions
+## Structs
 
-### importCssFromPath
+### `_alooCSS`
 
-- **Returns**: `void`
-- **Description**: Import CSS file from path
-- **Parameters**:
-- - `const char *name`: name path of css file
+#### `_alooCSS::importPath`
 
-### importCssFromData
+| Returns | Description               |
+| ------- | ------------------------- |
+| `void`  | Import CSS file from path |
 
-- **Returns**: `void`
-- **Description**: content css content
-- **Parameters**:
-- - `const char *content`: content
-- - `gssize length`: content length
+| Parameters Type | Brief            |
+| --------------- | ---------------- |
+| `const char*`   | path of css file |
 
-### importCssFromFile
+#### `_alooCSS::importData`
 
-- **Returns**: `void`
-- **Description**: Import CSS file from content
-- **Parameters**:
-- - `GFile *file`: file CSS GFile
+| Returns | Description         |
+| ------- | ------------------- |
+| `void`  | content css content |
 
-### `setWidth`
+| Parameters Type | Brief          |
+| --------------- | -------------- |
+| `const char*`   | content        |
+| `gssize`        | content length |
 
-- **Returns**: AlooWidget *
-- **Description**: Set the Width of widget.
-- **Parameters**:
-- - `AlooWidget *wid`
-- - `int width`
+#### `_alooCSS::importFile`
 
-### `setHeight`
+| Returns | Description                  |
+| ------- | ---------------------------- |
+| `void`  | Import CSS file from content |
 
-- **Returns**: AlooWidget *
-- **Description**: Set the Height of widget.
-- **Parameters**:
-- - `AlooWidget *wid`
-- - `int height`
+| Parameters Type | Brief          |
+| --------------- | -------------- |
+| `GFile*`        | file CSS GFile |
 
-### `setSize`
+#### `_alooCSS::setWidth`
 
-- **Returns**: AlooWidget *
-- **Description**: Set the Width and Height of widget.
-- **Parameters**:
-- - `AlooWidget *wid`
-- - `int width`
-- - `int height`
+| Returns       | Description              |
+| ------------- | ------------------------ |
+| `AlooWidget*` | Set the Width of widget. |
 
-### `widgetAddClass`
+| Parameters Type | Brief                            |
+| --------------- | -------------------------------- |
+| `AlooWidget*`   | widget whose width has to be set |
+| `int`           | new width of widget              |
 
-- **Returns**: AlooWidget *
-- **Description**: Adds class to widget.
-- **Parameters**:
-- - `AlooWidget *widget`
-- - `char *class`
+#### `_alooCSS::setHeight`
 
-### `widgetRemoveClass`
+| Returns       | Description               |
+| ------------- | ------------------------- |
+| `AlooWidget*` | Set the Height of widget. |
 
-- **Returns**: AlooWidget *
-- **Description**: Removes class from widget.
-- **Parameters**:
-- - `AlooWidget *widget`
-- - `char *class`
+| Parameters Type | Brief                             |
+| --------------- | --------------------------------- |
+| `AlooWidget*`   | widget whose height has to be set |
+| `int`           | new height of widget              |
 
-### `getWidgetClasses`
+#### `_alooCSS::setSize`
 
-- **Returns**: char **
-- **Description**: Gets \classes of widget.
-- **Parameters**:
-- - `AlooWidget *widget`
+| Returns       | Description                         |
+| ------------- | ----------------------------------- |
+| `AlooWidget*` | Set the Width and Height of widget. |
 
-### `setWidgetClasses`
+| Parameters Type | Brief                                     |
+| --------------- | ----------------------------------------- |
+| `AlooWidget*`   | widget whose width & height has to be set |
+| `int`           | new width of widget                       |
+| `int`           | new height of widget                      |
 
-- **Returns**: AlooWidget *
-- **Description**: Sets classes of widget.
-- **Parameters**:
-- - `AlooWidget *widget`
-- - `char **classes`
+#### `_alooCSS::addClass`
+
+| Returns       | Description           |
+| ------------- | --------------------- |
+| `AlooWidget*` | Adds class to widget. |
+
+| Parameters Type | Brief                                 |
+| --------------- | ------------------------------------- |
+| `AlooWidget*`   | widget in which class has to be added |
+| `char*`         | class name                            |
+
+#### `removeClass`
+
+| Returns       | Description                |
+| ------------- | -------------------------- |
+| `AlooWidget*` | Removes class from widget. |
+
+| Parameters Type | Brief                                     |
+| --------------- | ----------------------------------------- |
+| `AlooWidget*`   | widget from which class has to be removed |
+| `char*`         | class name                                |
+
+#### `_alooCSS::getClasses`
+
+| Returns  | Description             |
+| -------- | ----------------------- |
+| `char**` | Gets classes of widget. |
+
+| Parameters Type | Brief                                |
+| --------------- | ------------------------------------ |
+| `AlooWidget*`   | widget whose classes you want to get |
+
+#### `_alooCSS::setClasses`
+
+| Returns       | Description             |
+| ------------- | ----------------------- |
+| `AlooWidget*` | Sets classes of widget. |
+
+| Parameters Type | Brief                              |
+| --------------- | ---------------------------------- |
+| `AlooWidget*`   | widget whose classes has to be set |
+| `char**`        | list of classes                    |
+
+## Variables
+
+### CSS
+
+| Key  | Value             |
+| ---- | ----------------- |
+| type | `struct _alooCSS` |

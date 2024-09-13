@@ -1,73 +1,118 @@
+---
+Name: common/grid.h
+Brief: Aloo Grid related functions
+---
+
 # grid.h
 
 ## Macros
 
-### `ALOO_GRID_TO_GTK(x)`
+### `ALOO_GRID_TO_GTK`
 
-- **body**: `GTK_GRID(x->child)`
-- **Description**: Returns GtkGrid of AlooWidget.
-- **Parameters**: `GtkWidget *x`
+| Key         | Value                              |
+| ----------- | ---------------------------------- |
+| body        | `GTK_GRID(x->child)`               |
+| Description | Returns `GtkGrid` of `AlooWidget`. |
+| Parameters  | `GtkWidget *x`                     |
 
-## Functions
+## Structs
 
-### `gridAttach`
+### `_alooGrid`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Adds widget to aloo grid.
-- **Parameters**:
-- - `AlooWidget *grid`
-- - `AlooWidget *child`
-- - `int column`
-- - `int row`
-- - `int width`
-- - `int height`
+#### `_alooGrid::attach`
 
-### `gridAttachGtk`
+| Returns       | Description               |
+| ------------- | ------------------------- |
+| `AlooWidget*` | Adds widget to aloo grid. |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Adds widget to aloo grid.
-- **Parameters**:
-- - `AlooWidget *grid`
-- - `GtkWidget *child`
-- - `int column`
-- - `int row`
-- - `int width`
-- - `int height`
+| Parameter Type | Description                                       |
+| -------------- | ------------------------------------------------- |
+| `AlooWidget*`  | grid in which child should be added               |
+| `AlooWidget*`  | child to be added                                 |
+| `int`          | column in which it should be added                |
+| `int`          | row in which it should be added                   |
+| `int`          | column span of widget or how many column it takes |
+| `int`          | row span of widget or how many row it takes       |
 
-### `gridRemove`
+#### `_alooGrid::attachGtk`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Removes child from grid.
-- **Parameters**:
-- - `AlooWidget *grid`
-- - `AlooWidget *child`
+| Returns       | Description               |
+| ------------- | ------------------------- |
+| `AlooWidget*` | Adds widget to aloo grid. |
 
-### `gridRemoveGtk`
+| Parameter Type | Description                                       |
+| -------------- | ------------------------------------------------- |
+| `AlooWidget*`  | grid in which child should be added               |
+| `GtkWidget*`   | child to be added                                 |
+| `int`          | column in which it should be added                |
+| `int`          | row in which it should be added                   |
+| `int`          | column span of widget or how many column it takes |
+| `int`          | row span of widget or how many row it takes       |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Removes child from grid.
-- **Parameters**:
-- - `AlooWidget *grid`
-- - `GtkWidget *child`
+#### `_alooGrid::remove`
 
-### `alooGridNew`
+| Returns       | Description              |
+| ------------- | ------------------------ |
+| `AlooWidget*` | Removes child from grid. |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Creates new Aloo Grid Widget.
-- **No Parameters**
+| Parameter Type | Description                                      |
+| -------------- | ------------------------------------------------ |
+| `AlooWidget*`  | widget from which `AlooWidget` should be removed |
+| `AlooWidget*`  | widget to be removed                             |
 
-### `setGridColumnSpacing`
+#### `_alooGrid::removeGtk`
 
-- **Returns**: `AlooWidget *`
-- **Description**: Set the Grid Column Spacing.
-- **Parameters**:
-- - `AlooWidget *grid`
-- - `int space`
+| Returns       | Description              |
+| ------------- | ------------------------ |
+| `AlooWidget*` | Removes child from grid. |
 
-### `setGridRowSpacing`
+| Parameter Type | Description                                     |
+| -------------- | ----------------------------------------------- |
+| `AlooWidget*`  | widget from which `GtkWidget` should be removed |
+| `GtkWidget*`   | widget to be removed                            |
 
-- **Returns**: `AlooWidget *`
-- **Description**: Set the Grid Row Spacing.
-- **Parameters**
-- - `AlooWidget *grid`
-- - `int space`
+#### `_alooGrid::new`
+
+| Returns       | Description                   |
+| ------------- | ----------------------------- |
+| `AlooWidget*` | Creates new Aloo Grid Widget. |
+
+#### `_alooGrid::column_spacing`
+
+| Returns       | Description                  |
+| ------------- | ---------------------------- |
+| `AlooWidget*` | Set the Grid Column Spacing. |
+
+| Parameter Type | Description                            |
+| -------------- | -------------------------------------- |
+| `AlooWidget*`  | widget whose spacing has to be changed |
+| `int`          | column spacing                         |
+
+#### `_alooGrid::row_spacing`
+
+| Returns       | Description               |
+| ------------- | ------------------------- |
+| `AlooWidget*` | Set the Grid Row Spacing. |
+
+| Parameter Type | Description                            |
+| -------------- | -------------------------------------- |
+| `AlooWidget*`  | widget whose spacing has to be changed |
+| `int`          | row spacing                            |
+
+#### toGtk
+
+| Returns    | Description      |
+| ---------- | ---------------- |
+| `GtkGrid*` | Returns Gtk Grid |
+
+| Parameter Type | Description |
+| -------------- | ----------- |
+| AlooWidget*`   | Aloo Grid   |
+
+## Variables
+
+### Grid
+
+| Key  | Value              |
+| ---- | ------------------ |
+| type | `struct _alooGrid` |

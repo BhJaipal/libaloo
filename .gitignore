@@ -20,3 +20,9 @@ node_modules/
 .cache/
 *.log
 !gtest/build/
+!gtest/build/_deps
+!gtest/build/bin
+!gtest/build/CMakeFiles/
+!gtest/build/cmake_install.cmake
+!gtest/build/Makefile
+!gtest/build/CMakeCache.txt

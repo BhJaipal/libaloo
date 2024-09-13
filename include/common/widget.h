@@ -91,6 +91,11 @@ GtkWidget *__Widget_Aloo_to_Gtk(AlooWidget *wid);
 /******************** Private Types ********************/
 
 struct _aloo_widget {
+	/// @brief Create a widget
+	/// @param type type of widget
+	/// @param child actual GtkWidget
+	/// @return AlooWidget*
+	AlooWidget *(*new)(WidgetType type, GtkWidget *child);
 	/// @brief Creates GtkWidget from builder
 	GtkWidget *(*obj_to_gtk)(AlooBuilder *builder, const char *name);
 	/// @brief Creates AlooWidget from builder
@@ -101,11 +106,6 @@ struct _aloo_widget {
 	AlooWidget *(*gtk_to_aloo)(GtkWidget *widget);
 	/// @brief Sets orientation of AlooWidget
 	AlooWidget *(*setOrientation)(AlooWidget *widget, GtkOrientation orien);
-	/// @brief Create a widget
-	/// @param type type of widget
-	/// @param child actual GtkWidget
-	/// @return AlooWidget*
-	AlooWidget *(*new)(WidgetType type, GtkWidget *child);
 	/// @brief Set the Name of widget
 	/// @param widget AlooWidget
 	/// @param name string for name of widget

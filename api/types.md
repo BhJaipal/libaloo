@@ -9,30 +9,33 @@ Brief: Aloo CSS related functions
 
 ### `AlooWidget`
 
-- **Description**: widget for my aloo library
-- **Members**:
-- - `GtkWidget *child`: actual GtkWidget
-- - `WidgetType type`: Type of widget
+**Description**: widget for my aloo library
 
-## Macros
+| Member | type         | Description      |
+| ------ | ------------ | ---------------- |
+| widget | `GtkWidget*` | actual GtkWidget |
+| type   | `WidgetType` | Type of widget   |
 
-### `ALOO_WIDGET_TO_GTK(x)`
+### `AlooBuilder`
 
-- **Description**: Macro to convert AlooWidget to GtkWidget
-- **body**: x->child
-- **Parameters**:
-- - `AlooWidget *x`
+**Description**: Builder for aloo library
+
+| Member  | type          | Description |
+| ------- | ------------- | ----------- |
+| builder | `GtkBuilder*` | Gtk builder |
 
 ## Enumerations
 
 ### `WidgetType`
 
-- **Description**: Type of AlooWidget
-- **Values**:
-- - `ALOO_BOX`: Used for Gtk Box
-- - `ALOO_GRID`: Used for Gtk Grid
-- - `ALOO_ROW`: Used for Gtk Row
-- - `ALOO_COLUMN`: Used for Gtk Column
-- - `ALOO_BUTTON`: Used for Gtk Button
-- - `ALOO_LABEL`: Used for Gtk Label
-- - `ALOO_NEW_WIDGET`: Can be used to create new custom widget and used with all
+**Description**: Type of AlooWidget
+
+| Values            | Brief                                                     |
+| ----------------- | --------------------------------------------------------- |
+| `ALOO_BOX`        | Used for Gtk Box                                          |
+| `ALOO_GRID`       | Used for Gtk Grid                                         |
+| `ALOO_ROW`        | Used for Gtk Row                                          |
+| `ALOO_COLUMN`     | Used for Gtk Column                                       |
+| `ALOO_BUTTON`     | Used for Gtk Button                                       |
+| `ALOO_LABEL`      | Used for Gtk Label                                        |
+| `ALOO_NEW_WIDGET` | Can be used to create new custom widget and used with all |

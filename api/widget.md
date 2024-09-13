@@ -5,9 +5,11 @@ Brief: Aloo CSS related functions
 
 # widget.h
 
-## Functions
+## Structs
 
-### `__Widget_New`
+### `_aloo_widget`
+
+#### `_aloo_widget::new`
 
 | Brief            | Returns       |
 | ---------------- | ------------- |
@@ -18,7 +20,7 @@ Brief: Aloo CSS related functions
 | type       | `WidgetType` | Type of new Widget                        |
 | widget     | `GtkWidget*` | `GtkWidget` to be set on new `AlooWidget` |
 
-### `__Widget_Gtk_to_Aloo`
+#### `_aloo_widget::gtk_to_aloo`
 
 | Brief                              | Returns       |
 | ---------------------------------- | ------------- |
@@ -28,7 +30,7 @@ Brief: Aloo CSS related functions
 | ---------- | ------------ | -------------------------------------------- |
 | widget     | `GtkWidget*` | Widget whose `AlooWidget` has to be obtained |
 
-### `__Widget_Obj_to_Aloo`
+#### `_aloo_widget::obj_to_aloo`
 
 | Brief                           | Returns       |
 | ------------------------------- | ------------- |
@@ -38,7 +40,7 @@ Brief: Aloo CSS related functions
 | ---------- | ---------- | --------------------------------------- |
 | obj        | `GObject*` | `GObject` from which has to be obtained |
 
-### `__Widget_Obj_to_Gtk`
+#### `_aloo_widget::obj_to_gtk`
 
 | Brief                           | Returns      |
 | ------------------------------- | ------------ |
@@ -49,7 +51,7 @@ Brief: Aloo CSS related functions
 | builder    | `AlooBuilder*` | Builder from which  To obtain GtkWidget |
 | name       | `const char*`  | ID of UI object                         |
 
-### `__Widget_AlooFromBuilder`
+#### `_aloo_widget::alooFromBuilder`
 
 | Brief                            | Returns       |
 | -------------------------------- | ------------- |
@@ -60,7 +62,7 @@ Brief: Aloo CSS related functions
 | builder    | `AlooBuilder*` | `AlooBuilder` from which `AlooWidget` has to be obtained |
 | name       | `const char*`  | ID of UI object                                          |
 
-### `__Widget_SetOrientation`
+#### `_aloo_widget::setOrientation`
 
 | Brief                           | Returns       |
 | ------------------------------- | ------------- |
@@ -71,7 +73,7 @@ Brief: Aloo CSS related functions
 | widget      | `AlooWidget*`    | widget whose orientation has to be set |
 | orientation | `GtkOrientation` | new orientation of widget              |
 
-### `__Widget_setName`
+#### `_aloo_widget::setName`
 
 | Brief                   | Returns       |
 | ----------------------- | ------------- |
@@ -82,20 +84,43 @@ Brief: Aloo CSS related functions
 | widget     | `AlooWidget*` | `AlooWidget` on which name has to be set |
 | name       | `const char*` | Name to be set on `AlooWidget`           |
 
-### `__Widget_setHorizontalAlign`
+#### `_aloo_widget::horizontalAlign`
 
-| Brief | Returns |
+| Brief                                    | Returns       |
+| ---------------------------------------- | ------------- |
 | Set Horizontal alignment of `AlooWIdget` | `AlooWIdget*` |
 
-| Parameters | Type | Briefs |
-| widget | `AlooWidget*` | Widget whose alignment has to be changed |
-| alignment | `GtkALign` | alignment type |
+| Parameters | Type          | Briefs                                   |
+| ---------- | ------------- | ---------------------------------------- |
+| widget     | `AlooWidget*` | Widget whose alignment has to be changed |
+| alignment  | `GtkALign`    | alignment type                           |
 
-### `__Widget_setVerticalAlign`
+#### `_aloo_widget::verticalAlign`
 
-| Brief | Returns |
+| Brief                                  | Returns       |
+| -------------------------------------- | ------------- |
 | Set Vertical alignment of `AlooWIdget` | `AlooWIdget*` |
 
-| Parameters | Type | Briefs |
-| widget | `AlooWidget*` | Widget whose alignment has to be changed |
-| alignment | `GtkALign` | alignment type |
+| Parameters | Type          | Briefs                                   |
+| ---------- | ------------- | ---------------------------------------- |
+| widget     | `AlooWidget*` | Widget whose alignment has to be changed |
+| alignment  | `GtkALign`    | alignment type                           |
+
+#### `_alooWidget::check`
+
+| Name     | parameter     | Brief                           |
+| -------- | ------------- | ------------------------------- |
+| isBox    | `AlooWidget*` | Checks if widget is Aloo Box    |
+| isButton | `AlooWidget*` | Checks if widget is Aloo Button |
+| isGrid   | `AlooWidget*` | Checks if widget is Aloo Grid   |
+| isLabel  | `AlooWidget*` | Checks if widget is Aloo Label  |
+| isInput  | `AlooWidget*` | Checks if widget is Aloo Input  |
+| isWindow | `AlooWidget*` | Checks if widget is Aloo Window |
+
+## Variables
+
+### Widget
+
+| Key  | Value                 |
+| ---- | --------------------- |
+| type | `struct _aloo_widget` |
