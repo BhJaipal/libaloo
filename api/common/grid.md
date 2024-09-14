@@ -5,16 +5,6 @@ Brief: Aloo Grid related functions
 
 # grid.h
 
-## Macros
-
-### `ALOO_GRID_TO_GTK`
-
-| Key         | Value                              |
-| ----------- | ---------------------------------- |
-| body        | `GTK_GRID(x->child)`               |
-| Description | Returns `GtkGrid` of `AlooWidget`. |
-| Parameters  | `GtkWidget *x`                     |
-
 ## Structs
 
 ### `_alooGrid`

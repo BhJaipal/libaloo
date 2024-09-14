@@ -1,56 +1,102 @@
+---
+name: aloo.h
+brief: Imports all aloo function
+---
+
 # Aloo
 
 ## aloo.h
 
-### [`app.h`](app.md)
+### Common
 
-> [!NOTE]
-> Listing all functions is hard so I only added function tag
+#### [`app.h`](common/app.md)
 
-- [**Structures**](app.md#struct)
-- - [`alooApp_Status`](app.md#alooApp_Status)
-- - [`alooAppOptions`](app.md#alooappoptions)
-- [**Macros**](app.md#macros)
-- - [`ALOO_IS_WINDOW`](app.md#aloo_is_windowx)
-- [**Enums**](app.md#enumerations)
-- - [`alooAppFlags`](app.md#alooappflags)
-- [**Functions**](app.md#functions)
+- [**Structures**](common/app.md#struct)
+- - [`AlooApplication`](common/app.md#alooapplication)
+- - [`AlooAppOptions`](common/app.md#alooappoptions)
+- - [`_alooApp`](common/app.md#_alooapp)
+- [**Enums**](common/app.md#enumerations)
+- - [`alooAppFlags`](common/app.md#alooappflags)
 
-### [`box.h`](box.md)
+#### [`box.h`](common/box.md)
 
-- [**Macros**](box.md#macros)
-- - [`ALOO_BOX_TO_GTK_BOX`](box.md#aloo_box_to_gtk_boxx)
-- [**Functions**](box.md#functions)
+- [**Structures**](common/box.md#structs)
+- - [`_alooBox`](common/box.md#_aloobox)
 
-### [`button.h`](button.md)
+#### [`builder.h`](common/builder.md)
 
-- [**Macros**](button.md#macros)
-- - [`ALOO_BTN_TO_GTK`](button.md#aloo_btn_to_gtkx)
-- [**Functions**](button.md#functions)
+- [**Structures**](common/builder.md#structs)
+- - [`_AlooBuilder`](common/builder.md#_aloobuilder)
 
-### [`grid.h`](grid.md)
+#### [`button.h`](common/button.md)
 
-- [**Functions**](grid.md#functions)
+- [**Structures**](common/button.md#structs)
+- - [`_alooButton`](common/button.md#_aloobutton)
 
-### [`label.h`](label.md)
+#### [`grid.h`](common/grid.md)
 
-- [**Functions**](label.md#functions)
+- [**Structures**](common/grid.md#structs)
+- - [`_alooGrid`](common/grid.md#_aloogrid)
 
-### [`style.h`](style.md)
+#### [`label.h`](common/label.md)
 
-- [**Functions**](style.md#functions)
+- [**Structures**](common/label.md#structs)
+- - [`__alooLabel`](common/label.md#__aloolabel)
 
-### [`types.h`](types.md)
+#### [`macros.h`](common/macros.md)
 
-- [**Functions**](app.md#functions)
+- [**Macros**](common/macros.md#macros)
 
-- [**Structures**](types.md#struct)
-- - [`AlooWidget`](types.md#AlooWidget)
-- [**Macros**](types.md#macros)
-- - [`ALOO_WIDGET_TO_GTK`](types.md#aloo_widget_to_gtkx)
-- [**Enums**](types.md#enumerations)
-- - [`WidgetType`](types.md#widgettype)
+#### [`style.h`](common/style.md)
 
-### [`widget.h`](widget.md)
+- [**Structures**](common/style.md#structs)
+- - [`_alooCSS`](common/style.md#_aloocss)
 
-- [**Functions**](widget.md#functions)
+#### [`types.h`](common/types.md)
+
+- [**Structures**](common/types.md#struct)
+- - [`AlooWidget`](common/types.md#AlooWidget)
+- - [`AlooBuilder`](common/types.md#aloobuilder)
+- [**Enums**](common/types.md#enumerations)
+- - [`WidgetType`](common/types.md#widgettype)
+
+#### [`widget.h`](common/widget.md)
+
+- [**Structures**](common/widget.md#structs)
+- - [`_aloo_widget`](common/widget.md#_aloo_widget)
+
+#### [`window.h`](common/window.md)
+
+- [**Structures**](common/window.md#structs)
+- - [`_alooWindow`](common/window.md#_aloowindow)
+
+#### [`sqlite.h`](db/sqlite.md)
+
+- [**Structures**](db/sqlite.md#structs)
+- - [`_sqlite`](db/sqlite.md#sqlite)
+- [**Functions**](db/sqlite.md#functions)
+- - [`nothing`](db/sqlite.md#nothing)
+- - [`isString`](db/sqlite.md#isstring)
+
+### Test
+
+#### [`main.h`](test/index.md)
+
+- [**Structures**](test/index.md#structs)
+- - [`_Test`](test/index.md#_test)
+- [**Functions**](test/index.md#functions)
+- - [`createTest`](test/index.md#createtest)
+
+### Utils
+
+#### [`logger.h`](utils/logger.md)
+
+- [**Structures**](utils/logger.md#structs)
+- - [`_logger`](utils/logger.md#_logger)
+- [**Functions**](utils/logger.md#functions)
+- - [`newLogger`](utils/logger.md#newlogger)
+
+#### [`error.h`](utils/error.md)
+
+- [**Functions**](utils/error.md#function)
+- - [`newLogger`](utils/error.md#throw_error)
