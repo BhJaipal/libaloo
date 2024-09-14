@@ -8,8 +8,6 @@ import { connectDbWithModel } from "./connect-db";
 let { writeFileSync } = require("fs");
 let { argv }: { argv: string[] } = require("process");
 
-console.log(argv);
-
 function createGtkApp(project?: string | null) {
 	if (!project) {
 		project = prompt("Enter Project Name: ", "aloo-project");
@@ -44,21 +42,17 @@ function createGtkApp(project?: string | null) {
 		argv[1].split("/aloo")[0] + "/sample/CMakeLists.txt"
 	).toString();
 	cmake = cmake.replace("${appName}", appName);
-	cmake = cmake.replace(
-		"${libaloo}",
-		argv[1].split("/cli/aloo")[0] + "/lib/libaloo.a"
-	);
+	while (cmake.includes("${libaloo}")) {
+		cmake = cmake.replace(
+			"${libaloo}",
+			argv[1].split("/cli/aloo")[0] + "/lib/libaloo.a"
+		);
+	}
 	cmake = cmake.replace(
 		"${include_dir}",
 		argv[1].split("/cli/aloo")[0] + "/include"
 	);
 	writeFileSync(project + "/CMakeLists.txt", cmake);
-	while (cmake.includes("(run.exe")) {
-		cmake = cmake.replace("(run.exe", "(test-run.exe");
-	}
-	cmake = cmake.replace("app/main.c", "main.c");
-	cmake = cmake.replace("/bin", "/../bin");
-	writeFileSync(project + "/test/CMakeLists.txt", cmake);
 	writeFileSync(
 		project + "/test/main.c",
 		readFileSync(argv[1].split("/aloo")[0] + "/sample/test.c")

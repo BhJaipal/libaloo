@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.30)
 
 project("${appName}")
 
-add_executable(run.exe src/main.c)
+add_executable(app.exe app/main.c)
 set(CMAKE_BINARY_DIR build/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 
-target_link_libraries(run.exe ${libaloo})
+target_link_libraries(app.exe "${libaloo}")
 
 include_directories(
 	"${include_dir}"
@@ -22,7 +22,7 @@ include_directories(
 	"/usr/include/graphene-1.0"
 	"/usr/include/harfbuzz"
 	)
-target_link_libraries(run.exe
+target_link_libraries(app.exe
 	"/lib/x86_64-linux-gnu/libgtk-4.so"
 	"/lib/x86_64-linux-gnu/libgtk-4.so.1"
 	"/lib/x86_64-linux-gnu/libglib-2.0.so.0"
@@ -34,5 +34,23 @@ target_link_libraries(run.exe
 	"/lib/x86_64-linux-gnu/libgio-2.0.so.0"
 	"/lib/x86_64-linux-gnu/libsqlite3.so"
 	"/lib/x86_64-linux-gnu/libsqlite3.so.0"
-
 )
+add_executable(test.exe "test/main.c")
+target_link_libraries(test.exe
+	"${libaloo}"
+	"/lib/x86_64-linux-gnu/libgtk-4.so"
+	"/lib/x86_64-linux-gnu/libgtk-4.so.1"
+	"/lib/x86_64-linux-gnu/libglib-2.0.so.0"
+	"/lib/x86_64-linux-gnu/libglib-2.0.so"
+	"/lib/x86_64-linux-gnu/libgobject-2.0.so.0"
+	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
+	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
+	"/lib/x86_64-linux-gnu/libgio-2.0.so"
+	"/lib/x86_64-linux-gnu/libgio-2.0.so.0"
+	"/lib/x86_64-linux-gnu/libsqlite3.so"
+	"/lib/x86_64-linux-gnu/libsqlite3.so.0"
+)
+
+set(CMAKE_BUILD_TYPE "$ENV{Release}")
+add_test(AlooTest "../bin/test.exe")
+enable_testing(AlooTest)

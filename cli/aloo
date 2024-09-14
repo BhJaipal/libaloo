@@ -31,11 +31,7 @@ elif [[ $1 = "connect-db" ]]; then
 		$pwd$/cli/aloo.ts connect-db
 	fi
 elif [[ $1 = "build" ]]; then
-	if [ $2 ]; then
-		$pwd$/cli/build.sh $1 $2
-	else
-		echo -e "\033[1;31mError:\033[0m No argument found.\n\tPlease provide either 'app' or 'test' as an argument."
-	fi
+	$pwd$/cli/build.sh $1
 elif [[ $1 = "run" ]]; then
 	if [ $2 ]; then
 		$pwd$/cli/run.sh $1 $2
@@ -43,11 +39,7 @@ elif [[ $1 = "run" ]]; then
 		echo -e "\033[1;31mError:\033[0m No argument found.\n\tPlease provide either 'app' or 'test' as an argument."
 	fi
 elif [[ $1 = "clean" ]]; then
-	if [ $2 ]; then
-		$pwd$/cli/clean.sh $1 $2
-	else
-		echo -e "\033[1;31mError:\033[0m No argument found.\n\tPlease provide either 'app' or 'test' as an argument."
-	fi
+	$pwd$/cli/clean.sh $1 $2
 else
 	help
 fi

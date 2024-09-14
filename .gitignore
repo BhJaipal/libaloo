@@ -15,6 +15,7 @@ docs/
 build/
 out/
 bin/
+lib/
 
 node_modules/
 .cache/

@@ -23,8 +23,6 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 
 include_directories(
-	"../gtest/test-build/_deps/googletest-src/googletest/include/gtest"
-	${GTEST_INCLUDE_DIRS}
 	"/usr/include/gtk-4.0"
 	"/usr/include/glib-2.0"
 	"/usr/include/gdk-pixbuf-2.0"
@@ -38,11 +36,9 @@ include_directories(
 	"/usr/include/harfbuzz"
 	"/usr/include/tirpc"
 )
-find_package(GTest REQUIRED)
 
 target_link_libraries(aloo
 	${GTK4_LIBRARIES}
-	${GTEST_LIBRARIES}
 	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgmock.a"
 	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgmock_main.a"
 	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgtest.a"

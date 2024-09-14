@@ -7,7 +7,6 @@ var fs_1 = require("fs");
 var connect_db_1 = require("./connect-db");
 var writeFileSync = require("fs").writeFileSync;
 var argv = require("process").argv;
-console.log(argv);
 function createGtkApp(project) {
     if (!project) {
         project = prompt("Enter Project Name: ", "aloo-project");

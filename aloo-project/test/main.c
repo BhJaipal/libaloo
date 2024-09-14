@@ -1,4 +1,3 @@
-#include "../server/Human.h"
 #include "aloo.h"
 #include <stdio.h>
 AlooApplication *app;
@@ -25,15 +24,8 @@ int main(int argc, char **argv) {
 	t->addTest("Test trying", t, t->expectInt(2 * 2, 4));
 
 	struct AlooAppOptions opts = NONE_FLAGS_OPTIONS(argc, argv);
-	app = Application.create("com.example.hello", opts);
+	app = Application.create("com.aloo-test.aloo-project", opts);
 	Application.add_event_listener(app, "activate", activate);
-
-	// sqlite3 *db;
-	// SQLite.open("db.sqlite", &db);
-	// char *vals[3] = {"Hema", "21", "0"};
-	// char *err;
-	// insertHuman(db, vals, &err);
-	// SQLite.close(db);
 
 	int status = Application.run(app);
 	Application.unref(app);
