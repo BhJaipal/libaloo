@@ -39,10 +39,6 @@ include_directories(
 
 target_link_libraries(aloo
 	${GTK4_LIBRARIES}
-	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgmock.a"
-	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgmock_main.a"
-	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgtest.a"
-	"${CMAKE_SOURCE_DIR}/gtest/build/lib/libgtest_main.a"
 	"/lib/x86_64-linux-gnu/libgtk-4.so.1"
 	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
 	"/lib/x86_64-linux-gnu/libglib-2.0.so"

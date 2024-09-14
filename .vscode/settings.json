@@ -82,5 +82,6 @@
 	"cmake.buildDirectory": "${workspaceFolder}/build",
 	"cmake.configureOnOpen": true,
 	"cmake.cmakePath": "/home/linuxbrew/.linuxbrew/bin/cmake",
+	"cmake.buildArgs": ["-DCMAKE_BUILD_TYPE=Release"],
 	"C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild"
 }
