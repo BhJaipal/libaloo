@@ -100,7 +100,34 @@ int main(int argc, char const *argv[]) {
 					std::cerr << "Model not found" << std::endl;
 					return 1;
 				}
-				std::cout << outModel << std::endl;
+				// std::cout << outModel << std::endl;
+				std::string currentPath = argv[0];
+				int matchIndex = -1, startI;
+				found = 0;
+				int currI = 0;
+				std::string currFileName = "con";
+				std::cout << currentPath << " " << currFileName << "\n";
+				for (int i = 0; i < currentPath.size(); i++) {
+					if (currentPath[i] == currFileName[0] && matchIndex == -1) {
+						matchIndex = 0;
+						startI = i;
+						found = 1;
+					} else if (i == currFileName.size()) {
+						break;
+					} else if (currentPath[i] != currFileName[matchIndex]) {
+						found = 0;
+						matchIndex = -1;
+						break;
+					} else {
+						matchIndex++;
+						startI++;
+					}
+				}
+				if (!found) {
+					std::cerr << "path not found\n";
+					return 1;
+				}
+				std::string path = currentPath.substr(0, startI);
 			}
 		} else {
 			std::cout << "Requires one more arguments:\n";

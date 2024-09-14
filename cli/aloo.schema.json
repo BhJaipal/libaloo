@@ -16,6 +16,10 @@
 			"default": "An default template for aloo App",
 			"description": "Description of the app"
 		},
+		"db": {
+			"type": "string",
+			"description": "Path to the sqlite db file"
+		},
 		"models": {
 			"type": "array",
 			"description": "List of models",
