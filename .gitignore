@@ -16,6 +16,7 @@ build/
 out/
 bin/
 lib/
+*.exe
 
 node_modules/
 .cache/
