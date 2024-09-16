@@ -43,13 +43,13 @@ int __expectGtkWidget(GtkWidget *expected, AlooWidget *actual) {
 		(out->type == ALOO_NEW_WIDGET || actual->type == ALOO_NEW_WIDGET ||
 		 out->type != actual->type)) {
 		if (out->child != actual->child) throw_error("Widgets are different");
-		if (out->type != ALOO_NEW_WIDGET && actual->type != ALOO_NEW_WIDGET &&
-			actual->type != out->type)
+		else if (out->type != ALOO_NEW_WIDGET &&
+				 actual->type != ALOO_NEW_WIDGET && actual->type != out->type)
 			throw_error("Expected widget '%s', but got widget '%s'",
 						widgetStr(out), widgetStr(actual));
+		else return 1;
 		return 0;
 	}
-	return 1;
 }
 
 void __addTest(const char *test_name, struct _Test *test, int test_res) {

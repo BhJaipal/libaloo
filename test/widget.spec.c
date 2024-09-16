@@ -17,7 +17,7 @@ static void activate() {
 	g_application_quit(G_APPLICATION(app->app));
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 	app = Application.create("com.libaloo.test", getAppFlags.none(argc, argv));
 	t = createTest("Testing Aloo");
 	Application.add_event_listener(app, "activate", activate);
