@@ -1,5 +1,4 @@
 #include "common/window.h"
-#include "common/macros.h"
 #include "common/widget.h"
 #include "utils/error.h"
 

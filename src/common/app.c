@@ -1,5 +1,4 @@
 #include "common/app.h"
-#include "common/macros.h"
 
 struct AlooApplication *__CreateApp(const char *appName,
 									struct AlooAppOptions AppOptions) {
@@ -32,6 +31,19 @@ int __RunAppAndUnrefIt(AlooApplication *application) {
 	return status;
 }
 
+struct AlooAppOptions _app_get_none(int argc, char **argv) {
+	struct AlooAppOptions opts = {APP_FLAGS_NONE, argc, argv};
+	return opts;
+}
+struct AlooAppOptions _app_get_launcher(int argc, char **argv) {
+	struct AlooAppOptions opts = {APP_FLAGS_IS_LAUNCHER, argc, argv};
+	return opts;
+}
+struct AlooAppOptions _app_get_service(int argc, char **argv) {
+	struct AlooAppOptions opts = {APP_FLAGS_IS_SERVICE, argc, argv};
+	return opts;
+}
+
 void __unrefApp(AlooApplication *application) {
 	g_object_unref(application->app);
 }
@@ -41,4 +53,9 @@ void __AppAddEvents(AlooApplication *app, const char *event,
 }
 struct _alooApp Application = {
 	__CreateApp, __RunApp, __RunAppAndUnrefIt, __unrefApp, __AppAddEvents,
+};
+struct _getAppFlags getAppFlags = {
+	.none = _app_get_none,
+	.launcher = _app_get_launcher,
+	.service = _app_get_service
 };

@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 	t = createTest("Testing");
 	t->addTest("Test trying", t, t->expectInt(2 * 2, 4));
 
-	struct AlooAppOptions opts = NONE_FLAGS_OPTIONS(argc, argv);
+	struct AlooAppOptions opts = getAppFlags.none(argc, argv);
 	app = Application.create("com.aloo-test.$project", opts);
 	Application.add_event_listener(app, "activate", activate);
 

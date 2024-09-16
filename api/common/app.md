@@ -19,7 +19,7 @@ Brief: Aloo Application related functions
 
 ## Struct
 
-### AlooApplication
+### `AlooApplication`
 
 **Description**: Returns GtkApplication and status.
 
@@ -30,7 +30,7 @@ Brief: Aloo Application related functions
 | argc    | `int`             | command line argument count |
 | argv    | `char**`          | command line arguments      |
 
-### AlooAppOptions
+### `AlooAppOptions`
 
 **Description**: Takes GApplicationFlags, argc and argv.
 
@@ -39,6 +39,16 @@ Brief: Aloo Application related functions
 | appFlags | `enum alooAppFlags` | Application Flags           |
 | appFlags | `int`               | command line argument count |
 | appFlags | `char**`            | command line arguments      |
+
+### `_getAppFlags`
+
+**Description**: Takes argc and argv and returns struct AlooAppOptions
+
+| Members  | Types                                        | Brief                                                |
+| -------- | -------------------------------------------- | ---------------------------------------------------- |
+| none     | struct AlooAppOptions(int argc, char **argv) | `struct AlooAppOptions` with `APP_FLAGS_NONE`        |
+| launcher | struct AlooAppOptions(int argc, char **argv) | `struct AlooAppOptions` with `APP_FLAGS_IS_LAUNCHER` |
+| service  | struct AlooAppOptions(int argc, char **argv) | `struct AlooAppOptions` with `APP_FLAGS_IS_SERVICE`  |
 
 ### `_alooApp`
 
@@ -104,3 +114,9 @@ Brief: Aloo Application related functions
 | Key  | Value             |
 | ---- | ----------------- |
 | type | `struct _alooApp` |
+
+### getAppFlags
+
+| Key  | Value                 |
+| ---- | --------------------- |
+| type | `struct _getAppFlags` |

@@ -10,7 +10,7 @@
 #ifndef ALOO_APP_H
 #define ALOO_APP_H
 #include "types.h"
-#include <gtk-4.0/gtk/gtk.h>
+#include <gtk/gtk.h>
 
 /**
  * @brief G Application Flags
@@ -44,6 +44,18 @@ struct AlooAppOptions {
 	enum alooAppFlags appFlags;
 	int argc;
 	char **argv;
+};
+
+/**
+ * @brief Takes argc and argv and returns struct AlooAppOptions
+ */
+struct _getAppFlags {
+	/// @return `struct AlooAppOptions` with `APP_FLAGS_NONE`
+	struct AlooAppOptions (*none)(int argc, char **argv);
+	/// @return `struct AlooAppOptions` with `APP_FLAGS_IS_LAUNCHER`
+	struct AlooAppOptions (*launcher)(int argc, char **argv);
+	/// @return `struct AlooAppOptions` with `APP_FLAGS_IS_SERVICE`
+	struct AlooAppOptions (*service)(int argc, char **argv);
 };
 
 /******************** Private Funcs ********************/
@@ -109,5 +121,6 @@ struct _alooApp {
 /******************** Public ********************/
 
 extern struct _alooApp Application;
+extern struct _getAppFlags getAppFlags;
 
 #endif // ALOO_APP_H

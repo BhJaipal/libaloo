@@ -11,7 +11,6 @@
 #include "common/grid.h"
 #include "common/input.h"
 #include "common/label.h"
-#include "common/macros.h"
 #include "common/style.h"
 #include "common/widget.h"
 #include "common/window.h"

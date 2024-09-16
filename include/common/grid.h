@@ -57,6 +57,9 @@ AlooWidget *__setGridColumnSpacing(AlooWidget *grid, int space);
 /** @brief Set the Grid Row Spacing */
 AlooWidget *__setGridRowSpacing(AlooWidget *grid, int space);
 
+/// @brief Returns Gtk Grid
+GtkGrid *__toGridGtk(AlooWidget *wid);
+
 /******************** Private Types ********************/
 
 struct _alooGrid {

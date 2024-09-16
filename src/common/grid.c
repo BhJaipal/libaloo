@@ -1,5 +1,4 @@
 #include "common/grid.h"
-#include "common/macros.h"
 #include "common/widget.h"
 #include "utils/error.h"
 
@@ -9,7 +8,7 @@ AlooWidget *__gridAttach(AlooWidget *grid, AlooWidget *child, int column,
 		throw_error("Invalid grid");
 		return grid;
 	}
-	gtk_grid_attach(ALOO_GRID_TO_GTK(grid), Widget.to_gtk(child), column, row,
+	gtk_grid_attach(__toGridGtk(grid), Widget.to_gtk(child), column, row,
 					width, height);
 	return grid;
 }
@@ -19,7 +18,7 @@ AlooWidget *__gridAttachGtk(AlooWidget *grid, GtkWidget *child, int column,
 		throw_error("Invalid grid");
 		return grid;
 	}
-	gtk_grid_attach(ALOO_GRID_TO_GTK(grid), child, column, row, width, height);
+	gtk_grid_attach(__toGridGtk(grid), child, column, row, width, height);
 	return grid;
 }
 
@@ -28,7 +27,7 @@ AlooWidget *__gridRemove(AlooWidget *grid, AlooWidget *child) {
 		throw_error("Invalid grid");
 		return grid;
 	}
-	gtk_grid_remove(ALOO_GRID_TO_GTK(grid), Widget.to_gtk(child));
+	gtk_grid_remove(__toGridGtk(grid), Widget.to_gtk(child));
 	return grid;
 }
 AlooWidget *__gridRemoveGtk(AlooWidget *grid, GtkWidget *child) {
@@ -36,7 +35,7 @@ AlooWidget *__gridRemoveGtk(AlooWidget *grid, GtkWidget *child) {
 		throw_error("Invalid grid");
 		return grid;
 	}
-	gtk_grid_remove(ALOO_GRID_TO_GTK(grid), child);
+	gtk_grid_remove(__toGridGtk(grid), child);
 	return grid;
 }
 
@@ -47,7 +46,7 @@ AlooWidget *__setGridColumnSpacing(AlooWidget *grid, int space) {
 		throw_error("Invalid grid");
 		return grid;
 	}
-	gtk_grid_set_column_spacing(ALOO_GRID_TO_GTK(grid), space);
+	gtk_grid_set_column_spacing(__toGridGtk(grid), space);
 	return grid;
 }
 
@@ -56,14 +55,14 @@ AlooWidget *__setGridRowSpacing(AlooWidget *grid, int space) {
 		throw_error("Invalid grid");
 		return grid;
 	}
-	gtk_grid_set_row_spacing(ALOO_GRID_TO_GTK(grid), space);
+	gtk_grid_set_row_spacing(__toGridGtk(grid), space);
 	return grid;
 }
 
 GtkGrid *__toGridGtk(AlooWidget *wid) {
 	if (!Widget.check.isGrid(wid)) {
 		throw_error("Invalid grid");
-		return ALOO_GRID_TO_GTK(Grid.new());
+		return GTK_GRID(Grid.new()->child);
 	}
 	return GTK_GRID(wid->child);
 }

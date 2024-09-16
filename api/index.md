@@ -43,10 +43,6 @@ brief: Imports all aloo function
 - [**Structures**](common/label.md#structs)
 - - [`__alooLabel`](common/label.md#__aloolabel)
 
-#### [`macros.h`](common/macros.md)
-
-- [**Macros**](common/macros.md#macros)
-
 #### [`style.h`](common/style.md)
 
 - [**Structures**](common/style.md#structs)

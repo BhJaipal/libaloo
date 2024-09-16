@@ -1,5 +1,4 @@
 #include "common/style.h"
-#include "common/macros.h"
 #include "common/widget.h"
 
 void __importCssFromPath(const char *path) {
