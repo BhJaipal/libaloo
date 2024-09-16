@@ -15,10 +15,10 @@ Brief: Aloo Button related functions
 | ------------- | -------------------- |
 | `AlooWidget*` | Creates new ALoo Box |
 
-| Parameters Type  | Brief |
-| ---------------- | ----- |
-| `GtkOrientation` |       |
-| `int`            |       |
+| Parameters Type  | Brief                   |
+| ---------------- | ----------------------- |
+| `GtkOrientation` | box default orientation |
+| `int`            | box default spacing     |
 
 #### `_alooBox::setOrientation`
 

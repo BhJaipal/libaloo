@@ -10,7 +10,7 @@
 #ifndef ALOO_APP_H
 #define ALOO_APP_H
 #include "types.h"
-#include <gtk/gtk.h>
+#include <gtk-4.0/gtk/gtk.h>
 
 /**
  * @brief G Application Flags
@@ -76,20 +76,26 @@ void __AppAddEvents(AlooApplication *app, const char *event, void callbackFn());
 
 /******************** Private Types ********************/
 
+/**
+ * @brief An Structure that contains all the AlooApplication related functions
+ */
 struct _alooApp {
 	/// @brief Create a App object
 	/// @param app_id App Id are like com.google.Chrome, dev.zed.Zed
 	/// @param gAppOptions It takes GApplicationFlags, argc and argv
-	/// @return It returns Aloo Application
+	/// @return Create and Return an AlooApplication.
 	AlooApplication *(*create)(const char *app_id,
 							   struct AlooAppOptions gAppOptions);
 	/// @brief Runs aloo App
+	/// @param application AlooApplicaion to be run
 	/// @return status on exiting app
 	int (*run)(AlooApplication *application);
 	/// @brief Runs aloo App and unrefs after exiting it
+	/// @param application AlooApplicaion to be run and unref
 	/// @return status on exiting app
 	int (*run_and_unref)(AlooApplication *application);
 	/** @brief unrefs aloo App */
+	/// @param application AlooApplicaion to be unref
 	void (*unref)(AlooApplication *application);
 	/// @brief Adds Event Listener to Aloo App
 	/// @param app Aloo Application

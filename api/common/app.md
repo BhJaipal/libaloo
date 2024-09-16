@@ -42,11 +42,13 @@ Brief: Aloo Application related functions
 
 ### `_alooApp`
 
+**Description**: An Structure that contains all the AlooApplication related functions
+
 #### `_alooApp::create`
 
-| Returns                 | Brief                |
-| ----------------------- | -------------------- |
-| `struct alooApp_Status` | Create a App object. |
+| Returns                 | Brief                                  |
+| ----------------------- | -------------------------------------- |
+| `struct alooApp_Status` | Create and Returns an AlooApplication. |
 
 | Parameters Type         | Brief                                          |
 | ----------------------- | ---------------------------------------------- |
@@ -59,15 +61,17 @@ Brief: Aloo Application related functions
 | ------------- | ---------------------------------------- |
 | `AlooWidget*` | Sets horizontal alignment of AlooWidget. |
 
-| Parameters Type    | Brief                                               |
-| ------------------ | --------------------------------------------------- |
-| `AlooApplication*` | App on which event listener has to be added         |
-| `const char*`      | event name                                          |
-| `void()`           | callback                                   function |
+| Parameters Type    | Brief                                       |
+| ------------------ | ------------------------------------------- |
+| `AlooApplication*` | App on which event listener has to be added |
+| `const char*`      | event name                                  |
+| `void()`           | callback function                           |
 
 #### `_alooApp::run`
 
-**Description**: Runs aloo App
+| Returns                  | Brief         |
+| ------------------------ | ------------- |
+| `int` Status on app exit | Runs aloo App |
 
 | Parameter Type     | Description               |
 | ------------------ | ------------------------- |
@@ -75,7 +79,9 @@ Brief: Aloo Application related functions
 
 #### `_alooApp::run_and_unref`
 
-**Description**: Runs aloo App and unrefs after exiting it
+| Returns                  | Brief                                     |
+| ------------------------ | ----------------------------------------- |
+| `int` Status on app exit | Runs aloo App and unrefs after exiting it |
 
 | Parameter Type     | Description                         |
 | ------------------ | ----------------------------------- |
@@ -83,7 +89,9 @@ Brief: Aloo Application related functions
 
 #### `_alooApp::unref`
 
-**Description**: unrefs aloo App
+| Returns | Brief           |
+| ------- | --------------- |
+| `void`  | unrefs aloo App |
 
 | Parameter Type     | Description                 |
 | ------------------ | --------------------------- |

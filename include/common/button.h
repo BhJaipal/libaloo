@@ -23,6 +23,9 @@ GtkButton *__toButtonGtk(AlooWidget *wid);
 
 /******************** Private Types ********************/
 
+/**
+ * @brief An Structure that contains all the AlooButton related functions
+ */
 struct _alooButton {
 	/// @brief Creates new Aloo Button without label
 	AlooWidget *(*new)();

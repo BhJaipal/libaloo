@@ -63,6 +63,9 @@ AlooWidget *__AlooWidgetFromBuilder(AlooBuilder *builder, const char *name);
 
 /******************** Private Types ********************/
 
+/**
+ * @brief An Structure that contains all the AlooBuilder related functions
+ */
 struct _AlooBuilder {
 	/// @brief Unrefs aloo builder
 	void (*unref)(AlooBuilder *data);

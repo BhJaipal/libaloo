@@ -91,7 +91,11 @@ GtkBox *__toGtk(AlooWidget *widget);
 
 /******************** Private Types ********************/
 
+/**
+ * @brief An Structure that contains all the AlooBox related functions
+ */
 struct _alooBox {
+	/// @brief Creates new Aloo Box
 	AlooWidget *(*new)(GtkOrientation orientation, int spacing);
 	AlooWidget *(*setOrientation)(AlooWidget *box, GtkOrientation orientation);
 	/// @brief Gets Box Orientation

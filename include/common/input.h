@@ -19,6 +19,9 @@ GtkEditable *__input_to_gtk(AlooWidget *input);
 
 /******************** Private Types ********************/
 
+/**
+ * @brief An Structure that contains all the AlooInput related functions
+ */
 struct __alooInput {
 	/// @brief Creates new Aloo Input
 	AlooWidget *(*new)();

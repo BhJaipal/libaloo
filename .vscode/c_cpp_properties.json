@@ -31,7 +31,7 @@
 			],
 			"defines": [],
 			"compilerPath": "/usr/bin/gcc",
-			"cStandard": "gnu11",
+			"cStandard": "c17",
 			"compilerArgs": [
 				"../lib/libaloo.a",
 				"$(pkg-config --cflags gtk4)",
