@@ -4,7 +4,7 @@
 int str_to_int(char *str);
 
 void create$modelNameTable(sqlite3 *db);
-$modelName *select$modelName(sqlite3 *db char *where);
+$modelName *select$modelName(sqlite3 *db, char *where);
 void insert$modelName(sqlite3 *db, int column_count, char **values,
 					  char **errmsg);
 

@@ -1,8 +1,8 @@
-#include "$modelName.h"
+#include "human.h"
 #include "db/sqlite.h"
 #include <string.h>
 
-$modelName *out;
+human *out;
 
 int str_to_int(char *str) {
 	int result = 0;
@@ -21,33 +21,34 @@ int str_to_int(char *str) {
 	return result * sign;
 }
 
-void create$modelNameTable(sqlite3 *db) {
+void createhumanTable(sqlite3 *db) {
 	char *err;
-	SQLite.createTable(db, "$modelName", "$body", &err);
+	SQLite.createTable(db, "human", "ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT", &err);
 	if (err) printf("%s\n", err);
 }
 
-$modelName *select$modelName(sqlite3 *db, char *where) {
-	out = malloc(sizeof($modelName) * 0);
+human *selecthuman(sqlite3 *db, char *where) {
+	out = malloc(sizeof(human) * 0);
 	char errmsg[1024];
-	char cols = {"ID", $cols$};
+	char cols = {"ID", "name"};
 	int result =
-		SQLite.select(db, "Human", $col_count, cols, where, callback, &errmsg);
+		SQLite.select(db, "Human", 1, cols, where, callback, &errmsg);
 	if (result != SQLITE_OK) {
 		fprintf(stderr, "Error: %s\n", errmsg);
 		return NULL;
 	}
 	return out;
 }
-void insert$modelName(sqlite3 *db, int column_count, char **values,
+void inserthuman(sqlite3 *db, int column_count, char **values,
 					  char **errmsg) {
-	SQLite.insert(db, "$modelName", column_count, "$cols", values, errmsg);
+	SQLite.insert(db, "human", column_count, "name", values, errmsg);
 }
 
 int callback(void *data, int col_count, char **values, char **column_names) {
-	$modelName val;
+	human val;
 	int i = 0;
-	val.$member = values[i++];
+	val.id = values[i++];
+	val.name = values[i++];
 	out = realloc(out, sizeof(out) + (sizeof(out[0])));
 	return 0;
 }

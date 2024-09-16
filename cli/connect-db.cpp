@@ -1,9 +1,18 @@
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <jsoncpp/json/json.h>
 #include <memory>
 #include <string>
 #include <vector>
+
+std::map<std::string, std::string> typeSwitch{
+	{"int", "INTEGER"},
+	{"string", "TEXT"},
+	{"float", "FLOAT"},
+	{"bool", "INTEGER"},
+};
+std::string currFileName = "con";
 
 bool ends_with(std::string const &fullString, std::string const &ending) {
 	if (fullString.length() >= ending.length()) {
@@ -121,10 +130,105 @@ int main(int argc, char const *argv[]) {
 				int matchIndex = -1, startI;
 				found = 0;
 				int currI = 0;
-				std::string currFileName = "con";
-				std::vector<std::string> tokens =
-					split(currentPath, currFileName);
-				std::string path = currentPath.substr(0, startI);
+
+				std::vector<std::string> curr = split(argv[0], "bin");
+				std::string serverPath = curr[0] + "cli/sample/main.server.";
+				std::ifstream serverHeader((serverPath + "c").c_str());
+				if (!serverHeader.is_open()) {
+					throw std::runtime_error(
+						"Failed to open sample server file");
+				}
+				std::string line;
+				std::string content = "";
+				std::string body = "ID INTEGER PRIMARY KEY AUTOINCREMENT, ";
+				std::string colNames = "";
+				std::string members = "val.id = values[i++];\n\t";
+				std::string colArr = "\"";
+				int colCount = 0;
+				for (Json::Value::iterator i = outModel["members"].begin();
+					 i != outModel["members"].end(); i++) {
+					Json::Value mem = *i;
+					colNames += mem["member"].asCString();
+					members += "val.";
+					members += mem["member"].asCString();
+					members += " = values[i++];\n\t";
+					colNames += ", ";
+					colArr += mem["member"].asCString();
+					colArr += "\", \"";
+					body += mem["member"].asCString();
+					body += " ";
+					body += typeSwitch[mem["type"].asCString()];
+					body += ", ";
+					colCount++;
+				}
+				members.resize(members.size() - 2);
+				colNames.resize(colNames.size() - 2);
+				colArr.resize(colArr.size() - 3);
+				body.resize(body.size() - 2);
+				while (getline(serverHeader, line)) {
+					while (line.find("$modelName") != std::string::npos) {
+						line.replace(line.find("$modelName"),
+									 std::string("$modelName").size(),
+									 modelName);
+					}
+					if (line.find("$body") != std::string::npos) {
+						line.replace(line.find("$body"),
+									 std::string("$body").size(), body);
+					}
+					if (line.find("$cols$") != std::string::npos) {
+						line.replace(line.find("$cols$"),
+									 std::string("$cols$").size(), colArr);
+					}
+					if (line.find("$col_count") != std::string::npos) {
+						line.replace(line.find("$col_count"),
+									 std::string("$col_count").size(),
+									 std::to_string(colCount));
+					}
+					if (line.find("$cols") != std::string::npos) {
+						line.replace(line.find("$cols"),
+									 std::string("$cols").size(), colNames);
+					}
+					if (line.find("val.$member = values[i++];") !=
+						std::string::npos) {
+						line.replace(
+							line.find("val.$member = values[i++];"),
+							std::string("val.$member = values[i++];").size(),
+							members);
+					}
+					content += line + '\n';
+				}
+				if (!std::filesystem::exists("server"))
+					std::filesystem::create_directories("server");
+				if (std::filesystem::exists("server/" + modelName + ".c")) {
+					throw std::runtime_error("Server file already exists");
+				}
+				std::ofstream serverFile("server/" + modelName + ".c");
+				serverFile << content;
+				serverFile.close();
+				serverHeader.close();
+
+				serverHeader = std::ifstream((serverPath + "h").c_str());
+				if (!serverHeader.is_open()) {
+					throw std::runtime_error(
+						"Failed to open sample server file");
+				}
+				content = "";
+				line = "";
+				while (getline(serverHeader, line)) {
+					while (line.find("$modelName") != std::string::npos) {
+						line.replace(line.find("$modelName"),
+									 std::string("$modelName").size(),
+									 modelName);
+					}
+					content += line + '\n';
+				}
+				if (std::filesystem::exists("server/" + modelName + ".h")) {
+					throw std::runtime_error("Server file already exists");
+				}
+				serverFile = std::ofstream("server/" + modelName + ".h");
+				serverFile << content;
+				serverFile.close();
+				serverHeader.close();
 			}
 		} else {
 			std::cout << "Requires one more arguments:\n";
