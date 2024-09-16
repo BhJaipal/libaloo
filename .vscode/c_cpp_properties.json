@@ -2,6 +2,10 @@
 	"configurations": [
 		{
 			"name": "Linux",
+			"browse": {
+				"databaseFilename": "",
+				"limitSymbolsToIncludedHeaders": true
+			},
 			"includePath": [
 				"${workspaceFolder}/**",
 				"/usr/include",
@@ -32,12 +36,12 @@
 			"defines": [],
 			"compilerPath": "/usr/bin/gcc",
 			"cStandard": "c17",
+			"cppStandard": "c++17",
 			"compilerArgs": [
 				"../lib/libaloo.a",
 				"$(pkg-config --cflags gtk4)",
 				"$(pkg-config --libs gtk4)"
 			],
-			"cppStandard": "c++17",
 			"intelliSenseMode": "linux-gcc-x86"
 		}
 	],

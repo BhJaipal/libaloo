@@ -39,7 +39,7 @@ int __expectWidget(AlooWidget *expected, AlooWidget *actual) {
 }
 int __expectGtkWidget(GtkWidget *expected, AlooWidget *actual) {
 	AlooWidget *out = Widget.gtk_to_aloo(expected);
-	if (out->child != actual->child ||
+	if (expected != actual->child ||
 		(out->type == ALOO_NEW_WIDGET || actual->type == ALOO_NEW_WIDGET ||
 		 out->type != actual->type)) {
 		if (out->child != actual->child) throw_error("Widgets are different");
