@@ -27,7 +27,7 @@ jobs:
 
             - name: Install GTK4 and SQLite3 Dependencies
               run: |
-                  sudo apt install libgtk-4-dev tree
+                  sudo apt install libgtk-4-dev
                   sudo apt install libsqlite3-dev
                   sudo apt install libjsoncpp25 libjsoncpp-dev
 

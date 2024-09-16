@@ -22,25 +22,15 @@ add_library(aloo
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 
-include_directories(
-	${GTK4_INCLUDE_DIRS}
-	${SQLITE_INCLUDE_DIRS}
-	"/usr/include/gtk-4.0"
-	"/usr/include/glib-2.0"
-	"/usr/include/gdk-pixbuf-2.0"
-	"/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-	"/usr/include/gtk-4.0/gdk"
-	"/usr/include/gtk-4.0"
-	"/usr/include/cairo"
-	"/usr/lib/x86_64-linux-gnu/graphene-1.0/include"
-	"/usr/include/pango-1.0"
-	"/usr/include/graphene-1.0"
-	"/usr/include/harfbuzz"
-	"/usr/include/tirpc"
-)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
 pkg_check_modules(SQLITE REQUIRED sqlite3)
+
+include_directories(
+	${GTK4_INCLUDE_DIRS}
+	${SQLITE_INCLUDE_DIRS}
+	"/usr/include/tirpc"
+)
 
 target_link_libraries(aloo
 	${GTK4_LIBRARIES}
@@ -49,6 +39,7 @@ target_link_libraries(aloo
 
 add_executable(test-1.exe "test/int.spec.c")
 add_executable(test-2.exe "test/widget.spec.c")
+
 target_link_libraries(test-1.exe aloo)
 set_target_properties(test-1.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
 
@@ -56,7 +47,9 @@ target_link_libraries(test-2.exe aloo)
 set_target_properties(test-2.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
 
 set(CMAKE_BUILD_TYPE "$ENV{Release}")
+
 add_test(IntegerTest "../bin/test-1.exe")
 add_test(WidgetTest "../bin/test-2.exe")
+
 enable_testing(IntegerTest)
 enable_testing(WidgetTest)
