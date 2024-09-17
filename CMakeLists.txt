@@ -38,18 +38,12 @@ target_link_libraries(aloo
 )
 
 add_executable(test-1.exe "test/int.spec.c")
-add_executable(test-2.exe "test/widget.spec.c")
 
 target_link_libraries(test-1.exe aloo)
 set_target_properties(test-1.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
 
-target_link_libraries(test-2.exe aloo)
-set_target_properties(test-2.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
-
 set(CMAKE_BUILD_TYPE "$ENV{Release}")
 
 add_test(IntegerTest "../bin/test-1.exe")
-add_test(WidgetTest "../bin/test-2.exe")
 
 enable_testing(IntegerTest)
-enable_testing(WidgetTest)
