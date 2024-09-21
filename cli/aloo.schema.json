@@ -16,7 +16,7 @@
 			"default": "An default template for aloo App",
 			"description": "Description of the app"
 		},
-		"db": {
+		"sqlite-db": {
 			"type": "string",
 			"description": "Path to the sqlite db file"
 		},
@@ -41,7 +41,13 @@
 								},
 								"type": {
 									"type": "string",
-									"enum": ["int", "float", "string", "bool"],
+									"enum": [
+										"int",
+										"float",
+										"string",
+										"bool",
+										"object"
+									],
 									"description": "Data type of the model member"
 								}
 							}

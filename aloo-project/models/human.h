@@ -3,5 +3,6 @@
 
 typedef struct _human {
 	int id;
-	char * name
+	char* name;
 } human;
+

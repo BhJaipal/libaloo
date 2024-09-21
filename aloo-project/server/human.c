@@ -48,7 +48,7 @@ int callback(void *data, int col_count, char **values, char **column_names) {
 	human val;
 	int i = 0;
 	val.id = values[i++];
-	val.name = values[i++];
+	strcpy(val.name, values[i++]);
 	out = realloc(out, sizeof(out) + (sizeof(out[0])));
 	return 0;
 }

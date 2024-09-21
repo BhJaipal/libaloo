@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
 	if (argc >= 2) {
 		db = std::string(argv[1]);
 		if (!(db == "sqlite3" || db == "mongo")) {
-			std::cerr << "Unknown database: " << db;
+			throw std::runtime_error("Unknown database: " + db);
 			return 1;
 		}
 	} else {
@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
 		std::cout << "Enter database Type[sqlite3|mongo]: ";
 		std::cin >> db;
 		if (!(db == "sqlite3" || db == "mongo")) {
-			std::cerr << "Unknown database: " << db;
+			throw std::runtime_error("Unknown database: " + db);
 			return 1;
 		}
 	}
@@ -85,22 +85,20 @@ int main(int argc, char const *argv[]) {
 				Json::Value alooJson;
 				people_file >> alooJson;
 				Json::Value dbJson = Json::Value(dbname.c_str());
-				alooJson["db"] = dbJson;
-				std::cout << alooJson["db"] << std::endl;
+				alooJson["sqlite-db"] = dbJson;
 				std::ofstream alooRes("aloo.json", std::ofstream::binary);
 				alooRes << alooJson;
 			} else if (sqliteArgs == "restart") {
-				std::ifstream people_file("aloo.json", std::ifstream::binary);
+				std::ifstream alooJsonFile("aloo.json", std::ifstream::binary);
 				Json::Value alooJson;
-				people_file >> alooJson;
-				std::cout << alooJson["db"] << std::endl;
-				std::string dbname = alooJson["db"].asCString();
+				alooJsonFile >> alooJson;
+				std::string dbname = alooJson["sqlite-db"].asCString();
 				FILE *dbFile = fopen(dbname.c_str(), "w");
 				fprintf(dbFile, "");
 			} else if (sqliteArgs == "add") {
-				std::ifstream people_file("aloo.json", std::ifstream::binary);
+				std::ifstream alooJsonFile("aloo.json", std::ifstream::binary);
 				Json::Value alooJson;
-				people_file >> alooJson;
+				alooJsonFile >> alooJson;
 				std::string modelName;
 				if (argc >= 4) {
 					modelName = argv[3];
@@ -122,10 +120,9 @@ int main(int argc, char const *argv[]) {
 					}
 				}
 				if (!found) {
-					std::cerr << "Model not found" << std::endl;
+					throw std::runtime_error("Model not found\n");
 					return 1;
 				}
-				// std::cout << outModel << std::endl;
 				std::string currentPath = argv[0];
 				int matchIndex = -1, startI;
 				found = 0;
@@ -138,6 +135,16 @@ int main(int argc, char const *argv[]) {
 					throw std::runtime_error(
 						"Failed to open sample server file");
 				}
+				if (!std::filesystem::exists("server"))
+					std::filesystem::create_directories("server");
+				if (std::filesystem::exists("server/" + modelName + ".c")) {
+					throw std::runtime_error(
+						"Server Source file already exists");
+				}
+				if (std::filesystem::exists("server/" + modelName + ".h")) {
+					throw std::runtime_error(
+						"Server Header file already exists");
+				}
 				std::string line;
 				std::string content = "";
 				std::string body = "ID INTEGER PRIMARY KEY AUTOINCREMENT, ";
@@ -149,9 +156,15 @@ int main(int argc, char const *argv[]) {
 					 i != outModel["members"].end(); i++) {
 					Json::Value mem = *i;
 					colNames += mem["member"].asCString();
-					members += "val.";
-					members += mem["member"].asCString();
-					members += " = values[i++];\n\t";
+					if (std::string(mem["type"].asCString()) == "string") {
+						members += "strcpy(val." +
+								   std::string(mem["member"].asCString()) +
+								   ", values[i++]);\n\t";
+					} else {
+						members += "val.";
+						members += mem["member"].asCString();
+						members += " = values[i++];\n\t";
+					}
 					colNames += ", ";
 					colArr += mem["member"].asCString();
 					colArr += "\", \"";
@@ -197,11 +210,6 @@ int main(int argc, char const *argv[]) {
 					}
 					content += line + '\n';
 				}
-				if (!std::filesystem::exists("server"))
-					std::filesystem::create_directories("server");
-				if (std::filesystem::exists("server/" + modelName + ".c")) {
-					throw std::runtime_error("Server file already exists");
-				}
 				std::ofstream serverFile("server/" + modelName + ".c");
 				serverFile << content;
 				serverFile.close();
@@ -221,9 +229,6 @@ int main(int argc, char const *argv[]) {
 									 modelName);
 					}
 					content += line + '\n';
-				}
-				if (std::filesystem::exists("server/" + modelName + ".h")) {
-					throw std::runtime_error("Server file already exists");
 				}
 				serverFile = std::ofstream("server/" + modelName + ".h");
 				serverFile << content;

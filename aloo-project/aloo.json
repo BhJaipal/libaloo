@@ -1,18 +1,20 @@
 {
-	"$schema": "/home/jaipal001/Desktop/files/c-use/libaloo/cli/aloo.schema.json",
-	"app": "Example App",
-	"db": "db.sqlite",
-	"description": "An default template for aloo App",
-	"models": [
+	"$schema" : "/home/jaipal001/Desktop/files/c-use/libaloo/cli/aloo.schema.json",
+	"app" : "Example App",
+	"description" : "An default template for aloo App",
+	"models" : 
+	[
 		{
-			"members": [
+			"members" : 
+			[
 				{
-					"member": "name",
-					"type": "string"
+					"member" : "name",
+					"type" : "string"
 				}
 			],
-			"modelName": "human"
+			"modelName" : "human"
 		}
 	],
-	"project": "aloo-project"
+	"project" : "aloo-project",
+	"sqlite-db" : "db.sqlite"
 }
