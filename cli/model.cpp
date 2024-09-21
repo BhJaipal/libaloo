@@ -6,12 +6,6 @@
 #include <string>
 #include <vector>
 
-std::map<std::string, std::string> typeSwitch{
-	{"int", "INTEGER"},
-	{"string", "TEXT"},
-	{"float", "FLOAT"},
-	{"bool", "INTEGER"},
-};
 std::string currFileName = "model";
 
 bool ends_with(std::string const &fullString, std::string const &ending) {

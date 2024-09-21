@@ -25,6 +25,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
 pkg_check_modules(SQLITE REQUIRED sqlite3)
+pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 
 include_directories(
 	${GTK4_INCLUDE_DIRS}
@@ -38,6 +39,9 @@ target_link_libraries(aloo
 )
 
 add_executable(test-1.exe "test/int.spec.c")
+# add_executable(model "cli/model.cpp")
+
+# target_link_libraries(model ${JSONCPP_LIBRARIES})
 
 target_link_libraries(test-1.exe aloo)
 set_target_properties(test-1.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
