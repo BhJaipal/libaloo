@@ -5,6 +5,7 @@
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/direction.hpp>
 #include <ftxui/dom/elements.hpp>
+#include <ftxui/dom/requirement.hpp>
 #include <ftxui/dom/table.hpp>
 #include <ftxui/screen/box.hpp>
 #include <ftxui/screen/color.hpp>
@@ -36,18 +37,14 @@ void help() {
 	using namespace ftxui;
 
 	auto commands = Table({
-		{std::string("Commands"), "Description"},
-		{std::string("-h | --help | help"), "Shows this help message"},
-		{std::string("create-app --name <name>"),
-		 "Creates C Aloo app template with project name"},
-		{std::string("create-app --path <path>"),
-		 "Creates C Aloo app template at a path"},
-		{"run [ app | test ]", "Runs "
-							   "Aloo app/ test build"},
+		{std::string("         Commands"), "                  Description"},
+		{std::string("    -h | --help | help    "), "Shows this help message"},
+		{std::string("create-app"), "Creates C Aloo app template"},
+		{"    run [ app | test ]    ", "Runs "
+									   "Aloo app/ test build"},
 		{"build", "Builds Aloo "
 				  "app/ tests"},
-		{"clean", "Removes "
-				  "previous build data and executables"},
+		{"clean", "    Removes previous build data and executables    "},
 		{"model", "Creates model"},
 		{"connect-db", "Connects to "
 					   "database"},
@@ -60,30 +57,31 @@ void help() {
 
 	// Make first row bold with a double border.
 	commands.SelectRow(0).Decorate(bold);
-	commands.SelectRow(0).SeparatorVertical(HEAVY);
+	commands.SelectRow(0).SeparatorVertical(LIGHT);
 	commands.SelectRow(0).Border(DOUBLE);
 
-	// Align right the "Release date" column.
-	commands.SelectColumn(2).DecorateCells(align_right);
-
-	// Select row from the second to the last.
 	auto content = commands.SelectRows(1, -1);
-	// Alternate in between 3 colors.
-	content.DecorateCellsAlternateRow(color(Color::Blue), 1, 0);
 
+	content.DecorateCellsAlternateColumn(color(Color::SkyBlue1), 2, 0);
+	content.DecorateCellsAlternateColumn(center, 2, 0);
+	content.DecorateCellsAlternateColumn(bold, 2, 0);
+
+	content.DecorateCellsAlternateColumn(color(Color::GrayDark), 2, 1);
+	content.DecorateCellsAlternateColumn(center, 2, 1);
+
+	std::system("clear");
+	std::string spaces = "    ";
+	for (int i = 0; i < 7; i++) { spaces += "    "; }
 	Element document = hbox({
-		text("Aloo TUI") | border | flex | color(Color::BlueLight) | bold,
+		text(spaces + "   " + "Aloo TUI" + spaces + "   ") |
+			color(Color::BlueLight) | border | bold,
 	});
-	auto screen = Screen::Create(Dimension::Full(),		  // Width
-								 Dimension::Fit(document) // Height
-	);
+	auto screen = Screen::Create(Dimension::Full(), Dimension::Fit(document));
 	Render(screen, document);
 	screen.Print();
 
 	document = commands.Render();
-	screen = Screen::Create(Dimension::Full(),		 // Width
-							Dimension::Fit(document) // Height
-	);
+	screen = Screen::Create(Dimension::Full(), Dimension::Fit(document));
 	Render(screen, document);
 	screen.Print();
 }
