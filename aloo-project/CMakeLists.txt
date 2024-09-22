@@ -1,54 +1,34 @@
 cmake_minimum_required(VERSION 3.30)
 
-project("Example App")
+project("Example Appe}")
 
-add_executable(app.exe app/main.c)
+add_executable(app.exe "app/main.c")
 set(CMAKE_BINARY_DIR build/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 
-target_link_libraries(app.exe "/home/jaipal001/Desktop/files/c-use/libaloo/lib/libaloo.a")
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK4 REQUIRED gtk4)
+pkg_check_modules(SQLITE REQUIRED sqlite3)
 
 include_directories(
 	"/home/jaipal001/Desktop/files/c-use/libaloo/include"
-	"/usr/include/gtk-4.0"
-	"/usr/include/glib-2.0"
-	"/usr/include/glib-2.0/gobject"
-	"/usr/include/gdk-pixbuf-2.0"
-	"/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-	"/usr/include/gtk-4.0/gdk"
-	"/usr/include/cairo"
-	"/usr/lib/x86_64-linux-gnu/graphene-1.0/include"
-	"/usr/include/pango-1.0"
-	"/usr/include/graphene-1.0"
-	"/usr/include/harfbuzz"
-	)
-target_link_libraries(app.exe
-	"/lib/x86_64-linux-gnu/libgtk-4.so"
-	"/lib/x86_64-linux-gnu/libgtk-4.so.1"
-	"/lib/x86_64-linux-gnu/libglib-2.0.so.0"
-	"/lib/x86_64-linux-gnu/libglib-2.0.so"
-	"/lib/x86_64-linux-gnu/libgobject-2.0.so.0"
-	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
-	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
-	"/lib/x86_64-linux-gnu/libgio-2.0.so"
-	"/lib/x86_64-linux-gnu/libgio-2.0.so.0"
-	"/lib/x86_64-linux-gnu/libsqlite3.so"
-	"/lib/x86_64-linux-gnu/libsqlite3.so.0"
+	${GTK4_INCLUDE_DIRS}
+	${SQLITE_INCLUDE_DIRS}
+	"/usr/include/tirpc"
 )
+
 add_executable(test.exe "test/main.c")
+
+target_link_libraries(app.exe
+	"/home/jaipal001/Desktop/files/c-use/libaloo/lib/libaloo.a"
+	${GTK4_LIBRARIES}
+	${SQLITE_LIBRARIES}
+)
 target_link_libraries(test.exe
 	"/home/jaipal001/Desktop/files/c-use/libaloo/lib/libaloo.a"
-	"/lib/x86_64-linux-gnu/libgtk-4.so"
-	"/lib/x86_64-linux-gnu/libgtk-4.so.1"
-	"/lib/x86_64-linux-gnu/libglib-2.0.so.0"
-	"/lib/x86_64-linux-gnu/libglib-2.0.so"
-	"/lib/x86_64-linux-gnu/libgobject-2.0.so.0"
-	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
-	"/lib/x86_64-linux-gnu/libgobject-2.0.so"
-	"/lib/x86_64-linux-gnu/libgio-2.0.so"
-	"/lib/x86_64-linux-gnu/libgio-2.0.so.0"
-	"/lib/x86_64-linux-gnu/libsqlite3.so"
-	"/lib/x86_64-linux-gnu/libsqlite3.so.0"
+	${GTK4_LIBRARIES}
+	${SQLITE_LIBRARIES}
 )
 
 set(CMAKE_BUILD_TYPE "$ENV{Release}")

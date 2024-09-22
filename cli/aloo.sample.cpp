@@ -82,7 +82,7 @@ void help() {
 }
 
 int main(int argc, char const *argv[]) {
-	std::string currWD = "/home/jaipal001/Desktop/files/c-use/libaloo";
+	std::string currWD = "$pwd$";
 	std::vector<std::string> remainingArgs;
 	remainingArgs.push_back(std::string(argv[0]));
 	if (argc == 1) {

@@ -8,7 +8,7 @@
 
 std::string currFileName = "model";
 
-bool ends_with(std::string const &fullString, std::string const &ending) {
+bool m_ends_with(std::string const &fullString, std::string const &ending) {
 	if (fullString.length() >= ending.length()) {
 		return (0 == fullString.compare(fullString.length() - ending.length(),
 										ending.length(), ending));
@@ -17,8 +17,8 @@ bool ends_with(std::string const &fullString, std::string const &ending) {
 	}
 }
 
-std::vector<std::string> split(const std::string &str,
-							   const std::string &delimiter) {
+std::vector<std::string> m_split(const std::string &str,
+								 const std::string &delimiter) {
 	std::vector<std::string> tokens;
 	std::size_t pos = 0;
 	std::size_t found = str.find(delimiter);
@@ -33,7 +33,7 @@ std::vector<std::string> split(const std::string &str,
 	return tokens;
 }
 
-int main(int argc, char const *argv[]) {
+int model(int argc, char const *argv[], std::string currWD) {
 	int status;
 	std::string newModelName;
 	if (argc >= 2) {
@@ -94,17 +94,17 @@ int main(int argc, char const *argv[]) {
 		std::vector<Json::Value> tokens;
 		for (int i = 2; i < argc; i++) {
 			Json::Value token;
-			std::vector<std::string> tokenSplit = split(argv[i], ":");
+			std::vector<std::string> tokenm_split = m_split(argv[i], ":");
 			int found = 0;
 			for (int j = 0; j < 4; j++) {
-				if (tokenSplit[1] == validTypes[j]) found = 1;
+				if (tokenm_split[1] == validTypes[j]) found = 1;
 			}
 			if (!found) {
-				throw std::runtime_error("Invalid type: " + tokenSplit[1]);
+				throw std::runtime_error("Invalid type: " + tokenm_split[1]);
 			}
 
-			token["member"] = tokenSplit[0];
-			token["type"] = tokenSplit[1];
+			token["member"] = tokenm_split[0];
+			token["type"] = tokenm_split[1];
 			tokens.push_back(token);
 		}
 		for (auto j = tokens.begin(); j != tokens.end(); j++) {
