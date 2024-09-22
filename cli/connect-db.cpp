@@ -1,3 +1,5 @@
+#pragma once
+#include "utils.cpp"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -12,31 +14,6 @@ std::map<std::string, std::string> typeSwitch{
 	{"float", "FLOAT"},
 	{"bool", "INTEGER"},
 };
-
-bool con_ends_with(std::string const &fullString, std::string const &ending) {
-	if (fullString.length() >= ending.length()) {
-		return (0 == fullString.compare(fullString.length() - ending.length(),
-										ending.length(), ending));
-	} else {
-		return false;
-	}
-}
-
-std::vector<std::string> con_split(const std::string &str,
-								   const std::string &delimiter) {
-	std::vector<std::string> tokens;
-	std::size_t pos = 0;
-	std::size_t found = str.find(delimiter);
-
-	while (found != std::string::npos) {
-		tokens.push_back(str.substr(pos, found - pos));
-		pos = found + delimiter.length();
-		found = str.find(delimiter, pos);
-	}
-
-	tokens.push_back(str.substr(pos));
-	return tokens;
-}
 
 int connect_db(int argc, char const *argv[], std::string currWD) {
 	int status;
@@ -65,15 +42,15 @@ int connect_db(int argc, char const *argv[], std::string currWD) {
 				if (argc < 4) {
 					std::cout << "Enter database name: ";
 					std::cin >> dbname;
-					if (!con_ends_with(dbname, ".db") &&
-						!con_ends_with(dbname, ".sqlite")) {
+					if (!ends_with(dbname, ".db") &&
+						!ends_with(dbname, ".sqlite")) {
 						throw std::runtime_error(
 							"Database file must end with .db or .sqlite");
 					}
 				} else {
 					dbname = argv[3];
-					if (!con_ends_with(dbname, ".db") &&
-						!con_ends_with(dbname, ".sqlite")) {
+					if (!ends_with(dbname, ".db") &&
+						!ends_with(dbname, ".sqlite")) {
 						throw std::runtime_error(
 							"Database file must end with .db or .sqlite");
 					}
@@ -127,7 +104,7 @@ int connect_db(int argc, char const *argv[], std::string currWD) {
 				found = 0;
 				int currI = 0;
 
-				std::vector<std::string> curr = con_split(argv[0], "bin");
+				std::vector<std::string> curr = split(argv[0], "bin");
 				std::string serverPath = curr[0] + "cli/sample/main.server.";
 				std::ifstream serverHeader((serverPath + "c").c_str());
 				if (!serverHeader.is_open()) {

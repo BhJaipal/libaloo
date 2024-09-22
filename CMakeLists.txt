@@ -43,7 +43,7 @@ target_link_libraries(aloo_exe
 	PRIVATE ftxui::screen
 	PRIVATE ftxui::dom
 	PRIVATE ftxui::component
-	${JSONCPP_INCLUDE_DIRS}
+	${JSONCPP_LIBRARIES}
 )
 set_property(TARGET aloo_exe PROPERTY OUTPUT_NAME aloo)
 
@@ -54,7 +54,6 @@ include_directories(
 )
 
 target_link_libraries(aloo
-	ftxui
 	${GTK4_LIBRARIES}
 	${SQLITE_LIBRARIES}
 )

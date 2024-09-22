@@ -1,5 +1,7 @@
 #include "create-app.cpp"
 #include "model.cpp"
+#include "utils.cpp"
+#include <cstdlib>
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/direction.hpp>
 #include <ftxui/dom/elements.hpp>
@@ -13,22 +15,6 @@
 #include <iostream>
 #include <sys/ioctl.h>
 #include <unistd.h>
-
-static std::string &implode(const std::vector<std::string> &elems, char delim,
-							std::string &s) {
-	for (std::vector<std::string>::const_iterator ii = elems.begin();
-		 ii != elems.end(); ++ii) {
-		s += (*ii);
-		if (ii + 1 != elems.end()) { s += delim; }
-	}
-
-	return s;
-}
-
-static std::string implode(const std::vector<std::string> &elems, char delim) {
-	std::string s;
-	return implode(elems, delim, s);
-}
 
 void help() {
 	int cols = 80;
@@ -46,39 +32,60 @@ void help() {
 	lines = ts.ws_row;
 #endif /* TIOCGSIZE */
 
-	std::cout << "\033[2;36m";
-	std::string tab;
-	for (int i = 0; i < 8; i++) { std::cout << "    "; }
-
+	// std::cout << "\033[2;36m";
 	using namespace ftxui;
 
-	Element document = hbox({
-		text("left") | border,
-		text("middle") | border | flex,
-		text("right") | border,
+	auto commands = Table({
+		{std::string("Commands"), "Description"},
+		{std::string("-h | --help | help"), "Shows this help message"},
+		{std::string("create-app --name <name>"),
+		 "Creates C Aloo app template with project name"},
+		{std::string("create-app --path <path>"),
+		 "Creates C Aloo app template at a path"},
+		{"run [ app | test ]", "Runs "
+							   "Aloo app/ test build"},
+		{"build", "Builds Aloo "
+				  "app/ tests"},
+		{"clean", "Removes "
+				  "previous build data and executables"},
+		{"model", "Creates model"},
+		{"connect-db", "Connects to "
+					   "database"},
 	});
 
+	commands.SelectAll().Border(LIGHT);
+
+	// Add border around the first column.
+	commands.SelectColumn(0).Border(LIGHT);
+
+	// Make first row bold with a double border.
+	commands.SelectRow(0).Decorate(bold);
+	commands.SelectRow(0).SeparatorVertical(HEAVY);
+	commands.SelectRow(0).Border(DOUBLE);
+
+	// Align right the "Release date" column.
+	commands.SelectColumn(2).DecorateCells(align_right);
+
+	// Select row from the second to the last.
+	auto content = commands.SelectRows(1, -1);
+	// Alternate in between 3 colors.
+	content.DecorateCellsAlternateRow(color(Color::Blue), 1, 0);
+
+	Element document = hbox({
+		text("Aloo TUI") | border | flex | color(Color::BlueLight) | bold,
+	});
 	auto screen = Screen::Create(Dimension::Full(),		  // Width
 								 Dimension::Fit(document) // Height
 	);
 	Render(screen, document);
 	screen.Print();
-	;
-	std::cout << "ALOO CLI";
-	for (int i = 0; i < 20; i++) { std::cout << "    "; }
-	std::cout << "\nCommands\n";
-	std::cout << "\t\taloo create-app <name>\t\t\t\t\t\tCreates "
-				 "C Aloo app template\n";
-	std::cout << "\t\taloo run [ app | test ]\t\t\t\t\t\tRuns "
-				 "Aloo app/ test build\n";
-	std::cout << "\t\taloo build\t\t\t\t\t\t\t\tBuilds Aloo "
-				 "app/ tests\n";
-	std::cout << "\t\taloo clean\t\t\t\t\t\t\t\tRemoves "
-				 "previous build data and executables\n";
-	std::cout << "Utilities\n";
-	std::cout << "\t\taloo model\t\t\t\t\t\t\t\tCreates model\n";
-	std::cout << "\t\taloo connect-db\t\t\t\t\t\t\tConnects to "
-				 "database\033[0m\n";
+
+	document = commands.Render();
+	screen = Screen::Create(Dimension::Full(),		 // Width
+							Dimension::Fit(document) // Height
+	);
+	Render(screen, document);
+	screen.Print();
 }
 
 int main(int argc, char const *argv[]) {

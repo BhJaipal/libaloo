@@ -1,3 +1,5 @@
+#pragma once
+#include "utils.cpp"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -5,33 +7,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-
-namespace fs = std::filesystem;
-
-bool cre_ends_with(std::string const &fullString, std::string const &ending) {
-	if (fullString.length() >= ending.length()) {
-		return (0 == fullString.compare(fullString.length() - ending.length(),
-										ending.length(), ending));
-	} else {
-		return false;
-	}
-}
-
-std::vector<std::string> cre_split(const std::string &str,
-								   const std::string &delimiter) {
-	std::vector<std::string> tokens;
-	std::size_t pos = 0;
-	std::size_t found = str.find(delimiter);
-
-	while (found != std::string::npos) {
-		tokens.push_back(str.substr(pos, found - pos));
-		pos = found + delimiter.length();
-		found = str.find(delimiter, pos);
-	}
-
-	tokens.push_back(str.substr(pos));
-	return tokens;
-}
 
 int create_app(int argc, char const *argv[], std::string currWD) {
 	std::string projectPath = "";
@@ -54,7 +29,12 @@ int create_app(int argc, char const *argv[], std::string currWD) {
 	}
 
 	if (projectPath != "") {
-		std::vector<std::string> pathTokens = cre_split(projectPath, "/");
+		if (projectPath == ".") {
+			std::string path = fs::current_path().string();
+			std::vector<std::string> pathName = split(path, "/");
+			projectPath = pathName[pathName.size() - 1];
+		}
+		std::vector<std::string> pathTokens = split(projectPath, "/");
 		if (pathTokens[pathTokens.size() - 1] == ".")
 			projectName = pathTokens[pathTokens.size() - 2];
 		projectName = pathTokens[pathTokens.size() - 1];
