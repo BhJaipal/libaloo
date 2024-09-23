@@ -8,6 +8,25 @@
 #include <string>
 #include <vector>
 
+namespace NSmodel {
+
+std::vector<std::string> split(const std::string &str,
+							   const std::string &delimiter) {
+	std::vector<std::string> tokens;
+	std::size_t pos = 0;
+	std::size_t found = str.find(delimiter);
+
+	while (found != std::string::npos) {
+		tokens.push_back(str.substr(pos, found - pos));
+		pos = found + delimiter.length();
+		found = str.find(delimiter, pos);
+	}
+
+	tokens.push_back(str.substr(pos));
+	return tokens;
+}
+} // namespace NSmodel
+
 int model(int argc, char const *argv[], std::string currWD) {
 	int status;
 	std::string newModelName;
@@ -69,17 +88,18 @@ int model(int argc, char const *argv[], std::string currWD) {
 		std::vector<Json::Value> tokens;
 		for (int i = 2; i < argc; i++) {
 			Json::Value token;
-			std::vector<std::string> tokenm_split = split(argv[i], ":");
+			std::vector<std::string> token_split =
+				NSmodel::split(std::string(argv[i]), ":");
 			int found = 0;
 			for (int j = 0; j < 4; j++) {
-				if (tokenm_split[1] == validTypes[j]) found = 1;
+				if (token_split[1] == validTypes[j]) found = 1;
 			}
 			if (!found) {
-				throw std::runtime_error("Invalid type: " + tokenm_split[1]);
+				throw std::runtime_error("Invalid type: " + token_split[1]);
 			}
 
-			token["member"] = tokenm_split[0];
-			token["type"] = tokenm_split[1];
+			token["member"] = token_split[0];
+			token["type"] = token_split[1];
 			tokens.push_back(token);
 		}
 		for (auto j = tokens.begin(); j != tokens.end(); j++) {

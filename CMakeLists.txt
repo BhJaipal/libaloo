@@ -47,7 +47,13 @@ target_link_libraries(aloo_exe
 )
 set_property(TARGET aloo_exe PROPERTY OUTPUT_NAME aloo)
 
+add_executable("aloo-cli" "cli/aloo-cli.cpp")
+target_link_libraries("aloo-cli"
+	${JSONCPP_LIBRARIES}
+)
+
 include_directories(
+	"build/_deps/ftxui-src/include"
 	${GTK4_INCLUDE_DIRS}
 	${SQLITE_INCLUDE_DIRS}
 	"/usr/include/tirpc"

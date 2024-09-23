@@ -1,11 +1,8 @@
-#define ALOO_TUI
 #include "create-app.cpp"
 #include "model.cpp"
 #include "utils.cpp"
 #include <cstdlib>
 #include <iostream>
-#include <sys/ioctl.h>
-#include <unistd.h>
 
 int main(int argc, char const *argv[]) {
 	std::string currWD = "/home/jaipal001/Desktop/files/c-use/libaloo";
