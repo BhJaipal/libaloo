@@ -3,7 +3,7 @@ PROJECT_NUMBER         = 1.0
 PROJECT_BRIEF          = Aloo Widgets
 
 INPUT                  = include
-OUTPUT_DIRECTORY       = docs
+OUTPUT_DIRECTORY       = other-api
 FILE_PATTERNS          = *.h
 EXTRACT_ALL 			= YES
 

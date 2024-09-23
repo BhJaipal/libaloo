@@ -27,6 +27,16 @@ std::vector<std::string> split(const std::string &str,
 }
 } // namespace NSmodel
 
+/**
+ * @brief Create a app template project
+ *
+ * @param argc remaining no of arguments except model
+ * @param argv remaining vector of arguments except model
+ *
+ * `aloo model human name:string age:int` creates a new model human struct with
+ *`char* name` and `int age` in model/human.h
+ * @param currWD path where aloo project related files stays
+ */
 int model(int argc, std::vector<std::string> argv, std::string currWD) {
 	int status;
 	std::string newModelName;

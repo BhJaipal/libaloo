@@ -9,6 +9,23 @@
 #include <vector>
 namespace fs = std::filesystem;
 
+static std::string &CAimplode(const std::vector<std::string> &elems, char delim,
+							  std::string &s) {
+	for (std::vector<std::string>::const_iterator ii = elems.begin();
+		 ii != elems.end(); ++ii) {
+		s += (*ii);
+		if (ii + 1 != elems.end()) { s += delim; }
+	}
+
+	return s;
+}
+
+static std::string CAimplode(const std::vector<std::string> &elems,
+							 char delim) {
+	std::string s;
+	return CAimplode(elems, delim, s);
+}
+
 std::vector<std::string> CAsplit(const std::string &str,
 								 const std::string &delimiter) {
 	std::vector<std::string> tokens;
@@ -25,6 +42,19 @@ std::vector<std::string> CAsplit(const std::string &str,
 	return tokens;
 }
 
+/**
+ * @brief Create a app template project
+ *
+ * @param argc remaining no of arguments except create-app
+ * @param argv remaining vector of arguments except create-app
+ *
+ * `aloo create-app --name <projectName>` creates a new project at current dir
+ *
+ * `aloo create-app --path <projectPath>` creates a new project at certain path
+ * with name of project same as folder
+ *
+ * @param currWD path where aloo project related files stays
+ */
 int create_app(int argc, std::vector<std::string> argv, std::string currWD) {
 	std::string projectPath = "";
 	std::string projectName = "";
@@ -38,22 +68,27 @@ int create_app(int argc, std::vector<std::string> argv, std::string currWD) {
 			if (argc == 2)
 				throw std::runtime_error("Project path is not provided");
 			else projectPath = argv[2];
-	} else {
-		std::cout << "Enter project name[aloo-project]: ";
-		getline(std::cin, projectName);
-		if (projectName.empty()) projectName = "aloo-project";
-	}
-
-	if (projectPath != "") {
+	} else if (projectPath != "") {
 		if (projectPath == ".") {
 			std::string path = fs::current_path().string();
 			std::vector<std::string> pathName = CAsplit(path, "/");
 			projectPath = pathName[pathName.size() - 1];
 		}
+		if (projectPath == "..") {
+			std::string path = fs::current_path().string();
+			std::vector<std::string> pathName = CAsplit(path, "/");
+			projectPath = pathName[pathName.size() - 2];
+		}
 		std::vector<std::string> pathTokens = CAsplit(projectPath, "/");
 		if (pathTokens[pathTokens.size() - 1] == ".")
 			projectName = pathTokens[pathTokens.size() - 2];
+		if (pathTokens[pathTokens.size() - 1] == ".")
+			projectName = pathTokens[pathTokens.size() - 3];
 		projectName = pathTokens[pathTokens.size() - 1];
+	} else {
+		std::cout << "Enter project name[aloo-project]: ";
+		getline(std::cin, projectName);
+		if (projectName.empty()) projectName = "aloo-project";
 	}
 
 	std::cout << "Enter app name[Example App]: ";
@@ -135,9 +170,21 @@ int create_app(int argc, std::vector<std::string> argv, std::string currWD) {
 	while (getline(sampleCMake, out)) cmake += out + "\n";
 	sampleCMake.close();
 	cmake.replace(cmake.find("${appName}"), 8, appName);
-	cmake.replace(cmake.find("${libaloo}"), 10, currWD + "/lib/libaloo.a");
-	cmake.replace(cmake.find("${libaloo}"), 10, currWD + "/lib/libaloo.a");
-	cmake.replace(cmake.find("${include_dir}"), 14, currWD + "/include");
+	std::vector<std::string> pathTokens = CAsplit(currWD, "/");
+	pathTokens.pop_back();
+	pathTokens.pop_back();
+	cmake.replace(cmake.find("${libaloo}"), 10,
+				  pathTokens.size() > 0 && pathTokens[0] == ""
+					  ? std::string("") + "/lib/libaloo.a"
+					  : CAimplode(pathTokens, '/'));
+	cmake.replace(cmake.find("${libaloo}"), 10,
+				  pathTokens.size() > 0 && pathTokens[0] == ""
+					  ? std::string("") + "/lib/libaloo.a"
+					  : CAimplode(pathTokens, '/'));
+	cmake.replace(cmake.find("${include_dir}"), 14,
+				  pathTokens.size() > 0 && pathTokens[0] == ""
+					  ? std::string("") + "/usr/include/aloo"
+					  : CAimplode(pathTokens, '/'));
 	std::ofstream cmakeFile(currPath + "CMakeLists.txt", std::ofstream::binary);
 	cmakeFile << cmake;
 	cmakeFile.close();

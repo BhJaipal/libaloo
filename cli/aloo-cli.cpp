@@ -1,3 +1,4 @@
+#include "connect-db.cpp"
 #include "create-app.cpp"
 #include "model.cpp"
 #include "utils.cpp"
@@ -40,9 +41,9 @@ int main(int argc, char const *argv[]) {
 		} else if (command == "create-app") {
 			create_app(argc - 1, remainingArgs, currWD);
 		} else if (command == "model") {
-			create_app(argc - 1, remainingArgs, currWD);
+			model(argc - 1, remainingArgs, currWD);
 		} else if (command == "connect-db") {
-			create_app(argc - 1, remainingArgs, currWD);
+			connect_db(argc - 1, remainingArgs, currWD);
 		}
 		return 0;
 	}

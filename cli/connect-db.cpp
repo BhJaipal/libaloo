@@ -14,7 +14,21 @@ std::map<std::string, std::string> typeSwitch{
 	{"float", "FLOAT"},
 	{"bool", "INTEGER"},
 };
-
+/**
+ * @brief Creates functions that connects to database
+ *
+ * @param argc remaining no of arguments except connect-db
+ * @param argv remaining vector of arguments except connect-db
+ *
+ * `aloo connect-db sqlite3 new <dbname>.{sqlite|db}` creates
+ *`<dbname>.{sqlite|db}`
+ *
+ * `aloo connect-db sqlite3 restart` deletes old data
+ *
+ * `aloo connect-db sqlite3 add <modelname>` creates a table with modelname in
+ *database
+ * @param currWD path where aloo project related files stays
+ */
 int connect_db(int argc, std::vector<std::string> argv, std::string currWD) {
 	int status;
 	std::string db;

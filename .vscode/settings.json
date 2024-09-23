@@ -89,5 +89,7 @@
 	"cmake.ctestArgs": ["Release"],
 	"C_Cpp.default.compilerArgs": ["-std=c++23"],
 	"license.author": "Jaipal Bhanwariya",
-	"license.year": "2024"
+	"license.year": "2024",
+	"editor.wordWrap": "off",
+	"editor.wordBreak": "keepAll"
 }
