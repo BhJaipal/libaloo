@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-int create_app(int argc, char const *argv[], std::string currWD) {
+int create_app(int argc, char *argv[], std::string currWD) {
 	std::string projectPath = "";
 	std::string projectName = "";
 	char wantDesc;

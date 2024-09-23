@@ -27,7 +27,7 @@ std::vector<std::string> split(const std::string &str,
 }
 } // namespace NSmodel
 
-int model(int argc, char const *argv[], std::string currWD) {
+int model(int argc, char *argv[], std::string currWD) {
 	int status;
 	std::string newModelName;
 	if (argc >= 2) {

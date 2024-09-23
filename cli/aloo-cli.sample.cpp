@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
 			return 0;
 		}
 		for (int i = 0; i < argc; i++) {
-			remainingArgs.push_back(std::string(argv[i + 2]));
+			if (i > 1) remainingArgs.push_back(std::string(argv[i]));
 		}
 		if (command == "build") {
 			{
@@ -37,6 +37,24 @@ int main(int argc, char const *argv[]) {
 					(currWD + "/clean.sh " + implode(remainingArgs, ' '))
 						.c_str());
 			}
+		} else if (command == "create-app") {
+			char **args;
+			for (int i = 0; i < argc - 1; i++) {
+				strcpy(args[i], remainingArgs[i].c_str());
+			}
+			create_app(argc - 1, args, currWD);
+		} else if (command == "model") {
+			char **args;
+			for (int i = 0; i < argc - 1; i++) {
+				strcpy(args[i], remainingArgs[i].c_str());
+			}
+			create_app(argc - 1, args, currWD);
+		} else if (command == "connect-db") {
+			char **args;
+			for (int i = 0; i < argc - 1; i++) {
+				strcpy(args[i], remainingArgs[i].c_str());
+			}
+			create_app(argc - 1, args, currWD);
 		}
 		return 0;
 	}

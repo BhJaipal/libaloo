@@ -15,7 +15,7 @@ std::map<std::string, std::string> typeSwitch{
 	{"bool", "INTEGER"},
 };
 
-int connect_db(int argc, char const *argv[], std::string currWD) {
+int connect_db(int argc, char *argv[], std::string currWD) {
 	int status;
 	std::string db;
 	if (argc >= 2) {

@@ -1,6 +1,0 @@
-{
-	"$schema" : "/home/jaipal001/Desktop/files/c-use/libaloo/cli/aloo.schema.json",
-	"app" : "Example App",
-	"description" : "An default template for aloo App",
-	"project" : "aloo-project"
-}
