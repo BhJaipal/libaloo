@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.30)
 project(Aloo)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD_REQUIRED True)
+
+set(CMAKE_C_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS ON)
 
 include_directories(include)
 
@@ -22,38 +30,11 @@ add_library(aloo
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/)
 
-include(FetchContent)
-set(FETCHCONTENT_UPDATES_DISCONNECTED TRUE)
-
-FetchContent_Declare(
-	ftxui
-	GIT_REPOSITORY https://github.com/ArthurSonzogni/FTXUI.git
-	GIT_TAG v5.0.0
-)
-
-FetchContent_MakeAvailable(ftxui)
-
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK4 REQUIRED gtk4)
 pkg_check_modules(SQLITE REQUIRED sqlite3)
-pkg_check_modules(JSONCPP REQUIRED jsoncpp)
-
-add_executable(aloo_exe "cli/aloo.cpp")
-target_link_libraries(aloo_exe
-	PRIVATE ftxui::screen
-	PRIVATE ftxui::dom
-	PRIVATE ftxui::component
-	${JSONCPP_LIBRARIES}
-)
-set_property(TARGET aloo_exe PROPERTY OUTPUT_NAME aloo)
-
-add_executable("aloo-cli" "cli/aloo-cli.cpp")
-target_link_libraries("aloo-cli"
-	${JSONCPP_LIBRARIES}
-)
 
 include_directories(
-	"build/_deps/ftxui-src/include"
 	${GTK4_INCLUDE_DIRS}
 	${SQLITE_INCLUDE_DIRS}
 	"/usr/include/tirpc"
@@ -64,6 +45,7 @@ target_link_libraries(aloo
 	${SQLITE_LIBRARIES}
 )
 
+add_subdirectory("cli")
 add_executable(test-1.exe "test/int.spec.c")
 
 target_link_libraries(test-1.exe aloo)

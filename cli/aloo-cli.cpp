@@ -20,16 +20,23 @@ int main(int argc, char const *argv[]) {
 			remainingArgs.push_back(std::string(argv[i + 2]));
 		}
 		if (command == "build") {
-			std::system(
-				(currWD + "/cli/build.sh " + implode(remainingArgs, ' '))
-					.c_str());
+			{
+				int _ = std::system(
+					(currWD + "/cli/build.sh " + implode(remainingArgs, ' '))
+						.c_str());
+			}
 		} else if (command == "run") {
-			std::system((currWD + "/cli/run.sh " + implode(remainingArgs, ' '))
-							.c_str());
+			{
+				int _ = std::system(
+					(currWD + "/cli/run.sh " + implode(remainingArgs, ' '))
+						.c_str());
+			}
 		} else if (command == "clean") {
-			std::system(
-				(currWD + "/cli/clean.sh " + implode(remainingArgs, ' '))
-					.c_str());
+			{
+				int _ = std::system(
+					(currWD + "/cli/clean.sh " + implode(remainingArgs, ' '))
+						.c_str());
+			}
 		}
 		return 0;
 	}

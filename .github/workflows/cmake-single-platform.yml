@@ -50,3 +50,8 @@ jobs:
               run: |
                   cd ${{github.workspace}}/build
                   ctest -C ${{env.BUILD_TYPE}}
+            - name: Checking CLI Output
+              run: |
+                  cd ${{github.workspace}}
+                  bin/aloo
+                  bin/aloo-cli

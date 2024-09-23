@@ -102,7 +102,7 @@ void help() {
 	content.DecorateCellsAlternateColumn(color(Color::GrayDark), 2, 1);
 	content.DecorateCellsAlternateColumn(center, 2, 1);
 
-	std::system("clear");
+	int _ = std::system("clear");
 	std::string spaces = "    ";
 	for (int i = 0; i < 7; i++) { spaces += "    "; }
 	Element document = hbox({
