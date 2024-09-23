@@ -25,3 +25,4 @@ node_modules/
 *.log
 *.deb
 *.rpm
+aloo-project/

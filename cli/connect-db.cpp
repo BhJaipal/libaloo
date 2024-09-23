@@ -15,11 +15,11 @@ std::map<std::string, std::string> typeSwitch{
 	{"bool", "INTEGER"},
 };
 
-int connect_db(int argc, char *argv[], std::string currWD) {
+int connect_db(int argc, std::vector<std::string> argv, std::string currWD) {
 	int status;
 	std::string db;
 	if (argc >= 2) {
-		db = std::string(argv[1]);
+		db = argv[1];
 		if (!(db == "sqlite3" || db == "mongo")) {
 			throw std::runtime_error("Unknown database: " + db);
 			return 1;

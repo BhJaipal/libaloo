@@ -7,17 +7,34 @@
 #include <memory>
 #include <string>
 #include <vector>
+namespace fs = std::filesystem;
 
-int create_app(int argc, char *argv[], std::string currWD) {
+std::vector<std::string> CAsplit(const std::string &str,
+								 const std::string &delimiter) {
+	std::vector<std::string> tokens;
+	std::size_t pos = 0;
+	std::size_t found = str.find(delimiter);
+
+	while (found != std::string::npos) {
+		tokens.push_back(str.substr(pos, found - pos));
+		pos = found + delimiter.length();
+		found = str.find(delimiter, pos);
+	}
+
+	tokens.push_back(str.substr(pos));
+	return tokens;
+}
+
+int create_app(int argc, std::vector<std::string> argv, std::string currWD) {
 	std::string projectPath = "";
 	std::string projectName = "";
 	char wantDesc;
 	std::string appName = "";
 	if (argc >= 2) {
-		if (std::string(argv[1]) == "--name" || std::string(argv[1]) == "-n")
+		if (argv[1] == "--name" || argv[1] == "-n")
 			if (argc == 2) throw std::runtime_error("No name is provided");
 			else projectName = argv[2];
-		if (std::string(argv[1]) == "--path" || std::string(argv[1]) == "-p")
+		if (argv[1] == "--path" || argv[1] == "-p")
 			if (argc == 2)
 				throw std::runtime_error("Project path is not provided");
 			else projectPath = argv[2];
@@ -30,10 +47,10 @@ int create_app(int argc, char *argv[], std::string currWD) {
 	if (projectPath != "") {
 		if (projectPath == ".") {
 			std::string path = fs::current_path().string();
-			std::vector<std::string> pathName = split(path, "/");
+			std::vector<std::string> pathName = CAsplit(path, "/");
 			projectPath = pathName[pathName.size() - 1];
 		}
-		std::vector<std::string> pathTokens = split(projectPath, "/");
+		std::vector<std::string> pathTokens = CAsplit(projectPath, "/");
 		if (pathTokens[pathTokens.size() - 1] == ".")
 			projectName = pathTokens[pathTokens.size() - 2];
 		projectName = pathTokens[pathTokens.size() - 1];

@@ -27,11 +27,11 @@ std::vector<std::string> split(const std::string &str,
 }
 } // namespace NSmodel
 
-int model(int argc, char *argv[], std::string currWD) {
+int model(int argc, std::vector<std::string> argv, std::string currWD) {
 	int status;
 	std::string newModelName;
 	if (argc >= 2) {
-		newModelName = std::string(argv[1]);
+		newModelName = argv[1];
 	} else {
 		std::cout << "Enter model name: ";
 		std::cin >> newModelName;
