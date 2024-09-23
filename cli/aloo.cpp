@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 int main(int argc, char const *argv[]) {
-	std::string currWD = "/home/jaipal001/Desktop/files/c-use/libaloo";
+	std::string currWD = "/etc/aloo";
 	std::vector<std::string> remainingArgs;
 	remainingArgs.push_back(std::string(argv[0]));
 	if (argc == 1) {
@@ -25,17 +25,16 @@ int main(int argc, char const *argv[]) {
 		if (command == "build") {
 			{
 				int _ = std::system(
-					(currWD + "/cli/build.sh " + implode(remainingArgs, ' '))
+					(currWD + "/build.sh " + implode(remainingArgs, ' '))
 						.c_str());
 			}
 		} else if (command == "run") {
 			int _ = std::system(
-				(currWD + "/cli/run.sh " + implode(remainingArgs, ' '))
-					.c_str());
+				(currWD + "/run.sh " + implode(remainingArgs, ' ')).c_str());
 		} else if (command == "clean") {
 			{
 				int _ = std::system(
-					(currWD + "/cli/clean.sh " + implode(remainingArgs, ' '))
+					(currWD + "/clean.sh " + implode(remainingArgs, ' '))
 						.c_str());
 			}
 		}

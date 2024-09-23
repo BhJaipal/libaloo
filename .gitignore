@@ -23,3 +23,5 @@ lib/
 node_modules/
 .cache/
 *.log
+*.deb
+*.rpm

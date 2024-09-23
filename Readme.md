@@ -10,6 +10,21 @@ cd examples
 ./run.sh
 ```
 
+## Install
+
+To install it run
+
+```bash
+python3 setup.py  # or use python
+./dist/install.sh
+```
+
+## Uninstall
+
+```bash
+./uninstall.sh
+```
+
 ## API
 
 > Run `doxygen`

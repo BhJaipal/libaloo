@@ -1,0 +1,8 @@
+Package: aloo
+Version: 1.0-1
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Jaipal <jaipal@test.com>
+Description: This is a test application for aloo project
+Depends: libgtk-4-dev, libsqlite3-dev, libjsoncpp25, libjsoncpp-dev

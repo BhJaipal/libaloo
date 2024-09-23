@@ -13,7 +13,6 @@ int create_app(int argc, char const *argv[], std::string currWD) {
 	std::string projectName = "";
 	char wantDesc;
 	std::string appName = "";
-	std::string cliPath = currWD + "/cli/";
 	if (argc >= 2) {
 		if (std::string(argv[1]) == "--name" || std::string(argv[1]) == "-n")
 			if (argc == 2) throw std::runtime_error("No name is provided");
@@ -67,7 +66,7 @@ int create_app(int argc, char const *argv[], std::string currWD) {
 		// creating app/ dir
 		fs::create_directory(currPath + "app");
 		// sample/main.c => app/main.c
-		std::ifstream alooSampleApp(cliPath + "sample/main.c",
+		std::ifstream alooSampleApp(currWD + "/sample/main.c",
 									std::ifstream::binary);
 		std::string appMainC;
 		std::string out;
@@ -88,7 +87,7 @@ int create_app(int argc, char const *argv[], std::string currWD) {
 		// creating test/ dir
 		fs::create_directory(currPath + "test");
 		// sample/main.c => test/main.c
-		std::ifstream alooMainApp(cliPath + "sample/test.c",
+		std::ifstream alooMainApp(currWD + "/sample/test.c",
 								  std::ifstream::binary);
 		std::string testMainC;
 		std::string out;
@@ -105,14 +104,14 @@ int create_app(int argc, char const *argv[], std::string currWD) {
 
 	Json::Value alooJson;
 	std::ofstream alooJsonFile(currPath + "aloo.json", std::ofstream::binary);
-	alooJson["$schema"] = cliPath + "aloo.schema.json";
+	alooJson["$schema"] = currWD + "/aloo.schema.json";
 	alooJson["app"] = appName;
 	alooJson["project"] = projectName;
 	alooJson["description"] = desc;
 	alooJsonFile << alooJson;
 	alooJsonFile.close();
 
-	std::ifstream sampleCMake(cliPath + "sample/CMakeLists.txt",
+	std::ifstream sampleCMake(currWD + "/sample/CMakeLists.txt",
 							  std::ifstream::binary);
 	std::string cmake;
 	std::string out;

@@ -104,8 +104,7 @@ int connect_db(int argc, char const *argv[], std::string currWD) {
 				found = 0;
 				int currI = 0;
 
-				std::vector<std::string> curr = split(argv[0], "bin");
-				std::string serverPath = curr[0] + "cli/sample/main.server.";
+				std::string serverPath = currWD + "sample/main.server.";
 				std::ifstream serverHeader((serverPath + "c").c_str());
 				if (!serverHeader.is_open()) {
 					throw std::runtime_error(

@@ -22,19 +22,19 @@ int main(int argc, char const *argv[]) {
 		if (command == "build") {
 			{
 				int _ = std::system(
-					(currWD + "/cli/build.sh " + implode(remainingArgs, ' '))
+					(currWD + "/build.sh " + implode(remainingArgs, ' '))
 						.c_str());
 			}
 		} else if (command == "run") {
 			{
 				int _ = std::system(
-					(currWD + "/cli/run.sh " + implode(remainingArgs, ' '))
+					(currWD + "/run.sh " + implode(remainingArgs, ' '))
 						.c_str());
 			}
 		} else if (command == "clean") {
 			{
 				int _ = std::system(
-					(currWD + "/cli/clean.sh " + implode(remainingArgs, ' '))
+					(currWD + "/clean.sh " + implode(remainingArgs, ' '))
 						.c_str());
 			}
 		}
