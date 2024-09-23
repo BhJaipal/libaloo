@@ -25,7 +25,7 @@ jobs:
                   repository: ${{ github.repository }}
                   ref: ${{ github.ref }}
 
-            - name: Install GTK4 and SQLite3 Dependencies
+            - name: Installing Dependencies
               run: |
                   sudo apt install libgtk-4-dev libsqlite3-dev libjsoncpp25 libjsoncpp-dev
 
