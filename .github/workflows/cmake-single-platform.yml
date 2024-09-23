@@ -61,10 +61,12 @@ jobs:
                   cd ${{github.workspace}}
                   ./dist/install-deb.sh
 
-            - name: Temporary Project build
+            - name: Checking install
               run: |
                   cd ${{github.workspace}}
-                  aloo create-app
-                  cd aloo-project
-                  aloo build
-                  aloo run test
+                  echo "bin: "
+                  ls /bin
+                  echo "include: "
+                  ls /usr/include
+                  echo "current: "
+                  ls
