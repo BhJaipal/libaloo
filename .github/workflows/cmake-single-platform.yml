@@ -55,3 +55,16 @@ jobs:
                   cd ${{github.workspace}}
                   bin/aloo
                   bin/aloo-cli
+
+            - name: Installing libaloo
+              run: |
+                  cd ${{github.workspace}}
+                  ./dist/install-deb.sh
+
+            - name: Temporary Project build
+              run: |
+                  cd ${{github.workspace}}
+                  aloo create-app
+                  cd aloo-project
+                  aloo build
+                  aloo run test
