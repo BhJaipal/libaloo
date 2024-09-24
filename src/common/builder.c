@@ -1,5 +1,5 @@
-#include "common/builder.h"
-#include "common/widget.h"
+#include <aloo/common/builder.h>
+#include <aloo/common/widget.h>
 
 void __unrefBuilder(AlooBuilder *data) { g_object_unref(data->builder); }
 

@@ -1,6 +1,6 @@
-#include "common/button.h"
-#include "common/widget.h"
-#include "utils/error.h"
+#include <aloo/common/button.h>
+#include <aloo/common/widget.h>
+#include <aloo/utils/error.h>
 
 AlooWidget *__newButton() {
 	AlooWidget *btn = Widget.new(ALOO_BUTTON, gtk_button_new());

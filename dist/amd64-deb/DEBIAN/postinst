@@ -16,4 +16,4 @@ mv /etc/aloo/cli/run.sh /etc/aloo
 mv /etc/aloo/cli/clean.sh /etc/aloo
 mv /etc/aloo/cli/aloo.schema.json /etc/aloo
 mv /etc/aloo/lib/libaloo.a /lib
-rm -rf {cli,bin,src,build}
+rm -rf /etc/aloo/{bin,src}

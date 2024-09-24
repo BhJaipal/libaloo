@@ -1,6 +1,6 @@
-#include "common/input.h"
-#include "common/widget.h"
-#include "utils/error.h"
+#include <aloo/common/input.h>
+#include <aloo/common/widget.h>
+#include <aloo/utils/error.h>
 
 AlooWidget *__input_new(char *label) {
 	return Widget.new(ALOO_INPUT, gtk_editable_label_new(label));

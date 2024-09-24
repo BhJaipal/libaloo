@@ -1,6 +1,6 @@
-#include "common/box.h"
-#include "common/widget.h"
-#include "utils/error.h"
+#include <aloo/common/box.h>
+#include <aloo/common/widget.h>
+#include <aloo/utils/error.h>
 #include <gtk/gtk.h>
 
 AlooWidget *__new_alooBox(GtkOrientation orientation, int spacing) {

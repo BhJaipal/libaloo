@@ -1,4 +1,4 @@
-#include "common/app.h"
+#include <aloo/common/app.h>
 
 struct AlooApplication *__CreateApp(const char *appName,
 									struct AlooAppOptions AppOptions) {

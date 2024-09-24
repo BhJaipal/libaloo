@@ -1,6 +1,6 @@
-#include "common/label.h"
-#include "common/widget.h"
-#include "utils/error.h"
+#include <aloo/common/label.h>
+#include <aloo/common/widget.h>
+#include <aloo/utils/error.h>
 
 AlooWidget *__Label_new(const char *val) {
 	return Widget.new(ALOO_LABEL, gtk_label_new(val));

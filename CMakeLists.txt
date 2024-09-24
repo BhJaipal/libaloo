@@ -9,7 +9,9 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 set(CMAKE_C_EXTENSIONS ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
-include_directories(include)
+include_directories(
+	"/usr/include/aloo"
+)
 
 add_library(aloo
 	"src/common/app.c"

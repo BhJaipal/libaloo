@@ -1,4 +1,4 @@
-#include "common/widget.h"
+#include <aloo/common/widget.h>
 
 GtkWidget *__Widget_Aloo_to_Gtk(AlooWidget *wid) { return wid->child; }
 

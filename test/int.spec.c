@@ -1,4 +1,4 @@
-#include "aloo.h"
+#include <aloo/aloo.h>
 #include <stdio.h>
 
 int main(int argc, char** argv) {

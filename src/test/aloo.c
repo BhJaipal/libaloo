@@ -1,5 +1,5 @@
-#include "test/aloo.h"
-#include "utils/error.h"
+#include <aloo/test/aloo.h>
+#include <aloo/utils/error.h>
 
 int __expectInt(int expected, int actual) {
 	if (expected != actual) {

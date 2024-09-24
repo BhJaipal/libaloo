@@ -1,5 +1,5 @@
-#include "common/style.h"
-#include "common/widget.h"
+#include <aloo/common/style.h>
+#include <aloo/common/widget.h>
 
 void __importCssFromPath(const char *path) {
 	GtkCssProvider *cssProvider = gtk_css_provider_new();

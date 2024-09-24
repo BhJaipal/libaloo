@@ -1,6 +1,6 @@
-#include "common/grid.h"
-#include "common/widget.h"
-#include "utils/error.h"
+#include <aloo/common/grid.h>
+#include <aloo/common/widget.h>
+#include <aloo/utils/error.h>
 
 AlooWidget *__gridAttach(AlooWidget *grid, AlooWidget *child, int column,
 						 int row, int width, int height) {

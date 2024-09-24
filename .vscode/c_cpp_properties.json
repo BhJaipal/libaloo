@@ -31,7 +31,8 @@
 				"/usr/include/harfbuzz",
 				"/usr/include/tirpc/rpc",
 				"/usr/include/tirpc",
-				"/usr/include/fontconfig"
+				"/usr/include/fontconfig",
+				"/usr/include/aloo"
 			],
 			"defines": [],
 			"compilerPath": "/usr/bin/gcc",

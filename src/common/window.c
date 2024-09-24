@@ -1,5 +1,5 @@
-#include "common/window.h"
-#include "common/widget.h"
+#include <aloo/common/window.h>
+#include <aloo/common/widget.h>
 #include "utils/error.h"
 
 AlooWidget *__alooSetWindowChild(AlooWidget *window, AlooWidget *child) {
