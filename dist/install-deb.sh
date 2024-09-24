@@ -1,16 +1,11 @@
 #!/bin/bash
-python3.10 setup.py
-./build.sh
-cp bin/aloo dist/x86_64-deb/bin/aloo
-cp bin/aloo-cli dist/x86_64-deb/bin/aloo-cli
-cp cli/build.sh dist/x86_64-deb/etc/aloo/build.sh
-cp cli/run.sh dist/x86_64-deb/etc/aloo/run.sh
-cp cli/clean.sh dist/x86_64-deb/etc/aloo/clean.sh
-cp -r cli/sample dist/x86_64-deb/etc/aloo/sample
-cp -r lib/libaloo.a dist/x86_64-deb/lib/libaloo.a
-cp -r include dist/x86_64-deb/usr/include/aloo
-cp -r cli/aloo.schema.json dist/x86_64-deb/etc/aloo/aloo.schema.json
-sudo dpkg-deb --root-owner-group --build dist/x86_64-deb
+cp build.sh dist/amd64-deb/etc/aloo/build.sh
+cp -r include dist/amd64-deb/usr/include/aloo
+cp -r src dist/amd64-deb/etc/aloo/src
+cp -r cli dist/amd64-deb/etc/aloo/cli
+cp -r setup.py dist/amd64-deb/etc/aloo/setup.py
+cp -r CMakeLists.txt dist/amd64-deb/etc/aloo/CMakeLists.txt
+sudo dpkg-deb --root-owner-group --build dist/amd64-deb
 
-sudo dpkg -i dist/x86_64-deb.deb
+sudo dpkg -i dist/amd64-deb.deb
 sudo apt install -f
