@@ -1,8 +1,7 @@
 #!/bin/bash
-if [ -d "dist/rpm/bin" ]; then
-	rm -rf dist/rpm/bin
+if [ ! -d "dist/rpm/bin" ]; then
+	mkdir -p dist/rpm/bin
 fi
-mkdir -p dist/rpm/bin
 
 if [ -d "dist/rpm/etc/aloo" ]; then
 	rm -rf dist/rpm/etc/aloo
@@ -25,15 +24,16 @@ cp -r setup.py dist/rpm/etc/aloo/setup.py
 cp -r CMakeLists.txt dist/rpm/etc/aloo/CMakeLists.txt
 
 if [ $1 ]; then
-	sudo rpmbuild -bb dist/rpm/rpm.spec dist/libaloo-v$1.rpm
-	sudo dpkg -i dist/libaloo-v$1.rpm
+	cd dist
+	sudo rpmbuild -bb rpm/rpm.spec #libaloo-v$1.rpm
+	sudo rpm -i dist/libaloo-v$1.rpm
 else
+	cd dist
 	echo "Enter version: "
 	read version
-	sudo rpmbuild -bb dist/rpm/rpm.spec dist/libaloo-v${version}.rpm
-	sudo dpkg -i dist/libaloo-v${version}.rpm
+	sudo rpmbuild -bb rpm/rpm.spec # libaloo-v${version}.rpm
+	sudo rpm -i dist/libaloo-v${version}.rpm
 fi
-sudo apt install -f
 
 if [ -d dist/rpm/etc/aloo ]; then
 	rm -rf dist/rpm/etc/aloo
@@ -41,8 +41,4 @@ fi
 
 if [ -d dist/rpm/usr/include ]; then
 	rm -rf dist/rpm/usr/include
-fi
-
-if [ -d dist/rpm/bin ]; then
-	rm -rf dist/rpm/bin
 fi

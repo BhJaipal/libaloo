@@ -18,4 +18,4 @@ mv /etc/aloo/cli/clean.sh /etc/aloo
 mv /etc/aloo/cli/aloo.schema.json /etc/aloo
 mv /etc/aloo/cli/sample /etc/aloo
 mv /etc/aloo/lib/libaloo.a /lib
-rm -rf /etc/aloo/{build,src,include,lib,test,CMakeLists.txt,cli,bin,setup.py}
+rm -rf /etc/aloo/{build,src,include,lib,test,CMakeLists.txt,cli,setup.py}
