@@ -1,0 +1,21 @@
+#!/bin/bash
+cd /etc/aloo
+python3 setup.py
+sudo pip3 list | grep "cmake "
+if [[ ! $? ]]; then
+	sudo pip3 install cmake
+fi
+mkdir {bin,lib}
+cmake -B /etc/aloo/build -DCMAKE_BUILD_TYPE=Release
+cd /etc/aloo/build
+make
+cd ..
+mv /etc/aloo/bin/aloo /bin
+mv /etc/aloo/bin/aloo-cli /bin
+mv /etc/aloo/cli/build.sh /etc/aloo
+mv /etc/aloo/cli/run.sh /etc/aloo
+mv /etc/aloo/cli/clean.sh /etc/aloo
+mv /etc/aloo/cli/aloo.schema.json /etc/aloo
+mv /etc/aloo/cli/sample /etc/aloo
+mv /etc/aloo/lib/libaloo.a /lib
+rm -rf /etc/aloo/{build,src,include,lib,test,CMakeLists.txt,cli,bin,setup.py}

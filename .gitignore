@@ -26,5 +26,9 @@ node_modules/
 *.deb
 *.rpm
 aloo-project/
-dist/all-deb/usr/include
-dist/all-deb/etc/aloo
+dist/deb/usr/include
+dist/deb/etc/aloo
+
+dist/rpm/usr/include
+!dist/rpm/bin
+dist/rpm/etc/aloo
