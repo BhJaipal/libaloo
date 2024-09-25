@@ -26,5 +26,5 @@ node_modules/
 *.deb
 *.rpm
 aloo-project/
-dist/amd64-deb/usr/include
-dist/amd64-deb/etc
+dist/all-deb/usr/include
+dist/all-deb/etc/aloo

@@ -4,13 +4,13 @@ if [ -d "dist/all-deb/bin" ]; then
 fi
 mkdir -p dist/all-deb/bin
 
-if [ -d "dist/all-deb/etc" ]; then
-	rm -rf dist/all-deb/etc
+if [ -d "dist/all-deb/etc/aloo" ]; then
+	rm -rf dist/all-deb/etc/aloo
 fi
 mkdir -p dist/all-deb/etc/aloo
 
-if [ -d "dist/all-deb/usr" ]; then
-	rm -rf dist/all-deb/usr
+if [ -d "dist/all-deb/usr/include" ]; then
+	rm -rf dist/all-deb/usr/include
 fi
 mkdir -p dist/all-deb/usr/include/aloo
 
@@ -36,6 +36,6 @@ fi
 
 sudo apt install -f
 
-rm -rf dist/all-deb/etc
-rm -rf dist/all-deb/usr
+rm -rf dist/all-deb/etc/aloo
+rm -rf dist/all-deb/usr/include
 rm -rf dist/all-deb/bin
