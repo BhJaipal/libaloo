@@ -91,5 +91,6 @@
 	"license.author": "Jaipal Bhanwariya",
 	"license.year": "2024",
 	"editor.wordWrap": "off",
-	"editor.wordBreak": "keepAll"
+	"editor.wordBreak": "keepAll",
+	"clang-format.executable": "clang-format-15"
 }

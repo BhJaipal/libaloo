@@ -9,6 +9,8 @@
 			"includePath": [
 				"${workspaceFolder}/**",
 				"/usr/include",
+				"${workspaceFolder}/FTXUI/include/ftxui",
+				"/usr/lib/gcc/x86_64-linux-gnu/11/include",
 				"/usr/include/graphene-1.0",
 				"/usr/include/x86_64-linux-gnu",
 				"/usr/lib/x86_64-linux-gnu/graphene-1.0/include",
@@ -31,8 +33,7 @@
 				"/usr/include/harfbuzz",
 				"/usr/include/tirpc/rpc",
 				"/usr/include/tirpc",
-				"/usr/include/fontconfig",
-				"/usr/include/aloo"
+				"/usr/include/fontconfig"
 			],
 			"defines": [],
 			"compilerPath": "/usr/bin/gcc",
