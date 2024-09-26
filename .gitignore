@@ -32,3 +32,7 @@ dist/deb/etc/aloo
 dist/rpm/usr/include
 !dist/rpm/bin
 dist/rpm/etc/aloo
+
+dist/Arch/usr/include
+!dist/Arch/bin
+dist/Arch/etc/aloo

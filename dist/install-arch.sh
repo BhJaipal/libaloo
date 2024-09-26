@@ -24,14 +24,14 @@ cp -r setup.py dist/rpm/etc/aloo/setup.py
 cp -r CMakeLists.txt dist/rpm/etc/aloo/CMakeLists.txt
 
 if [ $1 ]; then
-	cd dist
-	sudo rpmbuild -bb rpm/libaloo.spec # output_file=./dist/libaloo-v$1.rpm
+	cd dist/Arch
+	sudo makepkg # output_file=./dist/libaloo-v$1.rpm
 	# sudo rpm -i dist/libaloo-v$1.rpm
 else
-	cd dist
+	cd dist/Arch
 	echo "Enter version: "
 	read version
-	sudo rpmbuild -bb rpm/libaloo.spec # libaloo-v${version}.rpm
+	sudo makepkg # libaloo-v${version}.rpm
 	# sudo rpm -i dist/libaloo-v${version}.rpm
 fi
 

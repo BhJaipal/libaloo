@@ -1,8 +1,6 @@
-Package: aloo
+Name: aloo
 Version: 0.1.1
-Section: utils
-Priority: optional
-Architecture: all
-Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
 Description: This a Gtk4 based library written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, libjsoncpp25, libjsoncpp-dev, python3, python3-pip, make
+CFlags: -I/usr/include/aloo
+Libs: -laloo

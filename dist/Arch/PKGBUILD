@@ -1,0 +1,36 @@
+pkgname=libaloo
+pkgver=0.1.1
+pkgrel=1
+pkgdesc="This a Gtk4 based library written in C to make things easier"
+arch=("all")
+url="https://github.com/BhJaipal/libaloo"
+license=('MIT')
+depends=(libgtk-4-dev libsqlite3-dev libjsoncpp25 libjsoncpp-dev python3 python3-pip make)
+makedepends=(git)
+provides=(libaloo)
+conflicts=(libaloo)
+source=("$url/releases/download/v$pkgver/libaloo-$pkgver.pkg.tar.zst")
+md5sums=(SKIP)
+
+package() {
+	cd /etc/aloo
+	python3 setup.py
+	sudo pip3 list | grep "cmake "
+	if [[ ! $? ]]; then
+		sudo pip3 install cmake
+	fi
+	mkdir {bin,lib}
+	cmake -B /etc/aloo/build -DCMAKE_BUILD_TYPE=Release
+	cd /etc/aloo/build
+	make
+	cd ..
+	mv /etc/aloo/bin/aloo /bin
+	mv /etc/aloo/bin/aloo-cli /bin
+	mv /etc/aloo/cli/build.sh /etc/aloo
+	mv /etc/aloo/cli/run.sh /etc/aloo
+	mv /etc/aloo/cli/clean.sh /etc/aloo
+	mv /etc/aloo/cli/aloo.schema.json /etc/aloo
+	mv /etc/aloo/cli/sample /etc/aloo
+	mv /etc/aloo/lib/libaloo.a /lib
+	rm -rf /etc/aloo/{build,src,include,lib,test,CMakeLists.txt,cli,setup.py}
+}

@@ -25,11 +25,33 @@ cp -r setup.py dist/deb/etc/aloo/setup.py
 cp -r CMakeLists.txt dist/deb/etc/aloo/CMakeLists.txt
 
 if [ $1 ]; then
+	if [ -f dist/deb/DEBIAN/control ]; then
+		rm dist/deb/DEBIAN/control
+	fi
+	echo "Package: aloo
+Version: $1
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
+Description: This a Gtk4 based library written in C to make things easier
+Depends: libgtk-4-dev, libsqlite3-dev, libjsoncpp25, libjsoncpp-dev, python3, python3-pip, make" >dist/deb/DEBIAN/control
 	sudo dpkg-deb --root-owner-group --build dist/deb dist/libaloo-v$1.deb
 	sudo dpkg -i dist/libaloo-v$1.deb
 else
 	echo "Enter version: "
 	read version
+	if [ -f dist/deb/DEBIAN/control ]; then
+		rm dist/deb/DEBIAN/control
+	fi
+	echo "Package: aloo
+Version: $version
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
+Description: This a Gtk4 based library written in C to make things easier
+Depends: libgtk-4-dev, libsqlite3-dev, libjsoncpp25, libjsoncpp-dev, python3, python3-pip, make" >dist/deb/DEBIAN/control
 	sudo dpkg-deb --root-owner-group --build dist/deb dist/libaloo-v${version}.deb
 	sudo dpkg -i dist/libaloo-v${version}.deb
 fi
