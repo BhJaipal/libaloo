@@ -54,6 +54,6 @@ jobs:
             - name: Debian install
               run: |
                   cd ${{github.workspace}}
-                  ./dist/install-deb.sh
+                  ./dist/install-deb.sh 0.1.1
                   which aloo
                   echo $?
