@@ -22,6 +22,7 @@ cp -r cli dist/rpm/etc/aloo/cli
 cp -r test dist/rpm/etc/aloo/test
 cp -r setup.py dist/rpm/etc/aloo/setup.py
 cp -r CMakeLists.txt dist/rpm/etc/aloo/CMakeLists.txt
+cp -r dist/deb/DEBIAN/postinst dist/Arch/etc/bin/postinst
 
 if [ $1 ]; then
 	cd dist/Arch
