@@ -1,4 +1,5 @@
 #pragma once
+#ifdef ALOO_TUI
 #include "ftxui/dom/canvas.hpp"
 #include "ftxui/dom/direction.hpp"
 #include "ftxui/dom/elements.hpp"
@@ -8,6 +9,7 @@
 #include "ftxui/screen/color.hpp"
 #include "ftxui/screen/color_info.hpp"
 #include "ftxui/screen/screen.hpp"
+#endif
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>

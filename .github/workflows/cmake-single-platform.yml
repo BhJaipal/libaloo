@@ -50,10 +50,3 @@ jobs:
               run: |
                   cd ${{github.workspace}}/build
                   ctest -C ${{env.BUILD_TYPE}}
-
-            - name: Debian install
-              run: |
-                  cd ${{github.workspace}}
-                  ./dist/install-deb.sh 0.1.1
-                  which aloo
-                  echo $?

@@ -11,6 +11,11 @@
 			"default": "Example App",
 			"description": "Name and window title of the app"
 		},
+		"app-id": {
+			"type": "string",
+			"default": "",
+			"description": "App ID of aloo app"
+		},
 		"description": {
 			"type": "string",
 			"default": "An default template for aloo App",

@@ -92,5 +92,5 @@
 	"license.year": "2024",
 	"editor.wordWrap": "off",
 	"editor.wordBreak": "keepAll",
-	"clang-format.executable": "clang-format-15"
+	"clang-format.executable": "clang-format-14"
 }

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.20)
 project(Aloo)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -48,7 +48,7 @@ add_subdirectory("cli")
 add_executable(test-1.exe "test/int.spec.c")
 
 target_link_libraries(test-1.exe aloo)
-set_target_properties(test-1.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
+# set_target_properties(test-1.exe PROPERTIES CFLAGS "${GTK4_CFLAGS}")
 
 set(CMAKE_BUILD_TYPE "$ENV{Release}")
 

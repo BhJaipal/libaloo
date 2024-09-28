@@ -8,7 +8,7 @@ AlooWidget *nothingLabel = 0;
 AlooWidget *tabs;
 AlooWidget *input;
 AlooApplication *app;
-struct _logger *lg;
+// struct _logger *lg;
 int isNothing = 1;
 
 struct _labelList {
@@ -28,7 +28,7 @@ void changeView() {
 
 static void toggleNav() {
 	char **classes = CSS.getClasses(navbar);
-	lg->log(lg, "Toggled Nav, %s", classes[0]);
+	// lg->log(lg, "Toggled Nav, %s", classes[0]);
 
 	if (!strcmp(classes[0], "vertical")) {
 		CSS.removeClass(navMenu, "nav-menu-show");
@@ -176,7 +176,7 @@ static void activate() {
 }
 
 int main(int argc, char **argv) {
-	lg = newLogger();
+	// lg = newLogger();
 	struct AlooAppOptions opts = getAppFlags.none(argc, argv);
 	app = Application.create("com.aloo-use.aloo-edit", opts);
 	Application.add_event_listener(app, "activate", activate);

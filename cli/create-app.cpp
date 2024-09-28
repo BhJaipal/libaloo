@@ -125,6 +125,7 @@ int create_app(int argc, std::vector<std::string> argv, std::string currWD) {
 	std::ofstream alooJsonFile(currPath + "aloo.json", std::ofstream::binary);
 	alooJson["$schema"] = currWD + "/aloo.schema.json";
 	alooJson["app"] = appName;
+	alooJson["app-id"] = "com.aloo-use." + projectName;
 	alooJson["project"] = projectName;
 	alooJson["description"] = desc;
 	alooJsonFile << alooJson;

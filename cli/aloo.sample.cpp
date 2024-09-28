@@ -23,6 +23,13 @@ int main(int argc, char const *argv[]) {
 		for (int i = 2; i < argc; i++) {
 			remainingArgs.push_back(std::string(argv[i]));
 		}
+		if (!(command == "--help" || command == "-h" || command == "help" ||
+			  command == "create-app")) {
+			if (!std::filesystem::exists(
+					std::filesystem::current_path().string() + "/aloo.json")) {
+				throw std::runtime_error("Cannot locate aloo.json")
+			}
+		}
 		if (command == "build") {
 			{
 				int _ = std::system(

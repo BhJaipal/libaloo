@@ -115,16 +115,6 @@
 										</child>
 									</object>
 								</child>
-								<child>
-									<object id="editor-box" name="GtkBox">
-										<property name="name">editor-box</property>
-										<child>
-											<object id="editor" class="GtkEntry">
-												<property name="name">editor</property>
-											</object>
-										</child>
-									</object>
-								</child>
 							</object>
 						</child>
 					</object>

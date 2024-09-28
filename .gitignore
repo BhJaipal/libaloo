@@ -34,5 +34,5 @@ dist/rpm/usr/include
 dist/rpm/etc/aloo
 
 dist/Arch/usr/include
-!dist/Arch/bin
+!dist/Arch/etc/bin
 dist/Arch/etc/aloo

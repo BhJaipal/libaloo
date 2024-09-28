@@ -17,3 +17,4 @@
 #include "db/sqlite.h"
 #include "test/aloo.h"
 #include "utils/error.h"
+#include "utils/logger.h"

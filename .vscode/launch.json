@@ -4,7 +4,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/aloo-edit/bin/run.exe",
+			"program": "${workspaceFolder}/aloo-edit/bin/app.exe",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/aloo-edit",

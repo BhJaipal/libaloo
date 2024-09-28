@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 int main(int argc, char const *argv[]) {
-	std::string currWD = "/etc/aloo";
+	std::string currWD = "/home/jaipal001/Desktop/files/c-use/libaloo/cli";
 	std::vector<std::string> remainingArgs;
 	remainingArgs.push_back(std::string(argv[0]));
 	if (argc == 1) {

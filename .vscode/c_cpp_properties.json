@@ -9,7 +9,6 @@
 			"includePath": [
 				"${workspaceFolder}/**",
 				"/usr/include",
-				"${workspaceFolder}/FTXUI/include/ftxui",
 				"/usr/lib/gcc/x86_64-linux-gnu/11/include",
 				"/usr/include/graphene-1.0",
 				"/usr/include/x86_64-linux-gnu",

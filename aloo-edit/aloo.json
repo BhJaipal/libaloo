@@ -1,6 +1,7 @@
 {
 	"project": "aloo-edit",
 	"app": "Aloo Edit",
+	"app-id": "com.aloo-use.aloo-edit",
 	"description": "An default template for aloo App",
 	"$schema": "/home/jaipal001/Desktop/files/c-use/libaloo/cli/aloo.schema.json"
 }
