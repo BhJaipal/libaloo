@@ -11,6 +11,7 @@ AlooWidget *__newButtonWithLabel(const char *label) {
 	gtk_button_set_label(Button.toGtk(btn), label);
 	return btn;
 }
+
 AlooWidget *__setLabel(AlooWidget *btn, char const *name) {
 	if (!Widget.check.isButton(btn)) {
 		throw_error("Invalid button");
@@ -44,6 +45,35 @@ AlooWidget *__setUseUnderline(AlooWidget *btn, gboolean yes) {
 	return btn;
 }
 
+const char *__getLabel(AlooWidget *btn) {
+	if (!Widget.check.isButton(btn)) {
+		throw_error("Invalid button");
+		return "Invalid";
+	}
+	return gtk_button_get_label(Button.toGtk(btn));
+}
+AlooWidget *__getChild(AlooWidget *btn) {
+	if (!Widget.check.isButton(btn)) {
+		throw_error("Invalid button");
+		return btn;
+	}
+	return Widget.new(ALOO_BUTTON, gtk_button_get_child(Button.toGtk(btn)));
+}
+const char *__getIcon(AlooWidget *btn) {
+	if (!Widget.check.isButton(btn)) {
+		throw_error("Invalid button");
+		return "Invalid";
+	}
+	return gtk_button_get_icon_name(Button.toGtk(btn));
+}
+gboolean __getUseUnderline(AlooWidget *btn) {
+	if (!Widget.check.isButton(btn)) {
+		throw_error("Invalid button");
+		return 0;
+	}
+	return gtk_button_get_use_underline(Button.toGtk(btn));
+}
+
 GtkButton *__toButtonGtk(AlooWidget *wid) {
 	if (!Widget.check.isButton(wid)) {
 		throw_error("Invalid button");
@@ -53,5 +83,21 @@ GtkButton *__toButtonGtk(AlooWidget *wid) {
 }
 
 struct _alooButton Button = {
-	__newButton, __newButtonWithLabel, __setLabel,	 __setChild,
-	__setIcon,	 __setUseUnderline,	   __toButtonGtk};
+	__newButton,
+	__newButtonWithLabel,
+	__toButtonGtk,
+	.set =
+		{
+			__setLabel,
+			__setChild,
+			__setIcon,
+			__setUseUnderline,
+		},
+	.get =
+		{
+			__getLabel,
+			__getChild,
+			__getIcon,
+			__getUseUnderline,
+		},
+};

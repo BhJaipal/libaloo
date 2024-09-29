@@ -15,11 +15,17 @@
 
 AlooWidget *__newButton();
 AlooWidget *__newButtonWithLabel(const char *label);
+GtkButton *__toButtonGtk(AlooWidget *wid);
+
 AlooWidget *__setLabel(AlooWidget *btn, char const *name);
 AlooWidget *__setChild(AlooWidget *btn, AlooWidget *child);
 AlooWidget *__setIcon(AlooWidget *btn, const char *child);
 AlooWidget *__setUseUnderline(AlooWidget *btn, gboolean yes);
-GtkButton *__toButtonGtk(AlooWidget *wid);
+
+const char *__getLabel(AlooWidget *btn);
+AlooWidget *__getChild(AlooWidget *btn);
+const char *__getIcon(AlooWidget *btn);
+gboolean __getUseUnderline(AlooWidget *btn);
 
 /******************** Private Types ********************/
 
@@ -31,16 +37,28 @@ struct _alooButton {
 	AlooWidget *(*new)();
 	/// @brief Creates new Aloo Button with label
 	AlooWidget *(*newWithLabel)(const char *label);
-	/// @brief Sets the label of the button
-	AlooWidget *(*label)(AlooWidget *btn, char const *name);
-	/// @brief Sets the child of the button
-	AlooWidget *(*child)(AlooWidget *btn, AlooWidget *child);
-	/// @brief Sets the icon of the button
-	AlooWidget *(*icon)(AlooWidget *btn, const char *child);
-	/// @brief Sets whether to use underline or not in the button
-	AlooWidget *(*useUnderline)(AlooWidget *btn, gboolean yes);
 	/// @brief Converts Aloo Button to Gtk Button
 	GtkButton *(*toGtk)(AlooWidget *wid);
+	struct {
+		/// @brief Sets the label of the button
+		AlooWidget *(*label)(AlooWidget *btn, char const *name);
+		/// @brief Sets the child of the button
+		AlooWidget *(*child)(AlooWidget *btn, AlooWidget *child);
+		/// @brief Sets the icon of the button
+		AlooWidget *(*icon)(AlooWidget *btn, const char *iconName);
+		/// @brief Sets whether to use underline or not in the button
+		AlooWidget *(*useUnderline)(AlooWidget *btn, gboolean yes);
+	} set;
+	struct {
+		/// @brief Gets the label of the button
+		const char *(*label)(AlooWidget *btn);
+		/// @brief Gets the child of the button
+		AlooWidget *(*child)(AlooWidget *btn);
+		/// @brief Gets the icon of the button
+		const char *(*icon)(AlooWidget *btn);
+		/// @brief Gets whether to use underline or not in the button
+		gboolean (*useUnderline)(AlooWidget *btn);
+	} get;
 };
 
 /******************** Public ********************/

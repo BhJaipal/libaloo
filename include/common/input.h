@@ -28,7 +28,7 @@ AlooWidget *__input_deleteSelection(AlooWidget *input, int start, int end);
 // getters
 const char *__input_get_val(AlooWidget *input);
 gboolean __input_get_isEditable(AlooWidget *input);
-guint16 *__input_get_value_length(AlooWidget *input);
+guint64 __input_get_value_length(AlooWidget *input);
 gboolean __input_get_isUndo_enabled(AlooWidget *input);
 gint __input_get_position(AlooWidget *input);
 gfloat __input_get_alignment(AlooWidget *input);
@@ -39,8 +39,8 @@ AlooWidget *__input_set_isEditable(AlooWidget *input, gboolean editable);
 AlooWidget *__input_select(AlooWidget *input, int start, int end);
 AlooWidget *__input_set_val(AlooWidget *input, const char *value);
 AlooWidget *__input_set_isUndo_enabled(AlooWidget *input, gboolean enabled);
-AlooWidget *__input_set_position(AlooWidget *input, int position);
-AlooWidget *__input_set_alignment(AlooWidget *input, int alignment);
+AlooWidget *__input_set_position(AlooWidget *input, gint position);
+AlooWidget *__input_set_alignment(AlooWidget *input, gfloat alignment);
 
 /******************** Private Types ********************/
 
@@ -56,7 +56,7 @@ struct __alooInput {
 	GtkEditable *(*toGtk)(AlooWidget *input);
 	/// @brief Gets the value length of the input
 	/// @param input input aloo Widget
-	guint16 (*getValueLength)(AlooWidget *input);
+	guint64 (*getValueLength)(AlooWidget *input);
 	/// @brief Inserts text in the input at a position
 	AlooWidget *(*insertText)(AlooWidget *input, const char *text,
 							  int text_length, int *position);
@@ -72,7 +72,7 @@ struct __alooInput {
 	struct {
 		/// @brief Gets the value of the input
 		AlooWidget *(*value)(AlooWidget *input, const char *value);
-		AlooWidget (*position)(AlooWidget *input, gint position);
+		AlooWidget *(*position)(AlooWidget *input, gint position);
 		AlooWidget *(*select_text)(AlooWidget *input, int start, int end);
 		/// @brief Sets input to editable or not
 		/// @param input input aloo Widget

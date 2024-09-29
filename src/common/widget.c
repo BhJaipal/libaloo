@@ -60,6 +60,9 @@ AlooWidget *__Widget_setName(AlooWidget *widget, const char *name) {
 	gtk_widget_set_name(Widget.to_gtk(widget), name);
 	return widget;
 }
+const char *__Widget_getName(AlooWidget *widget) {
+	return gtk_widget_get_name(Widget.to_gtk(widget));
+}
 
 AlooWidget *__Widget_AlooFromBuilder(AlooBuilder *builder, const char *name) {
 	AlooWidget *wid =
@@ -88,6 +91,15 @@ AlooWidget *__Widget_AddEventListener(AlooWidget *widget_instance,
 	g_signal_connect(widget_instance->child, event_name, G_CALLBACK(CallbackFn),
 					 data);
 	return widget_instance;
+}
+GtkOrientation __Widget_getOrientation(AlooWidget *widget) {
+	return gtk_orientable_get_orientation(GTK_ORIENTABLE(widget->child));
+}
+GtkAlign __Widget_getHorizontalAlign(AlooWidget *widget) {
+	return gtk_widget_get_halign(widget->child);
+}
+GtkAlign __Widget_getVerticalAlign(AlooWidget *widget) {
+	return gtk_widget_get_valign(widget->child);
 }
 
 int is_widget_of_type(AlooWidget *widget, enum WidgetType type) {
@@ -129,11 +141,21 @@ struct _aloo_widget Widget = {
 	.gtk_to_aloo = __Widget_Gtk_to_Aloo,
 	.obj_to_aloo = __Widget_Obj_to_Aloo,
 	.alooFromBuilder = __Widget_AlooFromBuilder,
-	.setName = __Widget_setName,
-	.setOrientation = __Widget_SetOrientation,
+	.set =
+		{
+			.name = __Widget_setName,
+			.orientation = __Widget_SetOrientation,
+			.horizontalAlign = __Widget_setHorizontalAlign,
+			.verticalAlign = __Widget_setVerticalAlign,
+		},
+	.get =
+		{
+			.name = __Widget_getName,
+			.orientation = __Widget_getOrientation,
+			.horizontalAlign = __Widget_getHorizontalAlign,
+			.verticalAlign = __Widget_getVerticalAlign,
+		},
 	.obj_to_gtk = __Widget_Obj_to_Gtk,
-	.verticalAlign = __Widget_setVerticalAlign,
-	.horizontalAlign = __Widget_setHorizontalAlign,
 	.addEventListener = __Widget_AddEventListener,
 	.check =
 		{

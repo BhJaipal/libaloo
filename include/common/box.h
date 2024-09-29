@@ -97,9 +97,6 @@ GtkBox *__toGtk(AlooWidget *widget);
 struct _alooBox {
 	/// @brief Creates new Aloo Box
 	AlooWidget *(*new)(GtkOrientation orientation, int spacing);
-	AlooWidget *(*setOrientation)(AlooWidget *box, GtkOrientation orientation);
-	/// @brief Gets Box Orientation
-	GtkOrientation (*getOrientation)(AlooWidget *box);
 	/// @brief Appends `GtkWidget` child to box
 	AlooWidget *(*appendGtk)(AlooWidget *box, GtkWidget *widget);
 	/// @brief Prepends `GtkWidget` child to box
@@ -118,20 +115,28 @@ struct _alooBox {
 	 */
 	AlooWidget *(*insertChildAfter)(AlooWidget *box, AlooWidget *child,
 									AlooWidget *after);
-	/// @brief Sets Box Spacing
-	AlooWidget *(*setSpacing)(AlooWidget *box, int spacing);
-	/// @brief Gets Box Spacing
-	int (*getSpacing)(AlooWidget *box);
-	/// @brief Gets box homogeneous
-	gboolean (*getHomogeneous)(AlooWidget *box);
-	/// @brief Sets box homogeneous
-	AlooWidget *(*setHomogeneous)(AlooWidget *box, gboolean homogeneous);
-	/// @brief Gets Box baseline position
-	GtkBaselinePosition (*getBaselinePosition)(AlooWidget *box);
-	/// @brief Sets Box baseline position
-	AlooWidget *(*setBaselinePosition)(AlooWidget *box,
-									   GtkBaselinePosition position);
-	/// @brief Returns Gtk Box
+	struct {
+		/// @brief Sets Box Orientation
+		AlooWidget *(*orientation)(AlooWidget *box, GtkOrientation orientation);
+		/// @brief Sets Box Spacing
+		AlooWidget *(*spacing)(AlooWidget *box, int spacing);
+		/// @brief Sets box homogeneous
+		AlooWidget *(*homogeneous)(AlooWidget *box, gboolean homogeneous);
+		/// @brief Sets Box baseline position
+		AlooWidget *(*baselinePosition)(AlooWidget *box,
+										GtkBaselinePosition position);
+	} set;
+	struct {
+		/// @brief Gets Box Orientation
+		GtkOrientation (*orientation)(AlooWidget *box);
+		/// @brief Gets Box Spacing
+		int (*spacing)(AlooWidget *box);
+		/// @brief Gets box homogeneous
+		gboolean (*homogeneous)(AlooWidget *box);
+		/// @brief Gets Box baseline position
+		GtkBaselinePosition (*baselinePosition)(AlooWidget *box);
+		/// @brief Returns Gtk Box
+	} get;
 	GtkBox *(*toGtk)(AlooWidget *widget);
 };
 

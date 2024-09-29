@@ -6,6 +6,9 @@ AlooWidget *__alooSetWindowChild(AlooWidget *window, AlooWidget *child) {
 	gtk_window_set_child(GTK_WINDOW(window->child), child->child);
 	return window;
 }
+AlooWidget *__alooGetWindowChild(AlooWidget *window) {
+	return Widget.gtk_to_aloo(gtk_window_get_child(GTK_WINDOW(window->child)));
+}
 AlooWidget *__alooPresentWindow(AlooWidget *window) {
 	gtk_window_present(GTK_WINDOW(window->child));
 	return window;
@@ -17,6 +20,9 @@ AlooWidget *__alooApplicationNewWindow(AlooApplication *app) {
 AlooWidget *__alooSetWindowTitle(AlooWidget *window, const char *title) {
 	gtk_window_set_title(GTK_WINDOW(window->child), title);
 	return window;
+}
+const char *__alooGetWindowTitle(AlooWidget *window) {
+	return gtk_window_get_title(GTK_WINDOW(window->child));
 }
 AlooWidget *__setWindowSize(AlooWidget *window, int width, int height) {
 	gtk_window_set_default_size(GTK_WINDOW(window->child), width, height);
@@ -30,6 +36,9 @@ AlooWidget *__getWindowSize(AlooWidget *window, int *width, int *height) {
 AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app) {
 	gtk_window_set_application(GTK_WINDOW(window->child), app->app);
 	return window;
+}
+GtkApplication *__getWindowApplication(AlooWidget *window) {
+	return gtk_window_get_application(GTK_WINDOW(window->child));
 }
 
 void __showWindow(AlooWidget *window) {
@@ -57,11 +66,20 @@ struct _alooWindow Window = {
 	.new = __alooApplicationNewWindow,
 	.present = __alooPresentWindow,
 	.show = __showWindow,
-	.setChild = __alooSetWindowChild,
-	.setTitle = __alooSetWindowTitle,
-	.setSize = __setWindowSize,
-	.getSize = __getWindowSize,
+	.set =
+		{
+			.child = __alooSetWindowChild,
+			.title = __alooSetWindowTitle,
+			.size = __setWindowSize,
+			.AppWindow = __setWindowApplication,
+		},
+	.get =
+		{
+			.size = __getWindowSize,
+			.AppWindow = __getWindowApplication,
+			.child = __alooGetWindowChild,
+			.title = __alooGetWindowTitle,
+		},
 	.app_add_window = __app_add_window,
-	.set_app_window = __setWindowApplication,
 	.toGtk = __Window_toGtk,
 };

@@ -8,7 +8,7 @@ AlooWidget *nothingLabel = 0;
 AlooWidget *tabs;
 AlooWidget *input;
 AlooApplication *app;
-// struct _logger *lg;
+struct _logger *lg;
 int isNothing = 1;
 
 struct _labelList {
@@ -28,7 +28,7 @@ void changeView() {
 
 static void toggleNav() {
 	char **classes = CSS.getClasses(navbar);
-	// lg->log(lg, "Toggled Nav, %s", classes[0]);
+	lg->log(lg, "Toggled Nav, %s", classes[0]);
 
 	if (!strcmp(classes[0], "vertical")) {
 		CSS.removeClass(navMenu, "nav-menu-show");
@@ -47,7 +47,7 @@ void nothingHappened(AlooWidget *data);
 void print_hello() {
 	if (labelList.len == 9) {
 		nothingLabel = Label.new("Maximum number of labels reached");
-		Widget.setName(nothingLabel, "no-label");
+		Widget.set.name(nothingLabel, "no-label");
 		isNothing = 1;
 		Grid.attach(labelGrid, nothingLabel, 1, 4, 3, 1);
 		return;
@@ -56,7 +56,7 @@ void print_hello() {
 	if (strlen(Input.get.value(input)) == 0) return;
 	if (isNothing && nothingLabel != 0) nothingHappened(labelGrid);
 	AlooWidget *label = Label.new(Input.get.value(input));
-	Widget.setName(label, "label");
+	Widget.set.name(label, "label");
 	Grid.attach(labelGrid, label, (labelList.len / 3) + 1,
 				(labelList.len % 3) + 1, 1, 1);
 	labelList.labels[labelList.len] = label;
@@ -85,13 +85,16 @@ void nothingHappened(AlooWidget *data) {
 		isNothing = 0;
 	} else {
 		nothingLabel = Label.new("Nothing Happened");
-		Widget.setName(nothingLabel, "no-label");
+		Widget.set.name(nothingLabel, "no-label");
 		Grid.attach(data, nothingLabel, 1, 1, 2, 1);
 		isNothing = 1;
 	}
 }
 
-static void activate() {
+static void activate(gpointer data) {
+	AlooApplication *app = malloc(sizeof(AlooApplication));
+	app->app = data;
+	int x = 1912, y = 992;
 	labelList.len = 0;
 	AlooBuilder *builder = Builder.create();
 	Builder.addFile(builder, "builder.ui", NULL);
@@ -107,32 +110,33 @@ static void activate() {
 	AlooWidget *menuBar = Builder.alooFromBuilder(builder, "menu-bar");
 	AlooWidget *boxBody = Builder.alooFromBuilder(builder, "box-body");
 
-	Widget.setOrientation(box, GTK_ORIENTATION_VERTICAL);
-	Widget.setOrientation(navbar, GTK_ORIENTATION_VERTICAL);
-	Widget.setOrientation(appBody, GTK_ORIENTATION_VERTICAL);
-	Widget.setOrientation(boxBody, GTK_ORIENTATION_HORIZONTAL);
-	Widget.setOrientation(tabs, GTK_ORIENTATION_HORIZONTAL);
+	Widget.set.orientation(box, GTK_ORIENTATION_VERTICAL);
+	Widget.set.orientation(navbar, GTK_ORIENTATION_VERTICAL);
+	Widget.set.orientation(appBody, GTK_ORIENTATION_VERTICAL);
+	Widget.set.orientation(boxBody, GTK_ORIENTATION_HORIZONTAL);
+	Widget.set.orientation(tabs, GTK_ORIENTATION_HORIZONTAL);
 	CSS.setSize(buttonWidget, 100, 50);
 	CSS.setSize(rmLabelWidget, 125, 50);
 
-	Button.label(buttonWidget, "add");
-	Button.label(rmLabelWidget, "remove");
+	Button.set.label(buttonWidget, "add");
+	Button.set.label(rmLabelWidget, "remove");
 
-	Window.setSize(window, 1904, 992);
-	Window.set_app_window(window, app);
+	Window.set.size(window, x, y);
+	Window.set.AppWindow(window, app);
 	Widget.addEventListener(buttonWidget, "clicked", print_hello, NULL);
 	Widget.addEventListener(rmLabelWidget, "clicked", removeLabel, NULL);
 
 	labelGrid = Grid.new();
-	Widget.setName(labelGrid, "label-grid");
-	Widget.horizontalAlign(Widget.verticalAlign(labelGrid, GTK_ALIGN_CENTER),
-						   GTK_ALIGN_CENTER);
-	Widget.horizontalAlign(Widget.verticalAlign(box, GTK_ALIGN_CENTER),
-						   GTK_ALIGN_CENTER);
+	Widget.set.name(labelGrid, "label-grid");
+	Widget.set.horizontalAlign(
+		Widget.set.verticalAlign(labelGrid, GTK_ALIGN_CENTER),
+		GTK_ALIGN_CENTER);
+	Widget.set.horizontalAlign(Widget.set.verticalAlign(box, GTK_ALIGN_CENTER),
+							   GTK_ALIGN_CENTER);
 	Box.append(box, labelGrid);
 
-	Widget.horizontalAlign(Widget.verticalAlign(grid, GTK_ALIGN_CENTER),
-						   GTK_ALIGN_CENTER);
+	Widget.set.horizontalAlign(Widget.set.verticalAlign(grid, GTK_ALIGN_CENTER),
+							   GTK_ALIGN_CENTER);
 
 	CSS.importPath("style.css");
 
@@ -140,8 +144,9 @@ static void activate() {
 	Grid.row_spacing(labelGrid, 5);
 	Grid.column_spacing(labelGrid, 5);
 
-	CSS.setWidth(box, 1904);
-	CSS.setHeight(box, 992);
+	CSS.setWidth(Builder.alooFromBuilder(builder, "nav-show"), x);
+	CSS.setWidth(box, x);
+	CSS.setHeight(box, y);
 	// CSS.setWidth(Widget.alooFromBuilder(builder, "editor-box"), 1904);
 	// CSS.setHeight(Widget.alooFromBuilder(builder, "editor-box"), 992);
 
@@ -150,20 +155,20 @@ static void activate() {
 							changeView, NULL);
 
 	navMenu = Grid.new();
-	Widget.setName(navMenu, "nav-menu");
+	Widget.set.name(navMenu, "nav-menu");
 	const char *menus[] = {"File", "Edit", "Save"};
 	for (int i = 0; i < 3; i++) {
 		AlooWidget *label = Button.newWithLabel(menus[i]);
-		Widget.setName(label, "menu-opt");
+		Widget.set.name(label, "menu-opt");
 		CSS.setSize(label, 100, 20);
 		Grid.attach(navMenu, label, 0, i, 1, 1);
 	}
-	CSS.setSize(box, 1804, 992);
-	CSS.setSize(navMenu, 100, 992);
+	CSS.setSize(box, x, y);
+	CSS.setSize(navMenu, 100, y);
 	CSS.addClass(navMenu, "nav-menu-show");
 
 	AlooWidget *navShow = Builder.alooFromBuilder(builder, "nav-show");
-	CSS.setSize(navShow, 1904, 70);
+	CSS.setSize(navShow, x, 70);
 	char **classes = CSS.getClasses(navMenu);
 	for (int i = 0; i < sizeof(classes) / sizeof(classes[0]); i++) {
 		printf("%s\n", classes[i]);
@@ -176,10 +181,10 @@ static void activate() {
 }
 
 int main(int argc, char **argv) {
-	// lg = newLogger();
+	lg = newLogger();
 	struct AlooAppOptions opts = getAppFlags.none(argc, argv);
 	app = Application.create("com.aloo-use.aloo-edit", opts);
-	Application.add_event_listener(app, "activate", activate);
+	Application.add_event_listener(app, "activate", activate, app->app);
 	int status = Application.run(app);
 	Application.unref(app);
 	return status;

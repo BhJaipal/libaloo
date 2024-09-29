@@ -48,8 +48,8 @@ void __unrefApp(AlooApplication *application) {
 	g_object_unref(application->app);
 }
 void __AppAddEvents(AlooApplication *app, const char *event,
-					GCallback callbackFn) {
-	g_signal_connect(app->app, "activate", callbackFn, NULL);
+					GCallback callbackFn, gpointer data) {
+	g_signal_connect(app->app, "activate", callbackFn, data);
 }
 struct _alooApp Application = {
 	__CreateApp, __RunApp, __RunAppAndUnrefIt, __unrefApp, __AppAddEvents,

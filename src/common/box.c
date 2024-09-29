@@ -140,8 +140,6 @@ GtkBox *__toGtk(AlooWidget *widget) {
 
 struct _alooBox Box = {
 	__new_alooBox,
-	__setBoxOrientation,
-	__getBoxOrientation,
 	__boxAppendGtk,
 	__boxPrependGtk,
 	__boxRemoveGtk,
@@ -149,11 +147,19 @@ struct _alooBox Box = {
 	__boxPrepend,
 	__boxRemove,
 	__boxInsertChildAfter,
-	__setBoxSpacing,
-	__getBoxSpacing,
-	__getBoxHomogeneous,
-	__setBoxHomogeneous,
-	__getBoxBaselinePosition,
-	__setBoxBaselinePosition,
+	.set =
+		{
+			.baselinePosition = __setBoxBaselinePosition,
+			.homogeneous = __setBoxHomogeneous,
+			.spacing = __setBoxSpacing,
+			.orientation = __setBoxOrientation,
+		},
+	.get =
+		{
+			.orientation = __getBoxOrientation,
+			.spacing = __getBoxSpacing,
+			.homogeneous = __getBoxHomogeneous,
+			.baselinePosition = __getBoxBaselinePosition,
+		},
 	__toGtk,
 };

@@ -7,16 +7,16 @@ Test *t;
 static void activate() {
 	AlooWidget *label = Label.new("Hello World!");
 	AlooWidget *win = Window.new(app);
-	Window.setChild(win, label);
-	Window.setSize(win, 400, 300);
-	Window.setTitle(win, "Example App");
+	Window.set.child(win, label);
+	Window.set.size(win, 400, 300);
+	Window.set.title(win, "Example App");
 	Window.show(win);
 	Window.present(win);
 
 	t->addTest("Widget Test", t, t->expectGtkWidget(label->child, label));
 	t->result(t);
 
-	Window.set_app_window(win, app);
+	Window.set.AppWindow(win, app);
 	g_application_quit(G_APPLICATION(app->app));
 }
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
 	struct AlooAppOptions opts = getAppFlags.none(argc, argv);
 	app = Application.create("com.example.hello", opts);
-	Application.add_event_listener(app, "activate", activate);
+	Application.add_event_listener(app, "activate", activate, NULL);
 
 	// sqlite3 *db;
 	// SQLite.open("db.sqlite", &db);

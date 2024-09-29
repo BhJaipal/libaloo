@@ -37,7 +37,7 @@ AlooWidget *__input_set_isEditable(AlooWidget *input, gboolean editable) {
 	return input;
 }
 
-guint16 *__input_get_value_length(AlooWidget *input) {
+guint64 __input_get_value_length(AlooWidget *input) {
 	if (!Widget.check.isInput(input)) {
 		throw_error("Invalid input");
 		return 0;
@@ -59,9 +59,9 @@ AlooWidget *__input_append_text(AlooWidget *input, const char *text,
 		throw_error("Invalid input");
 		return 0;
 	}
-	guint16 length = __input_get_value_length(input);
+	guint64 length = __input_get_value_length(input);
 	gtk_editable_insert_text(Input.toGtk(input), text, text_length,
-							 (int *)length);
+							 (int *)(&length));
 	return input;
 }
 AlooWidget *__input_prepend_text(AlooWidget *input, const char *text,
@@ -120,7 +120,7 @@ AlooWidget *__input_set_isUndo_enabled(AlooWidget *input, gboolean enabled) {
 	gtk_editable_set_enable_undo(Input.toGtk(input), enabled);
 	return input;
 }
-AlooWidget *__input_set_position(AlooWidget *input, int position) {
+AlooWidget *__input_set_position(AlooWidget *input, gint position) {
 	if (!Widget.check.isInput(input)) {
 		throw_error("Invalid input");
 		return 0;
@@ -128,7 +128,7 @@ AlooWidget *__input_set_position(AlooWidget *input, int position) {
 	gtk_editable_set_position(Input.toGtk(input), position);
 	return input;
 }
-AlooWidget *__input_set_alignment(AlooWidget *input, int alignment) {
+AlooWidget *__input_set_alignment(AlooWidget *input, gfloat alignment) {
 	if (!Widget.check.isInput(input)) {
 		throw_error("Invalid input");
 		return 0;

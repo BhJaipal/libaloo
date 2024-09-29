@@ -28,6 +28,7 @@ AlooWidget *__Widget_new(WidgetType type, GtkWidget *child);
  * @return returns the widget
  */
 AlooWidget *__Widget_setName(AlooWidget *widget, const char *name);
+const char *__Widget_getName(AlooWidget *widget);
 
 /**
  * @brief Creates AlooWidget from GtkWidget
@@ -70,6 +71,23 @@ AlooWidget *__Widget_setHorizontalAlign(AlooWidget *widget, GtkAlign alignment);
 AlooWidget *__Widget_setVerticalAlign(AlooWidget *widget, GtkAlign alignment);
 
 /**
+ * @brief Gets orientation of `AlooWidget`
+ * @param widget widget whose orientation has to be recieved
+ */
+GtkOrientation __Widget_getOrientation(AlooWidget *widget);
+
+/**
+ * @brief Gets horizontal alignment of `AlooWidget`
+ * @param widget Widget whose alignment has to be recieved
+ */
+GtkAlign __Widget_getHorizontalAlign(AlooWidget *widget);
+/**
+ * @brief Gets vertical alignment of `AlooWidget`
+ * @param widget Widget whose alignment has to be recieved
+ */
+GtkAlign __Widget_getVerticalAlign(AlooWidget *widget);
+
+/**
  * @brief Adds event listener to a widget
  * @param widget_instance
  * @param event_name Event name
@@ -104,17 +122,30 @@ struct _aloo_widget {
 	AlooWidget *(*obj_to_aloo)(GObject *obj);
 	/// @brief Creates AlooWidget from GtkWidget
 	AlooWidget *(*gtk_to_aloo)(GtkWidget *widget);
-	/// @brief Sets orientation of AlooWidget
-	AlooWidget *(*setOrientation)(AlooWidget *widget, GtkOrientation orien);
-	/// @brief Set the Name of widget
-	/// @param widget AlooWidget
-	/// @param name string for name of widget
-	/// @return returns the widget
-	AlooWidget *(*setName)(AlooWidget *widget, const char *name);
-	/// @brief Sets horizontal alignment of AlooWidget
-	AlooWidget *(*horizontalAlign)(AlooWidget *widget, GtkAlign alignment);
-	/// @brief Sets vertical alignment of AlooWidget
-	AlooWidget *(*verticalAlign)(AlooWidget *widget, GtkAlign alignment);
+	struct {
+		/// @brief Sets orientation of AlooWidget
+		AlooWidget *(*orientation)(AlooWidget *widget, GtkOrientation orien);
+		/// @brief Set the Name/ID of widget
+		/// @param widget AlooWidget
+		/// @param value string for name of widget
+		/// @return returns the widget
+		AlooWidget *(*name)(AlooWidget *widget, const char *value);
+		/// @brief Sets horizontal alignment of AlooWidget
+		AlooWidget *(*horizontalAlign)(AlooWidget *widget, GtkAlign alignment);
+		/// @brief Sets vertical alignment of AlooWidget
+		AlooWidget *(*verticalAlign)(AlooWidget *widget, GtkAlign alignment);
+	} set;
+	struct {
+		/// @brief Sets orientation of AlooWidget
+		GtkOrientation (*orientation)(AlooWidget *widget);
+		/// @brief Get the Name/ID of widget
+		/// @param widget AlooWidget
+		const char *(*name)(AlooWidget *widget);
+		/// @brief Gets horizontal alignment of AlooWidget
+		GtkAlign (*horizontalAlign)(AlooWidget *widget);
+		/// @brief Gets vertical alignment of AlooWidget
+		GtkAlign (*verticalAlign)(AlooWidget *widget);
+	} get;
 	/// @brief Adds event listener to a widget
 	/// @param widget_instance
 	/// @param data parameters for event listener

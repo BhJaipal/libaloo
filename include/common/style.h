@@ -36,7 +36,7 @@ AlooWidget *__widgetAddClass(AlooWidget *widget, char *class);
 /** @brief Removes class from widget */
 AlooWidget *__widgetRemoveClass(AlooWidget *widget, char *class);
 /** @brief Gets classes of widget */
-char **g__etWidgetClasses(AlooWidget *widget);
+char **__getWidgetClasses(AlooWidget *widget);
 /** @brief Sets classes of widget */
 AlooWidget *__setWidgetClasses(AlooWidget *widget, char **classes);
 
