@@ -62,4 +62,6 @@ typedef struct {
 	GtkBuilder *builder;
 } AlooBuilder;
 
+typedef enum { NORMAL, ELEVATED, OUTLINED, FILLED, TONAL } AlooButtonType;
+
 #endif // ALOO_TYPES_H

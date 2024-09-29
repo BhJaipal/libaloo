@@ -30,7 +30,6 @@ gboolean __getUseUnderline(AlooWidget *btn);
 /******************** Private Types ********************/
 
 /** @brief type of material buttons */
-typedef enum { NORMAL, ELEVATED, OUTLINED, FILLED, TONAL } AlooButtonType;
 
 /**
  * @brief An Structure that contains all the AlooButton related functions
