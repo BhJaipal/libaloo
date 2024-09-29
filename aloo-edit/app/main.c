@@ -53,9 +53,9 @@ void print_hello() {
 		return;
 	}
 
-	if (strlen(Input.getValue(input)) == 0) return;
+	if (strlen(Input.get.value(input)) == 0) return;
 	if (isNothing && nothingLabel != 0) nothingHappened(labelGrid);
-	AlooWidget *label = Label.new(Input.getValue(input));
+	AlooWidget *label = Label.new(Input.get.value(input));
 	Widget.setName(label, "label");
 	Grid.attach(labelGrid, label, (labelList.len / 3) + 1,
 				(labelList.len % 3) + 1, 1, 1);

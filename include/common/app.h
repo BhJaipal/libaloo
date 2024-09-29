@@ -84,7 +84,8 @@ void __unrefApp(AlooApplication *application);
  * @param callbackFn static void function which will be called when app is
  * started
  */
-void __AppAddEvents(AlooApplication *app, const char *event, void callbackFn());
+void __AppAddEvents(AlooApplication *app, const char *event,
+					GCallback callbackFn);
 
 /******************** Private Types ********************/
 
@@ -115,7 +116,7 @@ struct _alooApp {
 	/// @param callbackFn static void function which will be called when app is
 	/// started
 	void (*add_event_listener)(AlooApplication *app, const char *event,
-							   void callbackFn());
+							   GCallback callbackFn);
 };
 
 /******************** Public ********************/

@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) {
 			  command == "create-app")) {
 			if (!std::filesystem::exists(
 					std::filesystem::current_path().string() + "/aloo.json")) {
-				throw std::runtime_error("Cannot locate aloo.json")
+				throw std::runtime_error("Cannot locate aloo.json");
 			}
 		}
 		if (command == "build") {
