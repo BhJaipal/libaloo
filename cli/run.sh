@@ -1,6 +1,6 @@
 if [ $2 = "app" ]; then
 	if [ -f bin/app.exe ]; then
-		./bin/app.exe
+		./bin/app.exe | clear
 	else
 		echo "\033[1;31mError:\033[0m No executable found, please build app first"
 	fi

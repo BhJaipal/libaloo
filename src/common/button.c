@@ -1,9 +1,17 @@
 #include "common/button.h"
+#include "common/style.h"
 #include "common/widget.h"
 #include "utils/error.h"
 
-AlooWidget *__newButton() {
+AlooWidget *__newButton(AlooButtonType type) {
 	AlooWidget *btn = Widget.new(ALOO_BUTTON, gtk_button_new());
+	CSS.addClass(btn, "material-button");
+	switch (type) {
+	case ELEVATED: CSS.addClass(btn, "material-elevated-btn"); break;
+	case OUTLINED: CSS.addClass(btn, "material-outlined-btn"); break;
+	case TONAL: CSS.addClass(btn, "material-tonal-btn"); break;
+	case FILLED: CSS.addClass(btn, "material-filled-btn"); break;
+	}
 	return btn;
 }
 AlooWidget *__newButtonWithLabel(const char *label) {
@@ -77,7 +85,7 @@ gboolean __getUseUnderline(AlooWidget *btn) {
 GtkButton *__toButtonGtk(AlooWidget *wid) {
 	if (!Widget.check.isButton(wid)) {
 		throw_error("Invalid button");
-		return GTK_BUTTON(Button.new()->child);
+		return GTK_BUTTON(Button.new(NORMAL)->child);
 	}
 	return GTK_BUTTON(wid->child);
 }

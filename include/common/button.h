@@ -13,7 +13,7 @@
 
 /******************** Private Funcs ********************/
 
-AlooWidget *__newButton();
+AlooWidget *__newButton(AlooButtonType type);
 AlooWidget *__newButtonWithLabel(const char *label);
 GtkButton *__toButtonGtk(AlooWidget *wid);
 
@@ -29,12 +29,15 @@ gboolean __getUseUnderline(AlooWidget *btn);
 
 /******************** Private Types ********************/
 
+/** @brief type of material buttons */
+typedef enum { NORMAL, ELEVATED, OUTLINED, FILLED, TONAL } AlooButtonType;
+
 /**
  * @brief An Structure that contains all the AlooButton related functions
  */
 struct _alooButton {
 	/// @brief Creates new Aloo Button without label
-	AlooWidget *(*new)();
+	AlooWidget *(*new)(AlooButtonType type);
 	/// @brief Creates new Aloo Button with label
 	AlooWidget *(*newWithLabel)(const char *label);
 	/// @brief Converts Aloo Button to Gtk Button
@@ -64,5 +67,4 @@ struct _alooButton {
 /******************** Public ********************/
 
 extern struct _alooButton Button;
-
 #endif // ALOO_BUTTON_H

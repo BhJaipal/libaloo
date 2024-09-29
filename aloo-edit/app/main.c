@@ -7,7 +7,6 @@ AlooWidget *navMenu;
 AlooWidget *nothingLabel = 0;
 AlooWidget *tabs;
 AlooWidget *input;
-AlooApplication *app;
 struct _logger *lg;
 int isNothing = 1;
 
@@ -147,8 +146,6 @@ static void activate(gpointer data) {
 	CSS.setWidth(Builder.alooFromBuilder(builder, "nav-show"), x);
 	CSS.setWidth(box, x);
 	CSS.setHeight(box, y);
-	// CSS.setWidth(Widget.alooFromBuilder(builder, "editor-box"), 1904);
-	// CSS.setHeight(Widget.alooFromBuilder(builder, "editor-box"), 992);
 
 	Widget.addEventListener(menuBar, "clicked", toggleNav, NULL);
 	Widget.addEventListener(Widget.alooFromBuilder(builder, "view"), "clicked",
@@ -183,7 +180,7 @@ static void activate(gpointer data) {
 int main(int argc, char **argv) {
 	lg = newLogger();
 	struct AlooAppOptions opts = getAppFlags.none(argc, argv);
-	app = Application.create("com.aloo-use.aloo-edit", opts);
+	AlooApplication *app = Application.create("com.aloo-use.aloo-edit", opts);
 	Application.add_event_listener(app, "activate", activate, app->app);
 	int status = Application.run(app);
 	Application.unref(app);

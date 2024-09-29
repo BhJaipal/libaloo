@@ -1,3 +1,4 @@
+#include "common/style.h"
 #include "common/widget.h"
 #include "common/window.h"
 #include "utils/error.h"
@@ -15,6 +16,8 @@ AlooWidget *__alooPresentWindow(AlooWidget *window) {
 }
 
 AlooWidget *__alooApplicationNewWindow(AlooApplication *app) {
+	CSS.importPath("style/material.css");
+	CSS.importPath("styles/colors.css");
 	return Widget.gtk_to_aloo(gtk_application_window_new(app->app));
 }
 AlooWidget *__alooSetWindowTitle(AlooWidget *window, const char *title) {
@@ -34,6 +37,8 @@ AlooWidget *__getWindowSize(AlooWidget *window, int *width, int *height) {
 }
 
 AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app) {
+	CSS.importPath("styles/material.css");
+	CSS.importPath("styles/colors.css");
 	gtk_window_set_application(GTK_WINDOW(window->child), app->app);
 	return window;
 }
