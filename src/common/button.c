@@ -14,8 +14,14 @@ AlooWidget *__newButton(AlooButtonType type) {
 	}
 	return btn;
 }
-AlooWidget *__newButtonWithLabel(const char *label) {
+AlooWidget *__newButtonWithLabel(const char *label, AlooButtonType type) {
 	AlooWidget *btn = Widget.new(ALOO_BUTTON, gtk_button_new());
+	switch (type) {
+	case ELEVATED: CSS.addClass(btn, "material-elevated-btn"); break;
+	case OUTLINED: CSS.addClass(btn, "material-outlined-btn"); break;
+	case TONAL: CSS.addClass(btn, "material-tonal-btn"); break;
+	case FILLED: CSS.addClass(btn, "material-filled-btn"); break;
+	}
 	gtk_button_set_label(Button.toGtk(btn), label);
 	return btn;
 }

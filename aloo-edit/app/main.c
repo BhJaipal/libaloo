@@ -155,7 +155,7 @@ static void activate(gpointer data) {
 	Widget.set.name(navMenu, "nav-menu");
 	const char *menus[] = {"File", "Edit", "Save"};
 	for (int i = 0; i < 3; i++) {
-		AlooWidget *label = Button.newWithLabel(menus[i]);
+		AlooWidget *label = Button.newWithLabel(menus[i], NORMAL);
 		Widget.set.name(label, "menu-opt");
 		CSS.setSize(label, 100, 20);
 		Grid.attach(navMenu, label, 0, i, 1, 1);

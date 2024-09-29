@@ -14,7 +14,7 @@
 /******************** Private Funcs ********************/
 
 AlooWidget *__newButton(AlooButtonType type);
-AlooWidget *__newButtonWithLabel(const char *label);
+AlooWidget *__newButtonWithLabel(const char *label, AlooButtonType type);
 GtkButton *__toButtonGtk(AlooWidget *wid);
 
 AlooWidget *__setLabel(AlooWidget *btn, char const *name);
@@ -38,7 +38,7 @@ struct _alooButton {
 	/// @brief Creates new Aloo Button without label
 	AlooWidget *(*new)(AlooButtonType type);
 	/// @brief Creates new Aloo Button with label
-	AlooWidget *(*newWithLabel)(const char *label);
+	AlooWidget *(*newWithLabel)(const char *label, AlooButtonType type);
 	/// @brief Converts Aloo Button to Gtk Button
 	GtkButton *(*toGtk)(AlooWidget *wid);
 	struct {
