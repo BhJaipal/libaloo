@@ -31,6 +31,11 @@ int __RunAppAndUnrefIt(AlooApplication *application) {
 	return status;
 }
 
+struct AlooAppOptions _app_get_none_no_flags() {
+	char *argv[] = {"bin/test.exe"};
+	struct AlooAppOptions opts = {APP_FLAGS_NONE, 0, argv};
+	return opts;
+}
 struct AlooAppOptions _app_get_none(int argc, char **argv) {
 	struct AlooAppOptions opts = {APP_FLAGS_NONE, argc, argv};
 	return opts;
@@ -55,6 +60,7 @@ struct _alooApp Application = {
 	__CreateApp, __RunApp, __RunAppAndUnrefIt, __unrefApp, __AppAddEvents,
 };
 struct _getAppFlags getAppFlags = {
+	.noneNoArgs = _app_get_none_no_flags,
 	.none = _app_get_none,
 	.launcher = _app_get_launcher,
 	.service = _app_get_service,

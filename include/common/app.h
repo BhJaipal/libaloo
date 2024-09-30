@@ -50,6 +50,9 @@ struct AlooAppOptions {
  * @brief Takes argc and argv and returns struct AlooAppOptions
  */
 struct _getAppFlags {
+	/// @return `struct AlooAppOptions` with `APP_FLAGS_NONE` and no reqirements
+	/// of argc and argv
+	struct AlooAppOptions (*noneNoArgs)();
 	/// @return `struct AlooAppOptions` with `APP_FLAGS_NONE`
 	struct AlooAppOptions (*none)(int argc, char **argv);
 	/// @return `struct AlooAppOptions` with `APP_FLAGS_IS_LAUNCHER`

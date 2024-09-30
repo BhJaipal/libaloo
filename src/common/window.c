@@ -16,7 +16,7 @@ AlooWidget *__alooPresentWindow(AlooWidget *window) {
 }
 
 AlooWidget *__alooApplicationNewWindow(AlooApplication *app) {
-	CSS.importPath("style/material.css");
+	CSS.importPath("styles/material.css");
 	CSS.importPath("styles/colors.css");
 	return Widget.gtk_to_aloo(gtk_application_window_new(app->app));
 }
