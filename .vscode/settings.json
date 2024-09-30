@@ -93,5 +93,11 @@
 	"license.year": "2024",
 	"editor.wordWrap": "off",
 	"editor.wordBreak": "keepAll",
+	"Lua.completion.autoRequire": true,
+	"Lua.misc.executablePath": "luajit",
+	"Lua.hint.setType": true,
+	"Lua.hint.enable": true,
+	"Lua.hint.paramType": true,
+	"Lua.type.inferParamType": true,
 	"clang-format.executable": "clang-format-14"
 }

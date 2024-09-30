@@ -1,5 +1,4 @@
 package.path = "share/lua/5.1/?.lua;share/lua/5.1/?/?.lua"
-
 local ltui = require("ltui")
 local application = ltui.application
 local event = ltui.event
