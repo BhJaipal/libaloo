@@ -16,6 +16,7 @@ build/
 out/
 bin/
 lib/
+share/
 *.exe
 *.a
 *.so

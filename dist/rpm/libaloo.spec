@@ -3,7 +3,7 @@ Version: 0.1.1
 Release: 1
 Summary: Aloo library
 License: MIT
-Requires: libgtk-4-dev, libsqlite3-dev, libjsoncpp25, libjsoncpp-dev, python3, python3-pip
+Requires: libgtk-4-dev, libsqlite3-dev, libjsoncpp25, libjsoncpp-dev, python3, python3-pip, lua5.4, luarocks
 %global aloo_arch all
 
 %define aloo_version 0.1.1

@@ -29,3 +29,10 @@ python3 setup.py  # or use python to setup the aloo cli
 ## Docs
 
 > Open [docs](docs/index.md) for docs
+
+### lua TUI requirements
+
+```bash
+sudo apt install luarocks
+sudo luarocks install --tree .
+```

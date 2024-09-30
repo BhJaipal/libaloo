@@ -1,4 +1,12 @@
 #pragma once
+#include <cstdlib>
+#include <filesystem>
+#include <iostream>
+#include <string>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <vector>
+namespace fs = std::filesystem;
 // #define ALOO_TUI
 #ifdef ALOO_TUI
 #include "ftxui/component/animation.hpp"
@@ -99,15 +107,6 @@ void help() {
 	std::cout << "\n";
 }
 #endif
-
-#include <cstdlib>
-#include <filesystem>
-#include <iostream>
-#include <string>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <vector>
-namespace fs = std::filesystem;
 
 bool ends_with(std::string const &fullString, std::string const &ending) {
 	if (fullString.length() >= ending.length()) {
