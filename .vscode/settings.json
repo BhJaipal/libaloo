@@ -78,7 +78,8 @@
 		"span": "cpp",
 		"variant": "cpp",
 		"filesystem": "cpp",
-		"codecvt": "cpp"
+		"codecvt": "cpp",
+		"csignal": "cpp"
 	},
 	"cmake.sourceDirectory": "/home/jaipal001/Desktop/files/c-use/libaloo",
 	"cmake.buildDirectory": "${workspaceFolder}/build",
