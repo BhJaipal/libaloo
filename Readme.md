@@ -5,7 +5,7 @@
 ### Sample App
 
 <!-- markdownlint-disable MD010 -->
-<img alt="App" src="assets/sample-app.png" align="right" />
+![App](assets/sample-app.png)
 
 ```c
 #include "aloo.h"
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
 ### Sample Test
 
-<img alt="Test" src="assets/sample-test.png" align="right" />
+![Test](assets/sample-test.png)
 
 ```c
 #include "aloo.h"
