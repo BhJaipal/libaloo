@@ -1,6 +1,5 @@
 import blessed
 import os
-import math
 from typing import Union, Optional
 
 term = blessed.Terminal()
@@ -17,7 +16,7 @@ commandsInfo = {
         "info": "Create a new C aloo app",
         "hasSubCommands": True,
         "subCommands": {
-            "--name": {
+            "Name": {
                 "info": "Name of the new project",
                 "field": {
                     "projectName": str,
@@ -25,7 +24,7 @@ commandsInfo = {
                     "description": Optional[str],
                 },
             },
-            "--path": {
+            "Path": {
                 "info": "Path of the new project",
                 "field": {
                     "projectPath": str,
@@ -103,6 +102,7 @@ term.fullscreen()
 
 exitCommand = ""
 isCommandEnabled = False
+selectedCommand = ""
 
 
 def takeInput():
@@ -111,94 +111,150 @@ def takeInput():
         global activeSelection
         global isCommandEnabled
         global exitCommand
+        global selectedCommand
         os.system("clear")
         term.fullscreen()
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
         print(term.royalblue_on_lightblue((logo[1:-1])))
         print(term.royalblue_on_lightblue(lineSpace(1 / 5, True)))
-        for option in commands:
-            if commands.index(option) == 0:
+        # commands
+        if activeSelection.__len__() == 1:
+            for option in commands:
+                if commands.index(option) == 0:
+                    print(
+                        term.bold_royalblue_on_lightblue(
+                            " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                        )
+                        + (
+                            term.bold_white_on_royalblue
+                            if commands.index(option) == activeSelection[0]
+                            else term.bold_royalblue_on_lightblue
+                        )(" ┌─────────────────────┐ ")
+                        + term.bold_royalblue_on_lightblue(
+                            " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                        )
+                    )
                 print(
                     term.bold_royalblue_on_lightblue(
                         " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                     )
                     + (
-                        term.bold_white_on_royalblue
+                        term.bold_bright_white_on_royalblue
                         if commands.index(option) == activeSelection[0]
                         else term.bold_royalblue_on_lightblue
-                    )(" ┌─────────────────────┐ ")
+                    )((" │ " + option + " " * (20 - len(option)) + "│ "))
                     + term.bold_royalblue_on_lightblue(
                         " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                     )
                 )
+                if commands.index(option) == commands.__len__() - 1:
+                    print(
+                        term.bold_royalblue_on_lightblue(
+                            " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                        )
+                        + (
+                            term.bold_bright_white_on_royalblue
+                            if commands.index(option) == activeSelection[0]
+                            else term.bold_royalblue_on_lightblue
+                        )(" └─────────────────────┘ ")
+                        + term.bold_royalblue_on_lightblue(
+                            " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                        )
+                    )
+                else:
+                    print(
+                        term.bold_royalblue_on_lightblue(
+                            " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                        )
+                        + (
+                            term.bold_bright_white_on_royalblue
+                            if commands.index(option) == activeSelection[0]
+                            or (
+                                commands.index(option) < commands.__len__() - 1
+                                and commands.index(option) + 1 == activeSelection[0]
+                            )
+                            else term.bold_royalblue_on_lightblue
+                        )(" ├─────────────────────┤ ")
+                        + term.bold_royalblue_on_lightblue(
+                            " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                        )
+                    )
+            print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+            infoLen = len(commandsInfo[commands[activeSelection[0]]]["info"])
+            infoSpaceStart = "─" * (infoLen - 12)
+            infoSpaceEnd = "─" * (infoLen + 2)
             print(
                 term.bold_royalblue_on_lightblue(
-                    " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    " " * ((term.width - infoLen - 3) // 2)
                 )
-                + (
-                    term.bold_bright_white_on_royalblue
-                    if commands.index(option) == activeSelection[0]
-                    else term.bold_royalblue_on_lightblue
-                )((" │ " + option + " " * (20 - len(option)) + "│ "))
+                + term.royalblue_on_lightblue("┌─ Description " + infoSpaceStart + "┐")
                 + term.bold_royalblue_on_lightblue(
-                    " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    " " * ((term.width - infoLen - 4) // 2)
                 )
             )
-            if commands.index(option) == commands.__len__() - 1:
-                print(
-                    term.bold_royalblue_on_lightblue(
-                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
-                    )
-                    + (
-                        term.bold_bright_white_on_royalblue
-                        if commands.index(option) == activeSelection[0]
-                        else term.bold_royalblue_on_lightblue
-                    )(" └─────────────────────┘ ")
-                    + term.bold_royalblue_on_lightblue(
-                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
-                    )
+            print(
+                term.bold_royalblue_on_lightblue(
+                    " " * ((term.width - infoLen - 3) // 2)
                 )
-            else:
+                + term.royalblue_on_lightblue(
+                    "│ " + commandsInfo[commands[activeSelection[0]]]["info"] + " │"
+                )
+                + term.bold_royalblue_on_lightblue(
+                    " " * (term.width - infoLen - 4 - ((term.width - infoLen - 3) // 2))
+                )
+            )
+            print(
+                term.bold_royalblue_on_lightblue(
+                    " " * ((term.width - infoLen - 3) // 2)
+                )
+                + term.royalblue_on_lightblue("└" + infoSpaceEnd + "┘")
+                + term.bold_royalblue_on_lightblue(
+                    " " * ((term.width - infoLen - 4) // 2)
+                )
+            )
+        else:
+            print(
+                term.bold_royalblue_on_lightblue(
+                    f"{' ' * ((term.width - 10) // 2)}Select one{' ' * ((term.width - 10) // 2 + 1)}"
+                )
+            )
+            if commandsInfo[selectedCommand]["hasSubCommands"]:
+                subCmds = [
+                    subCmd
+                    for subCmd, v in commandsInfo[selectedCommand][
+                        "subCommands"
+                    ].items()
+                ]
                 print(
-                    term.bold_royalblue_on_lightblue(
-                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
-                    )
-                    + (
-                        term.bold_bright_white_on_royalblue
-                        if commands.index(option) == activeSelection[0]
-                        or (
-                            commands.index(option) < commands.__len__() - 1
-                            and commands.index(option) + 1 == activeSelection[0]
+                    term.royalblue_on_lightblue(
+                        " "
+                        * (
+                            (
+                                term.width
+                                - (sum([subCmd.__len__() for subCmd in subCmds]) + 5)
+                            )
+                            // 2
                         )
-                        else term.bold_royalblue_on_lightblue
-                    )(" ├─────────────────────┤ ")
-                    + term.bold_royalblue_on_lightblue(
-                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
-                    )
+                    ),
+                    end="",
                 )
-        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
-        infoLen = len(commandsInfo[commands[activeSelection[0]]]["info"])
-        infoSpaceStart = "─" * (infoLen - 12)
-        infoSpaceEnd = "─" * (infoLen + 2)
-        print(
-            term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
-            + term.royalblue_on_lightblue("┌─ Description " + infoSpaceStart + "┐")
-            + term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 4) // 2))
-        )
-        print(
-            term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
-            + term.royalblue_on_lightblue(
-                "│ " + commandsInfo[commands[activeSelection[0]]]["info"] + " │"
-            )
-            + term.bold_royalblue_on_lightblue(
-                " " * (term.width - infoLen - 4 - ((term.width - infoLen - 3) // 2))
-            )
-        )
-        print(
-            term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
-            + term.royalblue_on_lightblue("└" + infoSpaceEnd + "┘")
-            + term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 4) // 2))
-        )
+                selectionOpts = ""
+                for c in subCmds:
+                    subCmds += " " + c + " "
+                    if subCmds.index(c) != subCmds.__len__() - 1:
+                        selectionOpts += "|"
+                print(term.bold_royalblue_on_lightblue(selectionOpts), end="")
+                print(
+                    term.royalblue_on_lightblue(
+                        " "
+                        * (
+                            term.width
+                            - (sum([subCmd.__len__() for subCmd in subCmds]) + 5)
+                        )
+                        // 2
+                    ),
+                    end="",
+                )
         print(term.royalblue_on_lightblue(lineSpace()))
         if isCommandEnabled:
             commandSpace = ""
@@ -224,6 +280,9 @@ def takeInput():
                     exitCommand = exitCommand[:-1]
                 else:
                     isCommandEnabled = False
+            if inp.name is not None and inp.name == "KEY_TAB":
+                selectedCommand = commands[activeSelection[0]]
+                activeSelection.append(0)
             if (
                 inp.name is not None
                 and inp.name == "KEY_ENTER"
