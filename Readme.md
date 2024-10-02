@@ -5,7 +5,7 @@
 ### Sample App
 
 <!-- markdownlint-disable MD010 -->
-<img alt="App" src="assets/sample-app.png" float="right" />
+<img alt="App" src="assets/sample-app.png" align="right" />
 
 ```c
 #include "aloo.h"
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
 ### Sample Test
 
-<img alt="Test" src="assets/sample-test.png" float="right" />
+<img alt="Test" src="assets/sample-test.png" align="right" />
 
 ```c
 #include "aloo.h"
