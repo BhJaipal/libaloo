@@ -76,7 +76,11 @@ void help() {
 	std::string spaces = "    ";
 	for (int i = 0; i < 7; i++) { spaces += "    "; }
 	Element document = hbox({
-		text(spaces + "   " + "Aloo TUI" + spaces + "   ") |
+		text(" ██████╗   ██╗         █████╗        █████╗"
+			 "\n██╔═══██║  ██║       ██╔════██╗    ██╔════██╗"
+			 "\n████████║  ██║      ██║      ██║  ██║      ██║"
+			 "\n██║   ██║  ██║       ██╚════██╝    ██╚════██╝"
+			 "\n██║   ██╝  ██████║     █████╝        █████╝") |
 			color(Color::BlueLight) | border | bold,
 	});
 	auto screen = Screen::Create(Dimension::Full(), Dimension::Fit(document));
