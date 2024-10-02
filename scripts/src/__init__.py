@@ -1,5 +1,7 @@
 import blessed
 import os
+import math
+from typing import Union, Optional
 
 term = blessed.Terminal()
 spaces: str = " "
@@ -8,7 +10,67 @@ for i in range(
 ):
     spaces += " "
 
-commands: str = ""
+alooTypes = Union["str", "int", "float", "bool", "object"]
+commands: list[str] = ["create-app", "model", "build", "run", "connect-db"]
+commandsInfo = {
+    "create-app": {
+        "info": "Create a new C aloo app",
+        "hasSubCommands": True,
+        "subCommands": {
+            "--name": {
+                "info": "Name of the new project",
+                "field": {
+                    "projectName": str,
+                    "appName": str,
+                    "description": Optional[str],
+                },
+            },
+            "--path": {
+                "info": "Path of the new project",
+                "field": {
+                    "projectPath": str,
+                    "appName": str,
+                    "description": Optional[str],
+                },
+            },
+        },
+    },
+    "model": {
+        "info": "Create a new model",
+        "hasSubCommands": False,
+        "fields": {"name": str, "field": list[str, alooTypes]},
+    },
+    "build": {
+        "info": "Build the aloo project",
+        "hasSubCommands": False,
+    },
+    "run": {
+        "info": "Runs the project app/ tests",
+        "hasSubCommands": True,
+        "subCommands": {
+            "app": {"fields": "Runs the aloo app"},
+            "test": {"fields": "Runs the aloo project tests"},
+        },
+    },
+    "connect-db": {
+        "info": "Works with connection with databases",
+        "hasSubCommands": True,
+        "subCommands": {
+            "new": {
+                "info": "Create a new connection with database",
+                "field": {"modelName": str},
+            },
+            "restart": {
+                "info": "Deletes all data from sqlite",
+                "field": {"modelName": str},
+            },
+            "add": {
+                "info": "Add database model",
+                "field": {"modelName": str},
+            },
+        },
+    },
+}
 
 
 def lineSpace(n: float = 1 / 4, isEnd=False):
@@ -25,6 +87,7 @@ def lineSpace(n: float = 1 / 4, isEnd=False):
     return lineSpaces
 
 
+activeSelection = [0]
 print(term.home + term.clear + term.move_y(term.height))
 
 logo = f"""
@@ -37,58 +100,149 @@ logo = f"""
 
 os.system("clear")
 term.fullscreen()
-print(term.blue_on_lightblue(lineSpace()))
-print(term.blue_on_lightblue((logo[1:-1])))
-print(term.blue_on_lightblue(lineSpace(3 / 4)))
+
+exitCommand = ""
+isCommandEnabled = False
 
 
 def takeInput():
     try:
         global commands
-        if commands != "":
-            os.system("clear")
-            term.fullscreen()
-            print(term.blue_on_lightblue(lineSpace()))
-            print(term.blue_on_lightblue((logo[1:-1])))
-            if commands.__len__() != 0:
-                print(term.blue_on_lightblue(lineSpace(1 / 5, True)))
+        global activeSelection
+        global isCommandEnabled
+        global exitCommand
+        os.system("clear")
+        term.fullscreen()
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        print(term.royalblue_on_lightblue((logo[1:-1])))
+        print(term.royalblue_on_lightblue(lineSpace(1 / 5, True)))
+        for option in commands:
+            if commands.index(option) == 0:
                 print(
-                    term.bold_blue_on_lightblue(term.center("┌─────────────────────┐"))
-                )
-                print(
-                    term.bold_blue_on_lightblue(
-                        term.center("│ " + commands + " " * (20 - len(commands)) + "│")
+                    term.bold_royalblue_on_lightblue(
+                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    )
+                    + (
+                        term.bold_white_on_royalblue
+                        if commands.index(option) == activeSelection[0]
+                        else term.bold_royalblue_on_lightblue
+                    )(" ┌─────────────────────┐ ")
+                    + term.bold_royalblue_on_lightblue(
+                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                     )
                 )
-                print(
-                    term.bold_blue_on_lightblue(term.center("└─────────────────────┘"))
+            print(
+                term.bold_royalblue_on_lightblue(
+                    " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                 )
-                print(term.blue_on_lightblue(lineSpace(1 / 2)))
+                + (
+                    term.bold_bright_white_on_royalblue
+                    if commands.index(option) == activeSelection[0]
+                    else term.bold_royalblue_on_lightblue
+                )((" │ " + option + " " * (20 - len(option)) + "│ "))
+                + term.bold_royalblue_on_lightblue(
+                    " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                )
+            )
+            if commands.index(option) == commands.__len__() - 1:
+                print(
+                    term.bold_royalblue_on_lightblue(
+                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    )
+                    + (
+                        term.bold_bright_white_on_royalblue
+                        if commands.index(option) == activeSelection[0]
+                        else term.bold_royalblue_on_lightblue
+                    )(" └─────────────────────┘ ")
+                    + term.bold_royalblue_on_lightblue(
+                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    )
+                )
             else:
-                print(term.blue_on_lightblue(lineSpace(3 / 4)))
+                print(
+                    term.bold_royalblue_on_lightblue(
+                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    )
+                    + (
+                        term.bold_bright_white_on_royalblue
+                        if commands.index(option) == activeSelection[0]
+                        or (
+                            commands.index(option) < commands.__len__() - 1
+                            and commands.index(option) + 1 == activeSelection[0]
+                        )
+                        else term.bold_royalblue_on_lightblue
+                    )(" ├─────────────────────┤ ")
+                    + term.bold_royalblue_on_lightblue(
+                        " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
+                    )
+                )
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        infoLen = len(commandsInfo[commands[activeSelection[0]]]["info"])
+        infoSpaceStart = "─" * (infoLen - 12)
+        infoSpaceEnd = "─" * (infoLen + 2)
+        print(
+            term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
+            + term.royalblue_on_lightblue("┌─ Description " + infoSpaceStart + "┐")
+            + term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 4) // 2))
+        )
+        print(
+            term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
+            + term.royalblue_on_lightblue(
+                "│ " + commandsInfo[commands[activeSelection[0]]]["info"] + " │"
+            )
+            + term.bold_royalblue_on_lightblue(
+                " " * (term.width - infoLen - 4 - ((term.width - infoLen - 3) // 2))
+            )
+        )
+        print(
+            term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
+            + term.royalblue_on_lightblue("└" + infoSpaceEnd + "┘")
+            + term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 4) // 2))
+        )
+        print(term.royalblue_on_lightblue(lineSpace()))
+        if isCommandEnabled:
+            commandSpace = ""
+            for _ in range(int((term.width - exitCommand.__len__() - 11))):
+                commandSpace += " "
+            print(
+                term.bold_white_on_green4(" COMMAND ")
+                + term.bold_green4_on_gray25(" ")
+                + term.bold_bright_white_on_gray25(exitCommand + commandSpace)
+            )
         with term.cbreak(), term.hidden_cursor():
             inp = term.inkey()
-            if ord(inp) == 27:
-                commands = ""
-                takeInput()
-            if ord(inp) >= 32 and ord(inp) <= 126:
-                commands += inp
-            if inp.name == "KEY_BACKSPACE":
-                if commands.__len__() == 1:
-                    commands = ""
-                elif commands.__len__() > 1:
-                    commands = commands[:-1]
-                takeInput()
-            if inp.name == "KEY_ENTER":
-                print(commands)
-                if commands != ":q":
-                    takeInput()
+            if inp.name is not None and inp.name == "KEY_ESCAPE":
+                isCommandEnabled = True
+            elif inp.name is None and isCommandEnabled:
+                exitCommand += inp
+            elif (
+                inp.name is not None
+                and isCommandEnabled
+                and inp.name == "KEY_BACKSPACE"
+            ):
+                if exitCommand.__len__() > 0:
+                    exitCommand = exitCommand[:-1]
                 else:
-                    os.system("clear")
-                    exit(0)
-            else:
-                term.clear
-                takeInput()
+                    isCommandEnabled = False
+            if (
+                inp.name is not None
+                and inp.name == "KEY_ENTER"
+                and isCommandEnabled
+                and exitCommand == ":q"
+            ):
+                os.system("clear")
+                exit(0)
+            if inp.name is not None and inp.name == "KEY_DOWN":
+                if activeSelection[0] == commands.__len__() - 1:
+                    activeSelection[0] = 0
+                else:
+                    activeSelection[0] += 1
+            if inp.name is not None and inp.name == "KEY_UP":
+                if activeSelection[0] == 0:
+                    activeSelection[0] = commands.__len__() - 1
+                else:
+                    activeSelection[0] -= 1
+            takeInput()
     except KeyboardInterrupt:
         print("Process exited")
         os.system("clear")
