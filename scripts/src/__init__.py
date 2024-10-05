@@ -284,64 +284,37 @@ def createApp():
         )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
-            ),
-            end="",
-        )
-        print(
-            term.royalblue_on_lightblue("┌"),
-            end="",
-        )
-        print(
-            term.bold_royalblue_on_lightblue(
-                "─" * (len("Name") + 2) + "ᚁ" + "─" * (len("Path") + 2)
-            ),
-            end="",
-        )
-        print(
-            term.royalblue_on_lightblue("┐"),
-            end="",
-        )
-        print(
-            term.royalblue_on_lightblue(
+                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
+            )
+            + term.royalblue_on_lightblue("🬕")
+            + term.bold_royalblue_on_lightblue(
+                "🬂" * ((len("Name") // 2) + 1) + "🬨 🬕" + "🬂" * ((len("Path") // 2) + 1)
+            )
+            + term.royalblue_on_lightblue("🬨")
+            + term.royalblue_on_lightblue(
                 " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
             )
         )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
-            ),
-            end="",
-        )
-        print(term.bold_royalblue_on_lightblue("│ Name │ Path │"), end="")
-        print(
-            term.royalblue_on_lightblue(
+                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
+            )
+            + term.bold_royalblue_on_lightblue("▌ Name ▐ ▌ Path ▐")
+            + term.royalblue_on_lightblue(
                 " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
             ),
         )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 4)) // 2) - 1)
-            ),
-            end="",
-        )
-        print(
-            term.royalblue_on_lightblue("└"),
-            end="",
-        )
-        print(
-            term.bold_royalblue_on_lightblue(
-                "─" * (len("Name") + 2) + "ᚆ" + "─" * (len("Path") + 2)
-            ),
-            end="",
-        )
-        print(
-            term.royalblue_on_lightblue("┘"),
-            end="",
-        )
-        print(
-            term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
+                " " * (((term.width - (len("NamePath") + 4)) // 2) - 2)
+            )
+            + term.royalblue_on_lightblue("🬲")
+            + term.bold_royalblue_on_lightblue(
+                "🬭" * ((len("Name") // 2) + 1) + "🬷 🬲" + "🬭" * ((len("Path") // 2) + 1)
+            )
+            + term.royalblue_on_lightblue("🬷")
+            + term.royalblue_on_lightblue(
+                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
             )
         )
         print(term.royalblue_on_lightblue(lineSpace(1 / 2)))
