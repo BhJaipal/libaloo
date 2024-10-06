@@ -9,6 +9,14 @@ for i in range(
 ):
     spaces += " "
 
+
+def emptyLine(end="\n"):
+    global term
+    for i in range(term.width):
+        print(term.royalblue_on_lightblue(" "), end="")
+    print(end=end)
+
+
 alooTypes = Union["str", "int", "float", "bool", "object"]
 commands: list[str] = ["create-app", "model", "build", "run", "connect-db"]
 commandsInfo = {
@@ -198,7 +206,8 @@ def takeInput():
             + term.royalblue_on_lightblue("└" + infoSpaceEnd + "┘")
             + term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 4) // 2))
         )
-        print(term.royalblue_on_lightblue(lineSpace()))
+        for i in range(6):
+            emptyLine()
         if isCommandEnabled:
             commandSpace = ""
             for _ in range(int((term.width - exitCommand.__len__() - 11))):
@@ -206,11 +215,27 @@ def takeInput():
             print(
                 term.bold_white_on_green4(" COMMAND ")
                 + term.bold_green4_on_gray25(" ")
-                + term.bold_bright_white_on_gray25(exitCommand + commandSpace)
+                + term.bold_bright_white_on_gray25(exitCommand + commandSpace),
+                end="",
             )
+        else:
+            emptyLine("")
         with term.cbreak(), term.hidden_cursor():
             inp = term.inkey()
-            if inp.name is not None and inp.name != "KEY_TAB":
+            if inp.name is not None and inp.name == "KEY_TAB":
+                selectedCommand = commands[activeSelection[0]]
+                activeSelection.append(0)
+                match selectedCommand:
+                    case "create-app":
+                        isCommandEnabled = False
+                        createApp()
+                    case "model":
+                        pass
+                    case "build":
+                        pass
+                    case _:
+                        pass
+            else:
                 if inp.name is not None and inp.name == "KEY_ESCAPE":
                     isCommandEnabled = True
                 elif inp.name is None and isCommandEnabled:
@@ -243,28 +268,20 @@ def takeInput():
                     else:
                         activeSelection[0] -= 1
                 takeInput()
-            else:
-                selectedCommand = commands[activeSelection[0]]
-                activeSelection.append(0)
-                match selectedCommand:
-                    case "create-app":
-                        createApp()
-                    case "model":
-                        pass
-                    case "build":
-                        pass
-                    case _:
-                        pass
     except KeyboardInterrupt:
         print("Process exited")
         os.system("clear")
         exit(1)
 
 
+selectedAppOption = "Name"
+
+
 def createApp():
     try:
         global commandSpace
         global commands
+        global selectedAppOption
         global activeSelection
         global isCommandEnabled
         global exitCommand
@@ -274,50 +291,71 @@ def createApp():
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
         print(term.royalblue_on_lightblue((logo[1:-1])))
         print(term.royalblue_on_lightblue(lineSpace(1 / 5, True)))
+        selectionLabel = "╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──"
         print(
             term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - 10) // 2)}Select one{' ' * ((term.width - 10) // 2 + 1)}"
+                f"{' ' * ((term.width - len(selectionLabel)) // 2)}╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──{' ' * ((term.width - len(selectionLabel)) // 2)}"
+            )
+        )
+        print(
+            term.bold_royalblue_on_lightblue(
+                f"{' ' * ((term.width - len(selectionLabel)) // 2)}╙─╖ ╟── ║   ╟── ║    ║     ║ ║ ║╙╖║ ╟──{' ' * ((term.width - len(selectionLabel)) // 2)}"
+            )
+        )
+        print(
+            term.bold_royalblue_on_lightblue(
+                f"{' ' * ((term.width - len(selectionLabel)) // 2)}──╜ ╙── ╙── ╙── ╙──  ╨     ╙─╜ ╨ ╙╜ ╙──{' ' * ((term.width - len(selectionLabel)) // 2)}"
             )
         )
         createAppSubCommands: dict[str, dict[str, Union[str, dict[str, object]]]] = (
             commandsInfo["create-app"]["subCommands"]
         )
+        nameSelected: callable = (
+            term.bold_white_on_royalblue
+            if selectedAppOption == "Name"
+            else term.bold_royalblue_on_lightblue
+        )
+        pathSelected: callable = (
+            term.bold_white_on_royalblue
+            if selectedAppOption == "Path"
+            else term.bold_royalblue_on_lightblue
+        )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
             )
-            + term.royalblue_on_lightblue("🬕")
-            + term.bold_royalblue_on_lightblue(
-                "🬂" * ((len("Name") // 2) + 1) + "🬨 🬕" + "🬂" * ((len("Path") // 2) + 1)
-            )
-            + term.royalblue_on_lightblue("🬨")
+            + nameSelected("┌" + (("─" * 6) + "┐"))
+            + term.royalblue_on_lightblue(" ")
+            + pathSelected("┌" + ("─" * 6) + "┐")
             + term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
             )
         )
         print(
             term.royalblue_on_lightblue(
                 " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
             )
-            + term.bold_royalblue_on_lightblue("▌ Name ▐ ▌ Path ▐")
+            + nameSelected("│ Name │")
+            + term.bold_royalblue_on_lightblue(" ")
+            + pathSelected("│ Path │")
             + term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 1)
+                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
             ),
         )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 4)) // 2) - 2)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
             )
-            + term.royalblue_on_lightblue("🬲")
-            + term.bold_royalblue_on_lightblue(
-                "🬭" * ((len("Name") // 2) + 1) + "🬷 🬲" + "🬭" * ((len("Path") // 2) + 1)
-            )
-            + term.royalblue_on_lightblue("🬷")
+            + nameSelected("└" + (("─" * 6) + "┘"))
+            + term.royalblue_on_lightblue(" ")
+            + pathSelected("└" + ("─" * 6) + "┘")
             + term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
             )
         )
         print(term.royalblue_on_lightblue(lineSpace(1 / 2)))
+        emptyLine()
+        emptyLine()
         if isCommandEnabled:
             commandSpace = ""
             for _ in range(int((term.width - exitCommand.__len__() - 11))):
@@ -325,12 +363,20 @@ def createApp():
             print(
                 term.bold_white_on_green4(" COMMAND ")
                 + term.bold_green4_on_gray25(" ")
-                + term.bold_bright_white_on_gray25(exitCommand + commandSpace)
+                + term.bold_bright_white_on_gray25(exitCommand + commandSpace),
+                end="",
             )
+        else:
+            emptyLine("")
         with term.cbreak(), term.hidden_cursor():
             inp = term.inkey()
+            print(inp if inp.name is None else inp.name)
             if inp.name is not None and inp.name == "KEY_ESCAPE":
                 isCommandEnabled = True
+            if inp.name is not None and inp.name == "KEY_LEFT":
+                selectedAppOption = "Name"
+            if inp.name is not None and inp.name == "KEY_RIGHT":
+                selectedAppOption = "Path"
             elif inp.name is None and isCommandEnabled:
                 exitCommand += inp
             elif (
