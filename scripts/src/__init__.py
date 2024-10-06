@@ -97,10 +97,10 @@ print(term.home + term.clear + term.move_y(term.height))
 
 logo = f"""
 {spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
-{spaces}██╔═══██║  ██║       ██╔════██╗    ██╔════██╗  {spaces}
+{spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
 {spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
-{spaces}██║   ██║  ██║       ██╚════██╝    ██╚════██╝  {spaces}
-{spaces}██║   ██╝  ██████║     █████╝        █████╝    {spaces}
+{spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
+{spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
 """
 
 os.system("clear")
@@ -121,7 +121,7 @@ def takeInput():
         os.system("clear")
         term.fullscreen()
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
-        print(term.royalblue_on_lightblue((logo[1:-1])))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
         print(term.royalblue_on_lightblue(lineSpace(1 / 5, True)))
         for option in commands:
             if commands.index(option) == 0:
@@ -130,7 +130,7 @@ def takeInput():
                         " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                     )
                     + (
-                        term.bold_white_on_royalblue
+                        term.bold_white_on_cornflowerblue
                         if commands.index(option) == activeSelection[0]
                         else term.bold_royalblue_on_lightblue
                     )(" ┌─────────────────────┐ ")
@@ -143,7 +143,7 @@ def takeInput():
                     " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                 )
                 + (
-                    term.bold_bright_white_on_royalblue
+                    term.bold_bright_white_on_cornflowerblue
                     if commands.index(option) == activeSelection[0]
                     else term.bold_royalblue_on_lightblue
                 )((" │ " + option + " " * (20 - len(option)) + "│ "))
@@ -157,7 +157,7 @@ def takeInput():
                         " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                     )
                     + (
-                        term.bold_bright_white_on_royalblue
+                        term.bold_bright_white_on_cornflowerblue
                         if commands.index(option) == activeSelection[0]
                         else term.bold_royalblue_on_lightblue
                     )(" └─────────────────────┘ ")
@@ -171,7 +171,7 @@ def takeInput():
                         " " * ((term.width - len(" ┌─────────────────────┐ ")) // 2)
                     )
                     + (
-                        term.bold_bright_white_on_royalblue
+                        term.bold_bright_white_on_cornflowerblue
                         if commands.index(option) == activeSelection[0]
                         or (
                             commands.index(option) < commands.__len__() - 1
@@ -289,73 +289,106 @@ def createApp():
         os.system("clear")
         term.fullscreen()
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
-        print(term.royalblue_on_lightblue((logo[1:-1])))
-        print(term.royalblue_on_lightblue(lineSpace(1 / 5, True)))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6, True)))
         selectionLabel = "╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──"
         print(
             term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - len(selectionLabel)) // 2)}╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──{' ' * ((term.width - len(selectionLabel)) // 2)}"
+                f"{' ' * ((term.width - len(selectionLabel)) // 2)}┏━━ ┏━━ ┳   ┏━━ ┏━━ ━┳━    ┏━┓ ┏┓ ┳ ┏━━{' ' * ((term.width - len(selectionLabel)) // 2)}"
             )
         )
         print(
             term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - len(selectionLabel)) // 2)}╙─╖ ╟── ║   ╟── ║    ║     ║ ║ ║╙╖║ ╟──{' ' * ((term.width - len(selectionLabel)) // 2)}"
+                f"{' ' * ((term.width - len(selectionLabel)) // 2)}┗━┓ ┣━━ ┃   ┣━━ ┃    ┃     ┃ ┃ ┃┗┓┃ ┣━━{' ' * ((term.width - len(selectionLabel)) // 2)}"
             )
         )
         print(
             term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - len(selectionLabel)) // 2)}──╜ ╙── ╙── ╙── ╙──  ╨     ╙─╜ ╨ ╙╜ ╙──{' ' * ((term.width - len(selectionLabel)) // 2)}"
+                f"{' ' * ((term.width - len(selectionLabel)) // 2)}━━┛ ┗━━ ┗━━ ┗━━ ┗━━  ┻     ┗━┛ ┻ ┗┛ ┗━━{' ' * ((term.width - len(selectionLabel)) // 2)}"
             )
         )
         createAppSubCommands: dict[str, dict[str, Union[str, dict[str, object]]]] = (
             commandsInfo["create-app"]["subCommands"]
         )
         nameSelected: callable = (
-            term.bold_white_on_royalblue
+            term.bold_bright_white_on_royalblue
             if selectedAppOption == "Name"
-            else term.bold_royalblue_on_lightblue
+            else term.bold_bright_white_on_cornflowerblue
+        )
+        nameSelectedBorder: callable = (
+            term.bold_royalblue_on_royalblue
+            if selectedAppOption == "Name"
+            else term.bold_cornflowerblue_on_cornflowerblue
         )
         pathSelected: callable = (
-            term.bold_white_on_royalblue
+            term.bold_bright_white_on_royalblue
             if selectedAppOption == "Path"
-            else term.bold_royalblue_on_lightblue
+            else term.bold_bright_white_on_cornflowerblue
         )
+        pathSelectedBorder: callable = (
+            term.bold_royalblue_on_royalblue
+            if selectedAppOption == "Path"
+            else term.bold_cornflowerblue_on_cornflowerblue
+        )
+        emptyLine()
+        emptyLine()
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 3)
             )
-            + nameSelected("┌" + (("─" * 6) + "┐"))
+            + nameSelectedBorder("█" * 10)
             + term.royalblue_on_lightblue(" ")
-            + pathSelected("┌" + ("─" * 6) + "┐")
+            + pathSelectedBorder("█" * 10)
             + term.royalblue_on_lightblue(
-                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 3)
             )
         )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
+                " " * (((term.width - (len("NamePath") + 5)) // 2) - 4)
             )
-            + nameSelected("│ Name │")
+            + nameSelectedBorder("███")
+            + nameSelected("Name")
+            + nameSelectedBorder("███")
             + term.bold_royalblue_on_lightblue(" ")
-            + pathSelected("│ Path │")
+            + pathSelectedBorder("███")
+            + pathSelected("Path")
+            + pathSelectedBorder("███")
             + term.royalblue_on_lightblue(
-                " " * (((term.width - (len("NamePath") + 5)) // 2) - 2)
+                " " * (((term.width - (len("NamePath") + 5)) // 2) - 4)
             ),
         )
         print(
             term.royalblue_on_lightblue(
-                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 3)
             )
-            + nameSelected("└" + (("─" * 6) + "┘"))
+            + nameSelectedBorder("██" + (("█" * 6) + "██"))
             + term.royalblue_on_lightblue(" ")
-            + pathSelected("└" + ("─" * 6) + "┘")
+            + pathSelectedBorder("██" + ("█" * 6) + "██")
             + term.royalblue_on_lightblue(
-                " " * (((term.width - len("  Name   Path  ")) // 2) - 1)
+                " " * (((term.width - len("  Name   Path  ")) // 2) - 3)
             )
         )
-        print(term.royalblue_on_lightblue(lineSpace(1 / 2)))
         emptyLine()
         emptyLine()
+        selectedInfo = createAppSubCommands[selectedAppOption]["info"]
+        print(
+            term.royalblue_on_lightblue(
+                " " * ((term.width - len("Description: " + selectedInfo)) // 2)
+            ),
+            end="",
+        )
+        print(
+            term.bold_royalblue_on_lightblue("Description: ")
+            + term.royalblue_on_lightblue(selectedInfo),
+            end="",
+        )
+        print(
+            term.royalblue_on_lightblue(
+                " " * (((term.width - len("Description: " + selectedInfo)) // 2) + 1)
+            )
+        )
+        print(term.royalblue_on_lightblue(lineSpace(1 / 4)))
         if isCommandEnabled:
             commandSpace = ""
             for _ in range(int((term.width - exitCommand.__len__() - 11))):
