@@ -1,6 +1,6 @@
 import blessed
 import os
-from typing import Union, Optional
+from typing import Union, Optional, Callable
 
 term = blessed.Terminal()
 spaces: str = " "
@@ -45,7 +45,7 @@ commandsInfo = {
     "model": {
         "info": "Create a new model",
         "hasSubCommands": False,
-        "fields": {"name": str, "field": list[str, alooTypes]},
+        "fields": {"name": str, "field": dict[str, alooTypes]},
     },
     "build": {
         "info": "Build the aloo project",
@@ -109,6 +109,7 @@ term.fullscreen()
 exitCommand = ""
 isCommandEnabled = False
 selectedCommand = ""
+commandSpace: str = ""
 
 
 def takeInput():
@@ -184,7 +185,10 @@ def takeInput():
                     )
                 )
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
-        infoLen = len(commandsInfo[commands[activeSelection[0]]]["info"])
+        activeCmdInfo = commandsInfo[commands[activeSelection[0]]]["info"]
+        if type(activeCmdInfo) != str:
+            return
+        infoLen = len(activeCmdInfo)
         infoSpaceStart = "─" * (infoLen - 12)
         infoSpaceEnd = "─" * (infoLen + 2)
         print(
@@ -194,9 +198,7 @@ def takeInput():
         )
         print(
             term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 3) // 2))
-            + term.royalblue_on_lightblue(
-                "│ " + commandsInfo[commands[activeSelection[0]]]["info"] + " │"
-            )
+            + term.royalblue_on_lightblue("│ " + activeCmdInfo + " │")
             + term.bold_royalblue_on_lightblue(
                 " " * (term.width - infoLen - 4 - ((term.width - infoLen - 3) // 2))
             )
@@ -274,14 +276,28 @@ def takeInput():
         exit(1)
 
 
-selectedAppOption = "Name"
+class AppOptions:
+    selectedAppOption = "Name"
+    InputNumber = 0
+    Name = ""
+    Desc = ""
+
+
+def __init__(self):
+    self.selectedAppOption = "Name"
+    self.InputNumber = 0
+    self.Name = ""
+    self.Desc = ""
+
+
+appOptions = AppOptions()
 
 
 def createApp():
     try:
         global commandSpace
+        global appOptions
         global commands
-        global selectedAppOption
         global activeSelection
         global isCommandEnabled
         global exitCommand
@@ -294,40 +310,35 @@ def createApp():
         selectionLabel = "╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──"
         print(
             term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - len(selectionLabel)) // 2)}┏━━ ┏━━ ┳   ┏━━ ┏━━ ━┳━    ┏━┓ ┏┓ ┳ ┏━━{' ' * ((term.width - len(selectionLabel)) // 2)}"
+                (
+                    f"""
+{' ' * ((term.width - len(selectionLabel)) // 2)}┏━━ ┏━━ ┳   ┏━━ ┏━━ ━┳━    ┏━┓ ┏┓ ┳ ┏━━{' ' * ((term.width - len(selectionLabel)) // 2)}
+{' ' * ((term.width - len(selectionLabel)) // 2)}┗━┓ ┣━━ ┃   ┣━━ ┃    ┃     ┃ ┃ ┃┗┓┃ ┣━━{' ' * ((term.width - len(selectionLabel)) // 2)}
+{' ' * ((term.width - len(selectionLabel)) // 2)}━━┛ ┗━━ ┗━━ ┗━━ ┗━━  ┻     ┗━┛ ┻ ┗┛ ┗━━{' ' * ((term.width - len(selectionLabel)) // 2)}"""
+                )[1:]
             )
         )
-        print(
-            term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - len(selectionLabel)) // 2)}┗━┓ ┣━━ ┃   ┣━━ ┃    ┃     ┃ ┃ ┃┗┓┃ ┣━━{' ' * ((term.width - len(selectionLabel)) // 2)}"
-            )
-        )
-        print(
-            term.bold_royalblue_on_lightblue(
-                f"{' ' * ((term.width - len(selectionLabel)) // 2)}━━┛ ┗━━ ┗━━ ┗━━ ┗━━  ┻     ┗━┛ ┻ ┗┛ ┗━━{' ' * ((term.width - len(selectionLabel)) // 2)}"
-            )
-        )
-        createAppSubCommands: dict[str, dict[str, Union[str, dict[str, object]]]] = (
-            commandsInfo["create-app"]["subCommands"]
-        )
-        nameSelected: callable = (
+        createAppSubCommands = commandsInfo["create-app"]["subCommands"]
+        if type(createAppSubCommands) != dict:
+            return
+        nameSelected: Callable = (
             term.bold_bright_white_on_royalblue
-            if selectedAppOption == "Name"
+            if appOptions.selectedAppOption == "Name"
             else term.bold_bright_white_on_cornflowerblue
         )
-        nameSelectedBorder: callable = (
+        nameSelectedBorder: Callable = (
             term.bold_royalblue_on_royalblue
-            if selectedAppOption == "Name"
+            if appOptions.selectedAppOption == "Name"
             else term.bold_cornflowerblue_on_cornflowerblue
         )
-        pathSelected: callable = (
+        pathSelected: Callable = (
             term.bold_bright_white_on_royalblue
-            if selectedAppOption == "Path"
+            if appOptions.selectedAppOption == "Path"
             else term.bold_bright_white_on_cornflowerblue
         )
-        pathSelectedBorder: callable = (
+        pathSelectedBorder: Callable = (
             term.bold_royalblue_on_royalblue
-            if selectedAppOption == "Path"
+            if appOptions.selectedAppOption == "Path"
             else term.bold_cornflowerblue_on_cornflowerblue
         )
         emptyLine()
@@ -370,8 +381,9 @@ def createApp():
             )
         )
         emptyLine()
-        emptyLine()
-        selectedInfo = createAppSubCommands[selectedAppOption]["info"]
+        selectedInfo = createAppSubCommands[appOptions.selectedAppOption]["info"]
+        if type(selectedInfo) != str:
+            return
         print(
             term.royalblue_on_lightblue(
                 " " * ((term.width - len("Description: " + selectedInfo)) // 2)
@@ -388,6 +400,76 @@ def createApp():
                 " " * (((term.width - len("Description: " + selectedInfo)) // 2) + 1)
             )
         )
+        emptyLine()
+        # App Name Input
+        print(
+            (
+                term.royalblue_on_lightblue
+                if appOptions.InputNumber == 1
+                else term.cornflowerblue_on_lightblue
+            )(
+                (" " * ((term.width - len(" App Name ") - 20) // 2))
+                + ("┌─ App Name " + ("─" * 17) + "┐")
+                + (" " * ((term.width - len(" App Name ") - 20) // 2 + 1))
+            )
+        )
+        print(
+            (
+                term.royalblue_on_lightblue
+                if appOptions.InputNumber == 1
+                else term.cornflowerblue_on_lightblue
+            )(
+                (" " * ((term.width - len(" App Name ") - 20) // 2))
+                + ("│" + (" " * 28) + "│")
+                + (" " * ((term.width - len(" App Name ") - 20) // 2 + 1))
+            )
+        )
+        print(
+            (
+                term.royalblue_on_lightblue
+                if appOptions.InputNumber == 1
+                else term.cornflowerblue_on_lightblue
+            )(
+                (" " * ((term.width - len(" App Name ") - 20) // 2))
+                + ("└" + ("─" * 28) + "┘")
+                + (" " * ((term.width - len(" App Name ") - 20) // 2 + 1))
+            )
+        )
+        # App Description Input
+        print(
+            (
+                term.royalblue_on_lightblue
+                if appOptions.InputNumber == 2
+                else term.cornflowerblue_on_lightblue
+            )(
+                (" " * ((term.width - len(" Description ") - 20) // 2))
+                + ("┌─ Description " + ("─" * 17) + "┐")
+                + (" " * ((term.width - len(" Description ") - 20) // 2))
+            )
+        )
+        print(
+            (
+                term.royalblue_on_lightblue
+                if appOptions.InputNumber == 2
+                else term.cornflowerblue_on_lightblue
+            )(
+                (" " * ((term.width - len(" Description ") - 20) // 2))
+                + ("│" + (" " * (18 + len(" Description "))) + "│")
+                + (" " * ((term.width - len(" Description ") - 20) // 2))
+            )
+        )
+        print(
+            (
+                term.royalblue_on_lightblue
+                if appOptions.InputNumber == 2
+                else term.cornflowerblue_on_lightblue
+            )(
+                (" " * ((term.width - len(" Description ") - 20) // 2))
+                + ("└" + ("─" * (18 + len(" Description "))) + "┘")
+                + (" " * ((term.width - len(" Description ") - 20) // 2))
+            )
+        )
+        emptyLine()
         print(term.royalblue_on_lightblue(lineSpace(1 / 4)))
         if isCommandEnabled:
             commandSpace = ""
@@ -407,11 +489,41 @@ def createApp():
             if inp.name is not None and inp.name == "KEY_ESCAPE":
                 isCommandEnabled = True
             if inp.name is not None and inp.name == "KEY_LEFT":
-                selectedAppOption = "Name"
+                appOptions.selectedAppOption = "Name"
             if inp.name is not None and inp.name == "KEY_RIGHT":
-                selectedAppOption = "Path"
+                appOptions.selectedAppOption = "Path"
+            if inp.name is not None and inp.name == "KEY_DOWN":
+                if appOptions.InputNumber == 2:
+                    appOptions.InputNumber = 0
+                else:
+                    appOptions.InputNumber += 1
+            if inp.name is not None and inp.name == "KEY_UP":
+                if appOptions.InputNumber == 0:
+                    appOptions.InputNumber = 2
+                else:
+                    appOptions.InputNumber -= 1
+            elif inp.name is None and not isCommandEnabled:
+                if appOptions.InputNumber == 1:
+                    appOptions.Name += inp
+                elif appOptions.InputNumber == 2:
+                    appOptions.Desc += inp
             elif inp.name is None and isCommandEnabled:
                 exitCommand += inp
+            elif (
+                inp.name is not None
+                and not isCommandEnabled
+                and inp.name == "KEY_BACKSPACE"
+            ):
+                if appOptions.InputNumber == 1:
+                    if appOptions.Name.__len__() > 0:
+                        appOptions.Name = appOptions.Name[:-1]
+                    else:
+                        appOptions.Name = ""
+                elif appOptions.InputNumber == 2:
+                    if appOptions.Desc.__len__() > 0:
+                        appOptions.Desc = appOptions.Desc[:-1]
+                    else:
+                        appOptions.Desc = ""
             elif (
                 inp.name is not None
                 and isCommandEnabled
