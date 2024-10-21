@@ -26,7 +26,7 @@ commandsInfo = {
         "hasSubCommands": True,
         "subCommands": {
             "Name": {
-                "info": "Name of the new project",
+                "info": "Create new project with name         ",
                 "field": {
                     "projectName": str,
                     "appName": str,
@@ -34,7 +34,7 @@ commandsInfo = {
                 },
             },
             "Path": {
-                "info": "Path of the new project",
+                "info": "Uses current directory as new project",
                 "field": {
                     "projectPath": str,
                     "appName": str,
@@ -307,9 +307,9 @@ def createApp() -> None:
         global selectedCommand
         os.system("clear")
         term.fullscreen()
-        print(term.royalblue_on_lightblue(lineSpace(1 / 12)))
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
         print(term.cornflowerblue_on_lightblue((logo[1:-1])))
-        print(term.royalblue_on_lightblue(lineSpace(1 / 6, True)))
+        print(term.royalblue_on_lightblue(lineSpace(1 / 12, True)))
         selectionLabel = "╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──"
         print(
             term.bold_royalblue_on_lightblue(
@@ -404,76 +404,73 @@ def createApp() -> None:
         )
         emptyLine()
         # Project Name/ Path Input
-        print(
-            (
-                term.royalblue_on_lightblue
-                if appOptions.InputNumber == 0
-                else term.cornflowerblue_on_lightblue
-            )(
-                (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
-                + (
-                    "┌─ Project {} ".format(appOptions.selectedAppOption)
-                    + ("─" * 13)
-                    + "┐"
+        if appOptions.selectedAppOption != "Path":
+            print(
+                (
+                    term.royalblue_on_lightblue
+                    if appOptions.InputNumber == 0
+                    else term.cornflowerblue_on_lightblue
+                )(
+                    (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
+                    + ("┌─ Project Name " + ("─" * 13) + "┐")
+                    + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
                 )
-                + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
             )
-        )
-        print(
-            (
-                term.royalblue_on_lightblue
-                if appOptions.InputNumber == 0
-                else term.cornflowerblue_on_lightblue
-            )(
-                (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
-                + (
-                    "│ "
-                    + appOptions.projectName
-                    + (" " * (27 - len(appOptions.projectName)))
-                    + "│"
+            print(
+                (
+                    term.royalblue_on_lightblue
+                    if appOptions.InputNumber == 0
+                    else term.cornflowerblue_on_lightblue
+                )(
+                    (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
+                    + (
+                        "│ "
+                        + appOptions.projectName
+                        + (" " * (27 - len(appOptions.projectName)))
+                        + "│"
+                    )
+                    + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
                 )
-                + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
             )
-        )
-        print(
-            (
-                term.royalblue_on_lightblue
-                if appOptions.InputNumber == 0
-                else term.cornflowerblue_on_lightblue
-            )(
-                (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
-                + ("├" + ("─" * 28) + "┤")
-                + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
-            )
-        )
-        print(
-            (
-                term.royalblue_on_lightblue
-                if appOptions.InputNumber == 0
-                else term.cornflowerblue_on_lightblue
-            )(
-                (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
-                + (
-                    "│ "
-                    + term.bold_royalblue_on_lightblue("Default: ")
-                    + "aloo-project"
-                    + (" " * (27 - len("Default: aloo-project")))
-                    + "│"
+            print(
+                (
+                    term.royalblue_on_lightblue
+                    if appOptions.InputNumber == 0
+                    else term.cornflowerblue_on_lightblue
+                )(
+                    (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
+                    + ("├" + ("─" * 28) + "┤")
+                    + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
                 )
-                + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
             )
-        )
-        print(
-            (
-                term.royalblue_on_lightblue
-                if appOptions.InputNumber == 0
-                else term.cornflowerblue_on_lightblue
-            )(
-                (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
-                + ("└" + ("─" * 28) + "┘")
-                + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
+            print(
+                (
+                    term.royalblue_on_lightblue
+                    if appOptions.InputNumber == 0
+                    else term.cornflowerblue_on_lightblue
+                )(
+                    (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
+                    + (
+                        "│ "
+                        + term.bold_royalblue_on_lightblue("Default: ")
+                        + "aloo-project"
+                        + (" " * (27 - len("Default: aloo-project")))
+                        + "│"
+                    )
+                    + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
+                )
             )
-        )
+            print(
+                (
+                    term.royalblue_on_lightblue
+                    if appOptions.InputNumber == 0
+                    else term.cornflowerblue_on_lightblue
+                )(
+                    (" " * ((term.width - len(" Project Name ") - 20) // 2 + 2))
+                    + ("└" + ("─" * 28) + "┘")
+                    + (" " * ((term.width - len(" Project Name ") - 20) // 2 + 3))
+                )
+            )
         # App Name Input
         print(
             (
@@ -605,6 +602,8 @@ def createApp() -> None:
             )
         )
         emptyLine()
+        if appOptions.selectedAppOption == "Path":
+            emptyLine()
         print(
             term.royalblue_on_lightblue(" " * ((term.width - 9) // 2))
             + (
@@ -642,6 +641,11 @@ def createApp() -> None:
             )("█" * 9)
             + term.royalblue_on_lightblue(" " * ((term.width - 9) // 2))
         )
+        if appOptions.selectedAppOption == "Path":
+            emptyLine()
+            emptyLine()
+            emptyLine()
+            emptyLine()
         print(term.royalblue_on_lightblue(lineSpace(1 / 12)))
         if isCommandEnabled:
             commandSpace = ""
@@ -723,23 +727,39 @@ def createApp() -> None:
                                 else "An default template app for aloo project"
                             ),
                         }
+                        if appOptions.selectedAppOption == "Path":
+                            appInfo["project-name"] = os.getcwd().split("/")[-1]
                         if "aloo.config.yaml" in os.listdir(os.getcwd()):
                             os.system("clear")
                             raise FileExistsError("'aloo.config.yaml' already exist")
                         currFilePath = __file__.removesuffix("__init__.py")
-                        os.mkdir(appInfo["project-name"])
-                        yaml.dump(
-                            appInfo,
-                            open(appInfo["project-name"] + "/aloo.config.yaml", "w+"),
-                        )
-                        os.mkdir(appInfo["project-name"] + "/src")
-                        os.mkdir(appInfo["project-name"] + "/test")
+                        projectName = ""
+                        if appOptions.selectedAppOption != "Path":
+                            projectName = appInfo["app-name"]
+                            os.mkdir(appInfo["project-name"])
+                            yaml.dump(
+                                appInfo,
+                                open(
+                                    appInfo["project-name"] + "/aloo.config.yaml", "w+"
+                                ),
+                            )
+                            appInfo["project-name"] += "/"
+                        else:
+                            projectName = os.getcwd().split("/")[-1]
+                            yaml.dump(
+                                appInfo,
+                                open("aloo.config.yaml", "w+"),
+                            )
+                            appInfo["project-name"] = ""
+
+                        os.mkdir(appInfo["project-name"] + "src")
+                        os.mkdir(appInfo["project-name"] + "test")
                         os.system("clear")
 
-                        mainC = open(appInfo["project-name"] + "/src/main.c", "w+")
-                        testC = open(appInfo["project-name"] + "/test/main.c", "w+")
+                        mainC = open(appInfo["project-name"] + "src/main.c", "w+")
+                        testC = open(appInfo["project-name"] + "test/main.c", "w+")
                         CMakeFile = open(
-                            appInfo["project-name"] + "/CMakeLists.txt", "w+"
+                            appInfo["project-name"] + "CMakeLists.txt", "w+"
                         )
 
                         mainCSample = open(
@@ -759,12 +779,12 @@ def createApp() -> None:
                         alooDir = currFilePath.removesuffix("scripts/src/")
 
                         mainCSample = mainCSample.replace(
-                            "$projectName", appInfo["project-name"]
+                            "$projectName", projectName
                         ).replace("$appName", appInfo["app-name"])
                         mainC.write(mainCSample)
 
                         testCSample = testCSample.replace(
-                            "$projectName", appInfo["project-name"]
+                            "$projectName", projectName
                         ).replace("$appName", appInfo["app-name"])
                         testC.write(testCSample)
 
