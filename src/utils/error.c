@@ -1,7 +1,6 @@
 #include "utils/error.h"
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 void throw_error(const char *fmt, ...) {
 	va_list args;

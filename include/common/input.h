@@ -13,7 +13,7 @@
 
 /******************** Private Funcs ********************/
 
-AlooWidget *__input_new();
+AlooWidget *__input_new(char *label);
 GtkEditable *__input_to_gtk(AlooWidget *input);
 
 AlooWidget *__input_insert_text(AlooWidget *input, const char *text,
@@ -49,7 +49,7 @@ AlooWidget *__input_set_alignment(AlooWidget *input, gfloat alignment);
  */
 struct __alooInput {
 	/// @brief Creates new Aloo Input
-	AlooWidget *(*new)();
+	AlooWidget *(*new)(char *label);
 	/// @brief Converts Aloo Input to Gtk Input
 	/// @param input input aloo Widget
 	/// @return Gtk Editable

@@ -1,4 +1,5 @@
 #include "test/aloo.h"
+#include "common/widget.h"
 #include "utils/error.h"
 
 int __expectInt(int expected, int actual) {
@@ -50,6 +51,7 @@ int __expectGtkWidget(GtkWidget *expected, AlooWidget *actual) {
 		else return 1;
 		return 0;
 	}
+	return 0;
 }
 
 void __addTest(const char *test_name, struct _Test *test, int test_res) {

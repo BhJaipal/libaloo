@@ -11,6 +11,7 @@ AlooWidget *__newButton(AlooButtonType type) {
 	case OUTLINED: CSS.addClass(btn, "material-outlined-btn"); break;
 	case TONAL: CSS.addClass(btn, "material-tonal-btn"); break;
 	case FILLED: CSS.addClass(btn, "material-filled-btn"); break;
+	default: break;
 	}
 	return btn;
 }
@@ -21,6 +22,7 @@ AlooWidget *__newButtonWithLabel(const char *label, AlooButtonType type) {
 	case OUTLINED: CSS.addClass(btn, "material-outlined-btn"); break;
 	case TONAL: CSS.addClass(btn, "material-tonal-btn"); break;
 	case FILLED: CSS.addClass(btn, "material-filled-btn"); break;
+	default: break;
 	}
 	gtk_button_set_label(Button.toGtk(btn), label);
 	return btn;

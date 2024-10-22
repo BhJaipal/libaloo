@@ -70,9 +70,8 @@ AlooWidget *__input_prepend_text(AlooWidget *input, const char *text,
 		throw_error("Invalid input");
 		return 0;
 	}
-	guint16 length = 0;
-	gtk_editable_insert_text(Input.toGtk(input), text, text_length,
-							 (int *)length);
+	int length = 0;
+	gtk_editable_insert_text(Input.toGtk(input), text, text_length, &length);
 	return input;
 }
 AlooWidget *__input_deleteText(AlooWidget *input, int start, int end) {
