@@ -18,7 +18,7 @@ jobs:
             - name: Building deb package
               run: |
                   cd ${{ github.workspace }}
-                  git clone ${{ github.repositoryUrl }}
+                  git clone ${{ github.repositoryUrl }} --depth=1
                   cd libaloo
                   ./release.sh ${{ env.tag }}
 
