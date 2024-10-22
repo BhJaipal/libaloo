@@ -15,19 +15,17 @@ jobs:
         name: libaloo releases
         runs-on: ubuntu-latest
         steps:
-            - name: Building deb package
-              run: |
-                  cd ${{ github.workspace }}
-                  git clone ${{ github.repositoryUrl }} --depth=1
-                  cd libaloo
-                  ./release.sh ${{ env.tag }}
-
             - name: Checkout code
               uses: actions/checkout@v4
 
+            - name: Building deb package
+              run: |
+                  cd ${{ github.workspace }}
+                  ./release.sh ${{ env.tag }}
+
             - name: Create Release
               id: create_release
-              uses: actions/create-release@v.1.1
+              uses: actions/create-release@v1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
               with:
