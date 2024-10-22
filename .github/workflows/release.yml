@@ -1,13 +1,12 @@
-on:
-    push:
-        # Sequence of patterns matched against refs/tags
-        tags:
-            - "v0.1.2"
-
 env:
-    # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
     BUILD_TYPE: Release
     tag: "v0.1.2"
+
+on:
+    push:
+        branches: ["main"]
+        tags:
+            - "v0.1.2"
 
 name: libaloo releases
 
@@ -22,10 +21,11 @@ jobs:
                   ./release.sh ${{ env.tag }}
 
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
+
             - name: Create Release
               id: create_release
-              uses: actions/create-release@v1
+              uses: actions/create-release@v.1.1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
               with:
@@ -41,7 +41,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
                   asset_path: ./libaloo-${{ env.tag }}.deb
                   asset_name: libaloo-${{ env.tag }}.deb
                   asset_content_type: application/vnd.debian.binary-package
