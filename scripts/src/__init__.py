@@ -2,83 +2,12 @@ import blessed
 import os
 from typing import Union, Optional, Callable
 import yaml
-import sys
-
-term = blessed.Terminal()
-spaces: str = " "
-for i in range(
-    int((term.width - len("████████║  ██║      ██║      ██║  ██║      ██║")) / 2) - 1
-):
-    spaces += " "
 
 
 def emptyLine(end="\n"):
-    for i in range(term.width):
+    for _ in range(term.width):
         print(term.royalblue_on_lightblue(" "), end="")
     print(end=end)
-
-
-alooTypes = Union["str", "int", "float", "bool", "object"]
-commands: list[str] = ["create-app", "model", "build", "run", "connect-db"]
-commandsInfo = {
-    "create-app": {
-        "info": "Create a new C aloo app",
-        "hasSubCommands": True,
-        "subCommands": {
-            "Name": {
-                "info": "Create new project with name         ",
-                "field": {
-                    "projectName": str,
-                    "appName": str,
-                    "description": Optional[str],
-                },
-            },
-            "Path": {
-                "info": "Uses current directory as new project",
-                "field": {
-                    "projectPath": str,
-                    "appName": str,
-                    "description": Optional[str],
-                },
-            },
-        },
-    },
-    "model": {
-        "info": "Create a new model",
-        "hasSubCommands": False,
-        "fields": {"name": str, "field": dict[str, alooTypes]},
-    },
-    "build": {
-        "info": "Build the aloo project",
-        "hasSubCommands": False,
-    },
-    "run": {
-        "info": "Runs the project app/ tests",
-        "hasSubCommands": True,
-        "subCommands": {
-            "app": {"fields": "Runs the aloo app"},
-            "test": {"fields": "Runs the aloo project tests"},
-        },
-    },
-    "connect-db": {
-        "info": "Works with connection with databases",
-        "hasSubCommands": True,
-        "subCommands": {
-            "new": {
-                "info": "Create a new connection with database",
-                "field": {"modelName": str},
-            },
-            "restart": {
-                "info": "Deletes all data from sqlite",
-                "field": {"modelName": str},
-            },
-            "add": {
-                "info": "Add database model",
-                "field": {"modelName": str},
-            },
-        },
-    },
-}
 
 
 def lineSpace(n: float = 1 / 4, isEnd=False) -> str:
@@ -91,26 +20,6 @@ def lineSpace(n: float = 1 / 4, isEnd=False) -> str:
         lineSpaces += "\n"
     lineSpaces = lineSpaces[:-1]
     return lineSpaces
-
-
-activeSelection = [0]
-print(term.home + term.clear + term.move_y(term.height))
-
-logo = f"""
-{spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
-{spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
-{spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
-{spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
-{spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
-"""
-
-os.system("clear")
-term.fullscreen()
-
-exitCommand = ""
-isCommandEnabled = False
-selectedCommand = ""
-commandSpace: str = ""
 
 
 def takeInput() -> None:
@@ -732,7 +641,11 @@ def createApp() -> None:
                         if "aloo.config.yaml" in os.listdir(os.getcwd()):
                             os.system("clear")
                             raise FileExistsError("'aloo.config.yaml' already exist")
-                        currFilePath = __file__.removesuffix("__init__.py")
+                        currFilePath = "/".join(__file__.split("/")[:-1])
+                        if currFilePath.endswith("bin"):
+                            currFilePath = (
+                                "/".join(__file__.split("/")[:-2]) + "/scripts/src/"
+                            )
                         projectName = ""
                         if appOptions.selectedAppOption != "Path":
                             projectName = appInfo["app-name"]
@@ -814,4 +727,92 @@ def createApp() -> None:
 
 
 if __name__ == "__main__":
+    term = blessed.Terminal()
+    spaces: str = " "
+    for i in range(
+        int((term.width - len("████████║  ██║      ██║      ██║  ██║      ██║")) / 2)
+        - 1
+    ):
+        spaces += " "
+
+    alooTypes = Union["str", "int", "float", "bool", "object"]
+    commands: list[str] = ["create-app", "model", "build", "run", "connect-db"]
+    commandsInfo = {
+        "create-app": {
+            "info": "Create a new C aloo app",
+            "hasSubCommands": True,
+            "subCommands": {
+                "Name": {
+                    "info": "Create new project with name         ",
+                    "field": {
+                        "projectName": str,
+                        "appName": str,
+                        "description": Optional[str],
+                    },
+                },
+                "Path": {
+                    "info": "Uses current directory as new project",
+                    "field": {
+                        "projectPath": str,
+                        "appName": str,
+                        "description": Optional[str],
+                    },
+                },
+            },
+        },
+        "model": {
+            "info": "Create a new model",
+            "hasSubCommands": False,
+            "fields": {"name": str, "field": dict[str, alooTypes]},
+        },
+        "build": {
+            "info": "Build the aloo project",
+            "hasSubCommands": False,
+        },
+        "run": {
+            "info": "Runs the project app/ tests",
+            "hasSubCommands": True,
+            "subCommands": {
+                "app": {"fields": "Runs the aloo app"},
+                "test": {"fields": "Runs the aloo project tests"},
+            },
+        },
+        "connect-db": {
+            "info": "Works with connection with databases",
+            "hasSubCommands": True,
+            "subCommands": {
+                "new": {
+                    "info": "Create a new connection with database",
+                    "field": {"modelName": str},
+                },
+                "restart": {
+                    "info": "Deletes all data from sqlite",
+                    "field": {"modelName": str},
+                },
+                "add": {
+                    "info": "Add database model",
+                    "field": {"modelName": str},
+                },
+            },
+        },
+    }
+
+    activeSelection = [0]
+    print(term.home + term.clear + term.move_y(term.height))
+
+    logo = f"""
+    {spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
+    {spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
+    {spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
+    {spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
+    {spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
+    """
+
+    os.system("clear")
+    term.fullscreen()
+
+    exitCommand = ""
+    isCommandEnabled = False
+    selectedCommand = ""
+    commandSpace: str = ""
     takeInput()

@@ -44,7 +44,6 @@ target_link_libraries(aloo
 	${SQLITE_LIBRARIES}
 )
 
-add_subdirectory("cli")
 add_executable(test-1.exe "test/int.spec.c")
 
 target_link_libraries(test-1.exe aloo)
