@@ -19,7 +19,7 @@ jobs:
               run: |
                   cd ${{ github.workspace }}
                   echo $(pwd)
-                  tree
+                  tree /home/runner/work
                   ./release.sh ${{ env.tag }}
 
             - name: Checkout code
