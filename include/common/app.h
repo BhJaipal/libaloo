@@ -9,7 +9,6 @@
  */
 #ifndef ALOO_APP_H
 #define ALOO_APP_H
-#include "types.h"
 #include <gtk/gtk.h>
 
 /**

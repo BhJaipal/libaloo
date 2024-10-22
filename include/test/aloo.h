@@ -1,6 +1,6 @@
 #ifndef TEST_ALOO_H
 #define TEST_ALOO_H
-#include "../common/widget.h"
+#include "../common/types.h"
 
 /******************** Private Funcs ********************/
 

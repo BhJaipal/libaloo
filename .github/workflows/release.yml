@@ -7,18 +7,19 @@ on:
 env:
     # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
     BUILD_TYPE: Release
+    tag: "v0.1.2"
 
-name: Create Release
+name: libaloo releases
 
 jobs:
     build:
-        name: Create Release
+        name: libaloo releases
         runs-on: ubuntu-latest
         steps:
             - name: Building deb package
               run: |
                   cd ${{ github.workspace }}
-                  ./release.sh
+                  ./release.sh ${{ env.tag }}
 
             - name: Checkout code
               uses: actions/checkout@v2
@@ -34,3 +35,13 @@ jobs:
                       Added Create App to python TUI
                   draft: false
                   prerelease: false
+            - name: Lib aloo deb file
+              id: upload-release-asset
+              uses: actions/upload-release-asset@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+                  asset_path: ./libaloo-${{ env.tag }}.deb
+                  asset_name: libaloo-${{ env.tag }}.deb
+                  asset_content_type: application/vnd.debian.binary-package

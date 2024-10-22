@@ -644,7 +644,7 @@ def createApp() -> None:
                         currFilePath = "/".join(__file__.split("/")[:-1])
                         if currFilePath.endswith("bin"):
                             currFilePath = (
-                                "/".join(__file__.split("/")[:-2]) + "/scripts/src/"
+                                "/".join(__file__.split("/")[:-2]) + "/etc/aloo/"
                             )
                         projectName = ""
                         if appOptions.selectedAppOption != "Path":
