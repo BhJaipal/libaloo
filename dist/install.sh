@@ -19,9 +19,8 @@ cp -r include dist/deb/usr/include
 mv dist/deb/usr/include/include dist/deb/usr/include/aloo
 cp -r include dist/deb/etc/aloo/include
 cp -r src dist/deb/etc/aloo/src
-cp -r cli dist/deb/etc/aloo/cli
+cp -r script dist/deb/etc/aloo/cli script
 cp -r test dist/deb/etc/aloo/test
-cp -r setup.py dist/deb/etc/aloo/setup.py
 cp -r CMakeLists.txt dist/deb/etc/aloo/CMakeLists.txt
 
 if [ $1 ]; then

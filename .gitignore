@@ -37,3 +37,4 @@ dist/rpm/etc/aloo
 dist/Arch/usr/include
 !dist/Arch/etc/bin
 dist/Arch/etc/aloo
+.mypy_cache
