@@ -14,6 +14,10 @@ jobs:
     build:
         name: libaloo releases
         runs-on: ubuntu-latest
+        permissions:
+            packages: write
+            contents: write
+            actions: write
         steps:
             - uses: actions/checkout@v4
               with:
@@ -36,8 +40,8 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  tag_name: ${{ env.tag }}
-                  release_name: Release ${{ env.tag }}
+                  tag_name: v${{ env.tag }}
+                  release_name: Release v${{ env.tag }}
                   body: |
                       Added Create App to python TUI
                   draft: false
