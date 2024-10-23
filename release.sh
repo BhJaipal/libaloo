@@ -29,7 +29,7 @@ Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip, make
 " >DEBIAN/control
 
 mkdir -p usr/share/pkgconfig
-mkdir include usr/include
+mkdir usr/include
 mv include usr/include/aloo
 mv lib usr/lib
 mv bin usr/bin
@@ -64,4 +64,4 @@ rm -r *.log
 rm -r *.sh
 rm -r src
 rm -r *.html
-sudo dpkg-deb --root-owner-group --build . libaloo-$1.deb
+sudo dpkg-deb --root-owner-group --build . libaloo-v$1.deb
