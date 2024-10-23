@@ -49,6 +49,6 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   upload_url: ${{ steps.create_release.outputs.upload_url }}
-                  asset_path: ./libaloo-${{ env.tag }}.deb
-                  asset_name: libaloo-${{ env.tag }}.deb
+                  asset_path: ./libaloo-v${{ env.tag }}.deb
+                  asset_name: libaloo-v${{ env.tag }}.deb
                   asset_content_type: application/vnd.debian.binary-package
