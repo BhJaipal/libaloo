@@ -21,20 +21,10 @@ share/
 *.a
 *.so
 
-node_modules/
 .cache/
 *.log
 *.deb
 *.rpm
 aloo-project/
-dist/deb/usr/include
-dist/deb/etc/aloo
-
-dist/rpm/usr/include
-!dist/rpm/bin
-dist/rpm/etc/aloo
-
-dist/Arch/usr/include
-!dist/Arch/etc/bin
-dist/Arch/etc/aloo
 .mypy_cache
+output/

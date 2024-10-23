@@ -1,39 +1,29 @@
 #!/bin/bash
-
-if [ ! -d "build/" ]; then
-	mkdir build
+./build.sh
+if [ ! $(./build.sh test) ]; then
+	echo -e "Tests failed"
+	exit 1
 fi
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cd build
-make
-cd ..
-mv scripts/src/__init__.py bin/aloo.py
-
-mkdir -p etc/aloo
-echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc\n" >etc/aloo/aloo.conf
-mv scripts/src/main.c etc/aloo/main.c
-mv scripts/src/test.c etc/aloo/test.c
-mv scripts/src/main.server.c etc/aloo/main.server.c
-mv scripts/src/main.server.h etc/aloo/main.server.h
-mv scripts/src/CMakeLists.txt etc/aloo/CMakeLists.txt
-
-mkdir -p usr/share/pkgconfig
-mkdir usr/include
-mv include usr/include/aloo
-mv lib usr/lib
-mv bin usr/bin
-rm -r bin/test-1.exe
-
+if [ ! $1 ]; then
+	echo -e "Version not specified as argument"
+	exit 1
+fi
+mkdir -p output/usr/{include,bin}
+cp -r lib output/usr/lib
+cp -r scripts/src output/etc
+mv output/etc/__init__.py output/usr/bin/aloo.py
+cp -r include output/usr/include/aloo
+echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc" >output/etc/aloo.conf
+mkdir -p output/usr/share/pkgconfig
 echo "Name: aloo
 Version: $1
 Description: This a Gtk4 based library written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip
 CFlags: -I/usr/include/aloo
-Libs: -laloo" >usr/share/pkgconfig/aloo.pc
-
-rm -r {*.github,*.vscode,include,lib,test,styles,scripts,assets,build,aloo-edit,dist,docs,*.png,CMakeLists.txt,build.sh,Doxyfile,LICENSE,Readme.md,*.log,*.sh,src,*.html}
+Libs: -laloo" >output/usr/share/pkgconfig/aloo.pc
 
 if [ $(which dpkg-deb) ]; then
+	cd output
 	mkdir DEBIAN
 	echo "Package: aloo
 Version: $1
@@ -44,7 +34,11 @@ Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
 Description: This a library based on Gtk4 written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip" >DEBIAN/control
 	sudo dpkg-deb --root-owner-group --build . libaloo-v$1.deb
+	mv libaloo-v$1.deb ..
+	cd ..
+
 elif [ $(which rpm) && $(which dnf) ]; then
+	cd output
 	mkdir SPECS
 	echo "Name: aloo
 Version: $1
@@ -60,7 +54,10 @@ Requires: libgtk-4-dev, libsqlite3-dev, python3, python3-pip
 %description
 This a Gtk4 based library written in C to make things easier" >SPECS/libaloo.spec
 	rpmbuild -bs SPECS/libaloo.spec
+	cd ..
+
 else
+	cd output
 	echo "pkgname=libaloo
 pkgver=$1
 pkgrel=1
@@ -73,4 +70,6 @@ makedepends=(git)
 provides=(libaloo)
 conflicts=(libaloo)" >PKGBUILD
 	makepkg
+	mv libaloo-v$1-1-$(arch).pkg.tar.zst
+	cd ..
 fi
