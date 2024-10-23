@@ -6,6 +6,7 @@ fi
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cd build
 make
+cd ..
 mv scripts/src/__init__.py bin/aloo.py
 
 if [ ! $(which tree) ]; then
@@ -45,7 +46,27 @@ Libs: -laloo" >usr/share/pkgconfig/aloo.pc
 
 mv -r lib usr/lib
 mv -r bin usr/bin
-rm -r {*.github,*.vscode,include,lib,test,styles,scripts,assets,build,aloo-edit,dist,docs,*.png,CMakeLists.txt,build.sh,Doxyfile,LICENSE,Readme.md,*.log,*.sh,src,*.html}
+rm -r *.github
+rm -r *.vscode
+rm -r include
+rm -r lib
+rm -r test
+rm -r styles
+rm -r scripts
+rm -r assets
+rm -r build
+rm -r aloo-edit
+rm -r dist,docs
+rm -r *.png
+rm -r CMakeLists.txt
+rm -r build.sh
+rm -r Doxyfile
+rm -r LICENSE
+rm -r Readme.md
+rm -r *.log
+rm -r *.sh
+rm -r src
+rm -r *.html
 rm -r etc/aloo
 rm -r bin/test-1.exe
 sudo dpkg-deb --root-owner-group --build . libaloo-$1.deb
