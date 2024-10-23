@@ -20,6 +20,10 @@ jobs:
                   repository: ${{ github.repository }}
                   ref: ${{ github.ref }}
 
+            - name: Installing Dependencies
+              run: |
+                  sudo apt install libgtk-4-dev libsqlite3-dev
+
             - name: Building deb package
               run: |
                   cd ${{ github.workspace }}
