@@ -2,6 +2,8 @@ import blessed
 import os
 from typing import Union, Optional, Callable
 import yaml
+import threading
+import time
 
 
 def emptyLine(end="\n"):
@@ -144,7 +146,7 @@ def takeInput() -> None:
                     case "model":
                         pass
                     case "build":
-                        pass
+                        buildApp()
                     case _:
                         pass
             else:
@@ -726,6 +728,122 @@ def createApp() -> None:
         exit(1)
 
 
+def cmake_thread() -> None:
+    global threadStarted
+    threadStarted = True
+    os.system("cd {} && cmake -S . -B build && cd build && make".format(os.getcwd()))
+    threadStarted = False
+    exit(0)
+
+
+def loader(i: int):
+    match i:
+        case 1:
+            return "⠛"
+        case 2:
+            return "⠏"
+        case 3:
+            return "⡇"
+        case 4:
+            return "⣆"
+        case 5:
+            return "⣤"
+        case 6:
+            return "⣰"
+        case 7:
+            return "⢸"
+        case 8:
+            return "⠹"
+
+
+def loading_thread() -> None:
+    global term
+    global threadStarted
+    i = 6
+    while threadStarted:
+        print(
+            term.bold_seagreen_on_lightblue(
+                (" " * ((term.width - len("⡇ Building")) // 2))
+                + loader(i)
+                + " Building"
+                + (" " * ((term.width - len("⡇ Building")) // 2))
+            ),
+            end="\r",
+        )
+        if i == 1:
+            i = 8
+        else:
+            i -= 1
+        time.sleep(0.25)
+    else:
+        print(
+            term.royalblue_on_lightblue(
+                (" " * ((term.width - len("Build done")) // 2))
+                + "Build done"
+                + (" " * ((term.width - len("Build done")) // 2 + 1))
+            ),
+            end="",
+        )
+        print()
+
+
+def buildApp() -> None:
+    try:
+        global commandSpace
+        global appOptions
+        global commands
+        global activeSelection
+        global isCommandEnabled
+        global exitCommand
+        global selectedCommand
+        os.system("clear")
+        term.fullscreen()
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
+        emptyLine()
+        t1 = threading.Thread(target=cmake_thread, name="t1")
+        t2 = threading.Thread(target=loading_thread, name="t2")
+        t1.start()
+        t2.start()
+        t1.join()
+        t2.join()
+        print(term.royalblue_on_lightblue(lineSpace()))
+        if isCommandEnabled:
+            commandSpace = ""
+            for _ in range(int((term.width - exitCommand.__len__() - 11))):
+                commandSpace += " "
+            print(
+                term.bold_white_on_green4(" COMMAND ")
+                + term.bold_green4_on_gray25(" ")
+                + term.bold_bright_white_on_gray25(exitCommand + commandSpace),
+                end="",
+            )
+        with term.cbreak(), term.hidden_cursor():
+            inp = term.inkey()
+            if isCommandEnabled:
+                if inp.name is None:
+                    exitCommand += inp
+                elif inp.name is not None:
+                    if inp.name == "KEY_ENTER" and exitCommand == ":q":
+                        os.system("clear")
+                        exit(0)
+                    elif inp.name == "KEY_BACKSPACE":
+                        if exitCommand.__len__() > 0:
+                            exitCommand = exitCommand[:-1]
+                        else:
+                            exitCommand = ""
+                            isCommandEnabled = False
+            else:
+                if inp.name is not None:
+                    if inp.name == "KEY_ESCAPE":
+                        isCommandEnabled = True
+        buildApp()
+    except KeyboardInterrupt:
+        print("Process exited")
+        os.system("clear")
+        exit(1)
+
+
 if __name__ == "__main__":
     term = blessed.Terminal()
     spaces: str = " "
@@ -801,12 +919,12 @@ if __name__ == "__main__":
     print(term.home + term.clear + term.move_y(term.height))
 
     logo = f"""
-    {spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
-    {spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
-    {spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
-    {spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
-    {spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
-    """
+{spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
+{spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
+{spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
+{spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
+{spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
+"""
 
     os.system("clear")
     term.fullscreen()
