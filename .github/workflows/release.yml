@@ -1,5 +1,5 @@
 on:
-    pull_request:
+    push:
         branches: ["release"]
 
 env:
@@ -9,7 +9,7 @@ env:
 name: libaloo releases
 
 jobs:
-    build:
+    release:
         name: libaloo releases
         runs-on: ubuntu-latest
         permissions:
