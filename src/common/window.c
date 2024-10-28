@@ -2,6 +2,8 @@
 #include "common/style.h"
 #include "common/widget.h"
 #include "utils/error.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 AlooWidget *__alooSetWindowChild(AlooWidget *window, AlooWidget *child) {
 	gtk_window_set_child(GTK_WINDOW(window->child), child->child);
@@ -15,8 +17,61 @@ AlooWidget *__alooPresentWindow(AlooWidget *window) {
 	return window;
 }
 
+const char *readLine(FILE *file) {
+
+	if (file == NULL) {
+		printf("Error: file pointer is null.");
+		exit(1);
+	}
+
+	int maximumLineLength = 128;
+	char *lineBuffer = (char *)malloc(sizeof(char) * maximumLineLength);
+
+	if (lineBuffer == NULL) {
+		printf("Error allocating memory for line buffer.");
+		exit(1);
+	}
+
+	char ch = getc(file);
+	int count = 0;
+
+	while ((ch != '\n') && (ch != EOF)) {
+		if (count == maximumLineLength) {
+			maximumLineLength += 128;
+			lineBuffer = realloc(lineBuffer, maximumLineLength);
+			if (lineBuffer == NULL) {
+				printf("Error reallocating space for line buffer.");
+				exit(1);
+			}
+		}
+		lineBuffer[count] = ch;
+		count++;
+
+		ch = getc(file);
+	}
+
+	lineBuffer[count] = '\0';
+	char line[count + 1];
+	strncpy(line, lineBuffer, (count + 1));
+	free(lineBuffer);
+	const char *constLine = line;
+	return constLine;
+}
+
 AlooWidget *__alooApplicationNewWindow(AlooApplication *app) {
 	CSS.importPath("styles/material.bundle.min.css");
+	char *home = getenv("$HOME");
+	strcat(home, "/.config/gtk-4.0/settings.ini");
+	FILE *settingsIni = fopen(home, "r");
+	while (!feof(settingsIni)) {
+		const char *line = readLine(settingsIni);
+		if (strncmp("gtk-application-prefer-dark-theme", line,
+					strlen("gtk-application-prefer-dark-theme"))) {
+			if (home[strlen(home) - 1] == '0')
+				CSS.importPath("styles/light.bundle.min.css");
+			else CSS.importPath("styles/dark.bundle.min.css");
+		}
+	}
 	return Widget.gtk_to_aloo(gtk_application_window_new(app->app));
 }
 AlooWidget *__alooSetWindowTitle(AlooWidget *window, const char *title) {
@@ -36,8 +91,19 @@ AlooWidget *__getWindowSize(AlooWidget *window, int *width, int *height) {
 }
 
 AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app) {
-	CSS.importPath("styles/material.css");
-	CSS.importPath("styles/colors.css");
+	CSS.importPath("styles/material.bundle.min.css");
+	char *home = getenv("$HOME");
+	strcat(home, "/.config/gtk-4.0/settings.ini");
+	FILE *settingsIni = fopen(home, "r");
+	while (!feof(settingsIni)) {
+		const char *line = readLine(settingsIni);
+		if (strncmp("gtk-application-prefer-dark-theme", line,
+					strlen("gtk-application-prefer-dark-theme"))) {
+			if (home[strlen(home) - 1] == '0')
+				CSS.importPath("styles/light.bundle.min.css");
+			else CSS.importPath("styles/dark.bundle.min.css");
+		}
+	}
 	gtk_window_set_application(GTK_WINDOW(window->child), app->app);
 	return window;
 }

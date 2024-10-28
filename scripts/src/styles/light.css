@@ -1,0 +1,78 @@
+.material-btn {
+	background-color: white;
+	color: var(--skyblue-400);
+	padding: 10px;
+	border-radius: 5px;
+	border: transparent;
+	cursor: pointer;
+}
+.material-btn:hover {
+	background-color: var(--gray-100);
+}
+.material-elevated-btn {
+	box-shadow: 0px 1px 5px 0.1px rgba(0, 0, 0.5);
+}
+.material-filled-btn {
+	background-color: var(--skyblue-600);
+	color: whitesmoke;
+	box-shadow: 0px 1px 5px -4px rgba(0, 0, 0.5);
+}
+.material-filled-btn:hover {
+	background-color: var(--skyblue-700);
+}
+.material-outlined-btn {
+	border: 1px solid var(--skyblue-400);
+	background-color: white;
+}
+.material-outlined-btn:hover {
+	background-color: var(--gray-50);
+}
+/* Material Card */
+.material-card {
+	border-radius: 10px;
+	background-color: rgba(230, 230, 230, 0.3);
+	border: 2px solid transparent;
+	width: max-content;
+	padding: 20px;
+	color: black;
+	animation: material-shadow-out 1s normal;
+	animation-iteration-count: 1;
+}
+.material-card:hover {
+	background-color: rgba(137, 196, 252, 0.3);
+	box-shadow: 0px 0px 5px 1px var(--skyblue-300);
+}
+.material-card:active {
+	background-color: rgba(74, 167, 253, 0.3);
+	box-shadow: 0px 0px 5px 1px var(--skyblue-300);
+}
+@keyframes material-shadow-out {
+	0% {
+		box-shadow: 0px 0px 0px 0px var(--skyblue-300);
+	}
+	50% {
+		box-shadow: 0px 0px 2.5px 0.5px var(--skyblue-300);
+	}
+	100% {
+		box-shadow: 0px 0px 5px 1px var(--skyblue-300);
+	}
+}
+.material-card .material-card-title {
+	font-size: xx-large;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+.material-card .material-card-subtitle {
+	font-size: larger;
+	font-weight: normal;
+	padding-bottom: 10px;
+}
+.material-card .material-card-content {
+	font-size: medium;
+	font-weight: normal;
+	padding-bottom: 10px;
+}
+.material-card .actions {
+	display: flex;
+	flex-direction: row-reverse;
+}
