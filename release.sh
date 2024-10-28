@@ -49,7 +49,7 @@ Architecture: all
 Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
 Description: This a library based on Gtk4 written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip" >DEBIAN/control
-	sudo dpkg-deb --root-owner-group --build . libaloo-v$1-$(arch).deb
+	sudo dpkg-deb --root-owner-group --build . libaloo-v$1.deb
 elif [ $(which rpm) && $(which dnf) ]; then
 	mkdir SPECS
 	echo "Name: aloo
