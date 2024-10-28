@@ -1,5 +1,4 @@
-#include "aloo.h"
-#include "common/app.h"
+#include <aloo/aloo.h>
 AlooApplication *app;
 
 static void activate() {

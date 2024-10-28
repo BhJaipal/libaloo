@@ -1,7 +1,11 @@
+#!/usr/bin/env python3
 import blessed
 import os
 from typing import Union, Optional, Callable
 import yaml
+import threading
+import time
+import subprocess
 
 
 def emptyLine(end="\n"):
@@ -29,8 +33,7 @@ def takeInput() -> None:
         global isCommandEnabled
         global exitCommand
         global selectedCommand
-        os.system("clear")
-        term.fullscreen()
+        print("\x1b[%sH")
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
         print(term.cornflowerblue_on_lightblue((logo[1:-1])))
         print(term.royalblue_on_lightblue(lineSpace(1 / 5, True)))
@@ -118,8 +121,8 @@ def takeInput() -> None:
             + term.royalblue_on_lightblue("└" + infoSpaceEnd + "┘")
             + term.bold_royalblue_on_lightblue(" " * ((term.width - infoLen - 4) // 2))
         )
-        for i in range(6):
-            emptyLine()
+
+        print(term.royalblue_on_lightblue(lineSpace(1 / 4)))
         if isCommandEnabled:
             commandSpace = ""
             for _ in range(int((term.width - exitCommand.__len__() - 11))):
@@ -134,55 +137,46 @@ def takeInput() -> None:
             emptyLine("")
         with term.cbreak(), term.hidden_cursor():
             inp = term.inkey()
-            if inp.name is not None and inp.name == "KEY_TAB":
-                selectedCommand = commands[activeSelection[0]]
-                activeSelection.append(0)
-                match selectedCommand:
-                    case "create-app":
-                        isCommandEnabled = False
-                        createApp()
-                    case "model":
-                        pass
-                    case "build":
-                        pass
-                    case _:
-                        pass
-            else:
-                if inp.name is not None and inp.name == "KEY_ESCAPE":
-                    isCommandEnabled = True
-                elif inp.name is None and isCommandEnabled:
+            if isCommandEnabled:
+                if inp.name is None:
                     exitCommand += inp
-                elif (
-                    inp.name is not None
-                    and isCommandEnabled
-                    and inp.name == "KEY_BACKSPACE"
-                ):
+                elif inp.name == "KEY_BACKSPACE":
                     if exitCommand.__len__() > 0:
                         exitCommand = exitCommand[:-1]
                     else:
                         isCommandEnabled = False
-                if (
-                    inp.name is not None
-                    and inp.name == "KEY_ENTER"
-                    and isCommandEnabled
-                    and exitCommand == ":q"
-                ):
-                    os.system("clear")
+                if inp.name == "KEY_ENTER" and exitCommand == ":q":
+                    os.system("tput rmcup")
                     exit(0)
-                if inp.name is not None and inp.name == "KEY_DOWN":
-                    if activeSelection[0] == commands.__len__() - 1:
-                        activeSelection[0] = 0
-                    else:
-                        activeSelection[0] += 1
-                if inp.name is not None and inp.name == "KEY_UP":
-                    if activeSelection[0] == 0:
-                        activeSelection[0] = commands.__len__() - 1
-                    else:
-                        activeSelection[0] -= 1
+            else:
+                if inp.name is not None:
+                    if inp.name == "KEY_ENTER":
+                        selectedCommand = commands[activeSelection[0]]
+                        activeSelection.append(0)
+                        match selectedCommand:
+                            case "create-app":
+                                isCommandEnabled = False
+                                createApp()
+                            case "build":
+                                buildApp()
+                            case "run":
+                                runAnyOne()
+                    elif inp.name == "KEY_ESCAPE":
+                        isCommandEnabled = True
+                    elif inp.name == "KEY_DOWN":
+                        if activeSelection[0] == commands.__len__() - 1:
+                            activeSelection[0] = 0
+                        else:
+                            activeSelection[0] += 1
+                    elif inp.name == "KEY_UP":
+                        if activeSelection[0] == 0:
+                            activeSelection[0] = commands.__len__() - 1
+                        else:
+                            activeSelection[0] -= 1
                 takeInput()
     except KeyboardInterrupt:
-        print("Process exited")
         os.system("clear")
+        os.system("tput smcup")
         exit(1)
 
 
@@ -202,9 +196,6 @@ def __init__(self):
     self.Desc = ""
 
 
-appOptions = AppOptions()
-
-
 def createApp() -> None:
     try:
         global commandSpace
@@ -214,8 +205,7 @@ def createApp() -> None:
         global isCommandEnabled
         global exitCommand
         global selectedCommand
-        os.system("clear")
-        term.fullscreen()
+        print("\x1b[%sH")
         print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
         print(term.cornflowerblue_on_lightblue((logo[1:-1])))
         print(term.royalblue_on_lightblue(lineSpace(1 / 12, True)))
@@ -576,6 +566,7 @@ def createApp() -> None:
                 elif inp.name is not None:
                     if inp.name == "KEY_ENTER" and exitCommand == ":q":
                         os.system("clear")
+                        print("\x1b[?1049l")
                         exit(0)
                     elif inp.name == "KEY_BACKSPACE":
                         if exitCommand.__len__() > 0:
@@ -644,7 +635,7 @@ def createApp() -> None:
                         currFilePath = "/".join(__file__.split("/")[:-1])
                         if currFilePath.endswith("bin"):
                             currFilePath = (
-                                "/".join(__file__.split("/")[:-2]) + "/etc/aloo/"
+                                "/".join(__file__.split("/")[:-3]) + "/etc/aloo/"
                             )
                         projectName = ""
                         if appOptions.selectedAppOption != "Path":
@@ -709,7 +700,45 @@ def createApp() -> None:
                         ).replace("$libaloo", alooDir + "lib")
                         CMakeFile.write(CMakeSample)
 
+                        colorsCSS = open(
+                            currFilePath + "styles/colors.css",
+                            "r",
+                        ).read()
+                        materialCSS = open(
+                            currFilePath + "styles/material.css",
+                            "r",
+                        ).read()
+
+                        try:
+                            while colorsCSS.index("\t") != -1:
+                                colorsCSS = colorsCSS.replace("\t", "")
+                        except:
+                            pass
+                        try:
+                            while colorsCSS.index("\n") != -1:
+                                colorsCSS = colorsCSS.replace("\n", "")
+                        except:
+                            pass
+
+                        try:
+                            while materialCSS.index("\t") != -1:
+                                materialCSS = materialCSS.replace("\t", "")
+                        except:
+                            pass
+                        try:
+                            while materialCSS.index("\n") != -1:
+                                materialCSS = materialCSS.replace("\n", "")
+                        except:
+                            pass
+                        os.mkdir(appInfo["project-name"] + "styles")
+                        cssBundle = open(
+                            appInfo["project-name"] + "styles/material.bundle.min.css",
+                            "w+",
+                        )
+                        cssBundle.write(materialCSS + colorsCSS)
+
                         print("\t\033[1;32m󰄭 Aloo project created successfully\033[0m")
+                        os.system("tput smcup")
                         exit(0)
                 else:
                     match appOptions.InputNumber:
@@ -723,12 +752,342 @@ def createApp() -> None:
     except KeyboardInterrupt:
         print("Process exited")
         os.system("clear")
+        os.system("tput smcup")
+        exit(1)
+
+
+def cmake_thread() -> None:
+    global threadStarted
+    global commandRan
+    threadStarted = True
+    subprocess.run(
+        "clear && cmake -S . -B build && cd build && make",
+        shell=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    threadStarted = False
+    commandRan = True
+
+
+def loader(i: int):
+    match i:
+        case 1:
+            return "⠛"
+        case 2:
+            return "⠏"
+        case 3:
+            return "⡇"
+        case 4:
+            return "⣆"
+        case 5:
+            return "⣤"
+        case 6:
+            return "⣰"
+        case 7:
+            return "⢸"
+        case 8:
+            return "⠹"
+
+
+def loading_thread() -> None:
+    global term
+    global threadStarted
+    i = 6
+    while threadStarted:
+        os.system("clear")
+        term.fullscreen()
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
+        emptyLine()
+        print(
+            term.bold_seagreen_on_lightblue(
+                (" " * ((term.width - len("⡇ Building")) // 2))
+                + loader(i)
+                + " Building"
+                + (" " * ((term.width - len("⡇ Building")) // 2))
+            ),
+            end="",
+        )
+        print(term.royalblue_on_lightblue(lineSpace()))
+        print(term.royalblue_on_lightblue(lineSpace()))
+        print(term.royalblue_on_lightblue(lineSpace()))
+        emptyLine()
+        emptyLine()
+        emptyLine()
+        if i == 1:
+            i = 8
+        else:
+            i -= 1
+        time.sleep(0.25)
+    else:
+        os.system("clear")
+        term.fullscreen()
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
+        emptyLine()
+        print(
+            term.royalblue_on_lightblue(
+                (" " * ((term.width - len("Build done")) // 2))
+                + "Build done"
+                + (" " * ((term.width - len("Build done")) // 2 + 1))
+            ),
+            end="",
+        )
+        print(term.royalblue_on_lightblue(lineSpace()))
+        print(term.royalblue_on_lightblue(lineSpace()))
+        print(term.royalblue_on_lightblue(lineSpace()))
+        emptyLine()
+        emptyLine()
+        emptyLine("")
+
+
+def buildApp() -> None:
+    try:
+        global commandSpace
+        global appOptions
+        global commands
+        global activeSelection
+        global isCommandEnabled
+        global exitCommand
+        global selectedCommand
+        print("\x1b[%sH")
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
+        emptyLine()
+        global commandRan
+        if not commandRan:
+            t1 = threading.Thread(target=cmake_thread, name="t1")
+            t2 = threading.Thread(target=loading_thread, name="t2")
+            t1.start()
+            t2.start()
+            t1.join()
+            t2.join()
+        else:
+            print(
+                term.royalblue_on_lightblue(
+                    (" " * ((term.width - len("Build done")) // 2))
+                    + "Build done"
+                    + (" " * ((term.width - len("Build done")) // 2 + 1))
+                ),
+            )
+            print(term.royalblue_on_lightblue(lineSpace()))
+            print(term.royalblue_on_lightblue(lineSpace()))
+            print(term.royalblue_on_lightblue(lineSpace()))
+            emptyLine()
+            emptyLine()
+            emptyLine()
+        if isCommandEnabled:
+            commandSpace = ""
+            for _ in range(int((term.width - exitCommand.__len__() - 11))):
+                commandSpace += " "
+            print(
+                term.bold_white_on_green4(" COMMAND ")
+                + term.bold_green4_on_gray25(" ")
+                + term.bold_bright_white_on_gray25(exitCommand + commandSpace),
+                end="",
+            )
+        else:
+            emptyLine("")
+        with term.cbreak(), term.hidden_cursor():
+            inp = term.inkey()
+            if isCommandEnabled:
+                if inp.name is None:
+                    exitCommand += inp
+                elif inp.name is not None:
+                    if inp.name == "KEY_ENTER" and exitCommand == ":q":
+                        os.system("clear")
+                        os.system("tput rmcup")
+                        print("\x1b[?25h\x1b[?7h")
+                        exit(0)
+                    elif inp.name == "KEY_BACKSPACE":
+                        if exitCommand.__len__() > 0:
+                            exitCommand = exitCommand[:-1]
+                        else:
+                            exitCommand = ""
+                            isCommandEnabled = False
+            else:
+                if inp.name is not None:
+                    if inp.name == "KEY_ESCAPE":
+                        isCommandEnabled = True
+        buildApp()
+    except KeyboardInterrupt:
+        print("Process exited")
+        os.system("clear")
+        os.system("tput rmcup")
+        print("\x1b[?25h\x1b[?7h")
+        exit(1)
+
+
+def runAppOrTest(runWhat: str) -> None:
+    subprocess.run(
+        f"./bin/{runWhat}.exe",
+        shell=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+
+def runAnyOne() -> None:
+    try:
+        global commandSpace
+        global appOptions
+        global commands
+        global runAppSelection
+        global activeSelection
+        global isCommandEnabled
+        global exitCommand
+        global appRunStatus
+        global selectedCommand
+        print("\x1b[%sH")
+        print(term.royalblue_on_lightblue(lineSpace(1 / 6)))
+        print(term.cornflowerblue_on_lightblue((logo[1:-1])))
+        print(term.royalblue_on_lightblue(lineSpace(1 / 12, True)))
+        selectionLabel = "╓── ╓── ╥   ╓── ╓── ─╥─    ╓─╖ ╓╖ ╥ ╓──"
+        print(
+            term.bold_royalblue_on_lightblue(
+                (
+                    f"""
+{' ' * ((term.width - len(selectionLabel)) // 2)}┏━━ ┏━━ ┳   ┏━━ ┏━━ ━┳━    ┏━┓ ┏┓ ┳ ┏━━{' ' * ((term.width - len(selectionLabel)) // 2)}
+{' ' * ((term.width - len(selectionLabel)) // 2)}┗━┓ ┣━━ ┃   ┣━━ ┃    ┃     ┃ ┃ ┃┗┓┃ ┣━━{' ' * ((term.width - len(selectionLabel)) // 2)}
+{' ' * ((term.width - len(selectionLabel)) // 2)}━━┛ ┗━━ ┗━━ ┗━━ ┗━━  ┻     ┗━┛ ┻ ┗┛ ┗━━{' ' * ((term.width - len(selectionLabel)) // 2)}"""
+                )[1:]
+            )
+        )
+        nameSelected: Callable = (
+            term.bold_bright_white_on_royalblue
+            if runAppSelection == "App"
+            else term.bold_bright_white_on_cornflowerblue
+        )
+        nameSelectedBorder: Callable = (
+            term.bold_royalblue_on_royalblue
+            if runAppSelection == "App"
+            else term.bold_cornflowerblue_on_cornflowerblue
+        )
+        pathSelected: Callable = (
+            term.bold_bright_white_on_royalblue
+            if runAppSelection == "Test"
+            else term.bold_bright_white_on_cornflowerblue
+        )
+        pathSelectedBorder: Callable = (
+            term.bold_royalblue_on_royalblue
+            if runAppSelection == "Test"
+            else term.bold_cornflowerblue_on_cornflowerblue
+        )
+        emptyLine()
+        print(
+            term.royalblue_on_lightblue(
+                " " * (((term.width - len("  App   Test  ")) // 2) - 3)
+            )
+            + nameSelectedBorder("█" * 10)
+            + term.royalblue_on_lightblue(" ")
+            + pathSelectedBorder("█" * 10)
+            + term.royalblue_on_lightblue(
+                " " * (((term.width - len("  App   Test  ")) // 2) - 3)
+            )
+        )
+        print(
+            term.royalblue_on_lightblue(
+                " " * (((term.width - (len("AppTest") + 5)) // 2) - 4)
+            )
+            + nameSelectedBorder("███")
+            + nameSelected("App")
+            + nameSelectedBorder("████")
+            + term.bold_royalblue_on_lightblue(" ")
+            + pathSelectedBorder("███")
+            + pathSelected("Test")
+            + pathSelectedBorder("███")
+            + term.royalblue_on_lightblue(
+                " " * (((term.width - (len("AppTest") + 5)) // 2) - 4)
+            ),
+        )
+        print(
+            term.royalblue_on_lightblue(
+                " " * (((term.width - len("  App   Test  ")) // 2) - 3)
+            )
+            + nameSelectedBorder("██" + (("█" * 6) + "██"))
+            + term.royalblue_on_lightblue(" ")
+            + pathSelectedBorder("██" + ("█" * 6) + "██")
+            + term.royalblue_on_lightblue(
+                " " * (((term.width - len("  App   Test  ")) // 2) - 3)
+            )
+        )
+        emptyLine()
+        if appRunStatus:
+            print(
+                term.royalblue_on_lightblue(
+                    " " * ((term.width - len("Running Test")) // 2)
+                )
+                + term.royalblue_on_lightblue(
+                    "Running " + ("App  " if runAppSelection == "App" else "Test ")
+                )
+                + term.royalblue_on_lightblue(
+                    " " * ((term.width - len("Running Test")) // 2)
+                ),
+            )
+            t1 = threading.Thread(target=runAppOrTest, args=(runAppSelection.lower(),))
+            t1.start()
+            t1.join()
+        else:
+            emptyLine()
+        print(term.royalblue_on_lightblue(lineSpace(1 / 2)))
+        emptyLine()
+        emptyLine()
+        if isCommandEnabled:
+            commandSpace = ""
+            for _ in range(int((term.width - exitCommand.__len__() - 11))):
+                commandSpace += " "
+            print(
+                term.bold_white_on_green4(" COMMAND ")
+                + term.bold_green4_on_gray25(" ")
+                + term.bold_bright_white_on_gray25(exitCommand + commandSpace),
+                end="",
+            )
+        else:
+            emptyLine("")
+        with term.cbreak(), term.hidden_cursor():
+            inp = term.inkey()
+            if isCommandEnabled:
+                if inp.name is None:
+                    exitCommand += inp
+                elif inp.name is not None:
+                    if inp.name == "KEY_ENTER" and exitCommand == ":q":
+                        os.system("clear")
+                        os.system("tput smcup")
+                        exit(0)
+                    elif inp.name == "KEY_BACKSPACE":
+                        if exitCommand.__len__() > 0:
+                            exitCommand = exitCommand[:-1]
+                        else:
+                            exitCommand = ""
+                            isCommandEnabled = False
+            else:
+                if inp.name is not None:
+                    if inp.name == "KEY_ESCAPE":
+                        isCommandEnabled = True
+                    elif inp.name == "KEY_ENTER":
+                        appRunStatus = True
+                    elif inp.name == "KEY_LEFT" and not appRunStatus:
+                        runAppSelection = "App"
+                    elif inp.name == "KEY_RIGHT" and not appRunStatus:
+                        runAppSelection = "Test"
+        runAnyOne()
+    except KeyboardInterrupt:
+        print("Process exited")
+        os.system("clear")
+        os.system("tput smcup")
         exit(1)
 
 
 if __name__ == "__main__":
     term = blessed.Terminal()
     spaces: str = " "
+    commandRan = False
+    appOptions = AppOptions()
+    threadStarted = False
+    runAppSelection = "App"
+    appRunStatus = False
+
     for i in range(
         int((term.width - len("████████║  ██║      ██║      ██║  ██║      ██║")) / 2)
         - 1
@@ -736,7 +1095,7 @@ if __name__ == "__main__":
         spaces += " "
 
     alooTypes = Union["str", "int", "float", "bool", "object"]
-    commands: list[str] = ["create-app", "model", "build", "run", "connect-db"]
+    commands: list[str] = ["create-app", "build", "run"]
     commandsInfo = {
         "create-app": {
             "info": "Create a new C aloo app",
@@ -760,39 +1119,16 @@ if __name__ == "__main__":
                 },
             },
         },
-        "model": {
-            "info": "Create a new model",
-            "hasSubCommands": False,
-            "fields": {"name": str, "field": dict[str, alooTypes]},
-        },
         "build": {
             "info": "Build the aloo project",
             "hasSubCommands": False,
         },
         "run": {
-            "info": "Runs the project app/ tests",
+            "info": "Runs the project app/ tests (Recommended to use in Terminal to see output)",
             "hasSubCommands": True,
             "subCommands": {
                 "app": {"fields": "Runs the aloo app"},
                 "test": {"fields": "Runs the aloo project tests"},
-            },
-        },
-        "connect-db": {
-            "info": "Works with connection with databases",
-            "hasSubCommands": True,
-            "subCommands": {
-                "new": {
-                    "info": "Create a new connection with database",
-                    "field": {"modelName": str},
-                },
-                "restart": {
-                    "info": "Deletes all data from sqlite",
-                    "field": {"modelName": str},
-                },
-                "add": {
-                    "info": "Add database model",
-                    "field": {"modelName": str},
-                },
             },
         },
     }
@@ -801,18 +1137,17 @@ if __name__ == "__main__":
     print(term.home + term.clear + term.move_y(term.height))
 
     logo = f"""
-    {spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
-    {spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
-    {spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
-    {spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
-    {spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
-    """
-
-    os.system("clear")
-    term.fullscreen()
+{spaces} ██████╗   ██╗         █████╗        █████╗    {spaces}
+{spaces}██╔═══██║  ██║       ██║    ██╗    ██║    ██╗  {spaces}
+{spaces}████████║  ██║      ██║      ██║  ██║      ██║ {spaces}
+{spaces}██║   ██║  ██║       ██║    ██╝    ██║    ██╝  {spaces}
+{spaces}██║   ██║  ██████║     █████╝        █████╝    {spaces}
+"""
 
     exitCommand = ""
     isCommandEnabled = False
     selectedCommand = ""
     commandSpace: str = ""
+    os.system("tput smcup")
     takeInput()
+    os.system("tput rmcup")

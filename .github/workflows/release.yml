@@ -1,8 +1,6 @@
 on:
     push:
-        branches: ["main"]
-        tags:
-            - "v0.1.2"
+        branches: ["release"]
 
 env:
     BUILD_TYPE: Release
@@ -11,7 +9,7 @@ env:
 name: libaloo releases
 
 jobs:
-    build:
+    release:
         name: libaloo releases
         runs-on: ubuntu-latest
         permissions:
@@ -53,6 +51,6 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   upload_url: ${{ steps.create_release.outputs.upload_url }}
-                  asset_path: ./libaloo-v${{ env.tag }}.deb
-                  asset_name: libaloo-v${{ env.tag }}.deb
+                  asset_path: ./libaloo-v${{ env.tag }}-$(arch).deb
+                  asset_name: libaloo-v${{ env.tag }}-$(arch).deb
                   asset_content_type: application/vnd.debian.binary-package

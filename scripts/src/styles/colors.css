@@ -1,5 +1,8 @@
+:root {
+	--blue-500: #0307f5;
+}
 .bg-blue-500 {
-	background-color: #0307f5;
+	background-color: var(--blue-500);
 }
 .bg-red-500 {
 	background-color: #f50303;

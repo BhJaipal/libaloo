@@ -1,4 +1,4 @@
-#include "aloo.h"
+#include <aloo/aloo.h>
 #include <stdio.h>
 AlooApplication *app;
 Test *t;

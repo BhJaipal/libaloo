@@ -13,33 +13,26 @@ if [ -d "output" ]; then
 	rm -rf output
 fi
 
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cd build
-make
-cd ..
+mkdir -p output/usr/{include,bin}
+cp -r lib output/usr/lib
+mkdir -p output/etc
+cp -r scripts/src output/etc/aloo
+mv output/etc/aloo/__init__.py output/usr/bin/aloo
+mv output/etc/aloo/aloocli.py output/usr/bin/aloocli
+chmod +x output/usr/bin/*
 
-mkdir -p usr/{include,bin}
-mkdir -p etc
-echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc\n" >etc/aloo.conf
-
-mv lib usr/lib
-mv scripts/src etc/aloo
-mv include usr/include/aloo
-mv etc/aloo/__init__.py usr/bin/aloo
-mv etc/aloo/aloocli.py usr/bin/aloocli
-chmod +x usr/bin/*
-
-mkdir -p usr/share/pkgconfig
+cp -r include output/usr/include/aloo
+echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc" >output/etc/aloo.conf
+mkdir -p output/usr/share/pkgconfig
 echo "Name: aloo
 Version: $1
 Description: This a Gtk4 based library written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip
 CFlags: -I/usr/include/aloo
-Libs: -laloo" >usr/share/pkgconfig/aloo.pc
-
-rm -r {*.github,*.vscode,include,lib,test,styles,scripts,assets,build,aloo-edit,dist,docs,*.png,CMakeLists.txt,build.sh,Doxyfile,LICENSE,Readme.md,*.log,*.sh,src,*.html}
+Libs: -laloo" >output/usr/share/pkgconfig/aloo.pc
 
 if [ $(which dpkg-deb) ]; then
+	cd output
 	mkdir DEBIAN
 	echo "Package: aloo
 Version: $1
@@ -50,7 +43,11 @@ Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
 Description: This a library based on Gtk4 written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip" >DEBIAN/control
 	sudo dpkg-deb --root-owner-group --build . libaloo-v$1-$(arch).deb
+	mv libaloo-v$1-$(arch).deb ..
+	cd ..
+
 elif [ $(which rpm) && $(which dnf) ]; then
+	cd output
 	mkdir SPECS
 	echo "Name: aloo
 Version: $1
@@ -66,7 +63,10 @@ Requires: libgtk-4-dev, libsqlite3-dev, python3, python3-pip
 %description
 This a Gtk4 based library written in C to make things easier" >SPECS/libaloo.spec
 	rpmbuild -bs SPECS/libaloo.spec
+	cd ..
+
 else
+	cd output
 	echo "pkgname=libaloo
 pkgver=$1
 pkgrel=1
@@ -79,4 +79,6 @@ makedepends=(git)
 provides=(libaloo)
 conflicts=(libaloo)" >PKGBUILD
 	makepkg
+	mv libaloo-v$1-1-$(arch).pkg.tar.zst
+	cd ..
 fi
