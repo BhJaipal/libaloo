@@ -1,29 +1,35 @@
 #!/bin/bash
-
-if [ ! -d "build/" ]; then
-	mkdir build
+if [ -d build ]; then
+	rm -rf build
+	rm -rf bin
+	rm -rf lib
 fi
+./build.sh
+if [ ! $1 ]; then
+	echo -e "Version not specified as argument"
+	exit 1
+fi
+if [ -d "output" ]; then
+	rm -rf output
+fi
+
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cd build
 make
 cd ..
-mv scripts/src/__init__.py bin/aloo.py
 
-mkdir -p etc/aloo
-echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc\n" >etc/aloo/aloo.conf
-mv scripts/src/main.c etc/aloo/main.c
-mv scripts/src/test.c etc/aloo/test.c
-mv scripts/src/main.server.c etc/aloo/main.server.c
-mv scripts/src/main.server.h etc/aloo/main.server.h
-mv scripts/src/CMakeLists.txt etc/aloo/CMakeLists.txt
+mkdir -p usr/{include,bin}
+mkdir -p etc
+echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc\n" >etc/aloo.conf
+
+mv lib usr/lib
+mv scripts/src etc/aloo
+mv include usr/include/aloo
+mv etc/aloo/__init__.py usr/bin/aloo
+mv etc/aloo/aloocli.py usr/bin/aloocli
+chmod +x usr/bin/*
 
 mkdir -p usr/share/pkgconfig
-mkdir usr/include
-mv include usr/include/aloo
-mv lib usr/lib
-mv bin usr/bin
-rm -r bin/test-1.exe
-
 echo "Name: aloo
 Version: $1
 Description: This a Gtk4 based library written in C to make things easier
@@ -43,7 +49,7 @@ Architecture: all
 Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
 Description: This a library based on Gtk4 written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip" >DEBIAN/control
-	sudo dpkg-deb --root-owner-group --build . libaloo-v$1.deb
+	sudo dpkg-deb --root-owner-group --build . libaloo-v$1-$(arch).deb
 elif [ $(which rpm) && $(which dnf) ]; then
 	mkdir SPECS
 	echo "Name: aloo
@@ -65,7 +71,7 @@ else
 pkgver=$1
 pkgrel=1
 pkgdesc="This a Gtk4 based library written in C to make things easier"
-arch=("x86_64")
+arch=("$(arch)")
 url="https://github.com/BhJaipal/libaloo"
 license=('MIT')
 depends=(gtk4 sqlite python python-pip)

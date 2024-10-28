@@ -1,5 +1,6 @@
-#include "aloo.h"
-#include "common/app.h"
+#include <aloo/aloo.h>
+#include <gtk/gtk.h>
+#include <string.h>
 
 AlooWidget *labelGrid;
 AlooWidget *navbar;

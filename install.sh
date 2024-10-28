@@ -1,17 +1,26 @@
 #!/bin/bash
-./build.sh
-if [ ! $(./build.sh test) ]; then
-	echo -e "Tests failed"
-	exit 1
+if [ -d build ]; then
+	rm -rf build
+	rm -rf bin
+	rm -rf lib
 fi
+./build.sh
 if [ ! $1 ]; then
 	echo -e "Version not specified as argument"
 	exit 1
 fi
+if [ -d "output" ]; then
+	rm -rf output
+fi
+
 mkdir -p output/usr/{include,bin}
 cp -r lib output/usr/lib
-cp -r scripts/src output/etc
-mv output/etc/__init__.py output/usr/bin/aloo.py
+mkdir -p output/etc
+cp -r scripts/src output/etc/aloo
+mv output/etc/aloo/__init__.py output/usr/bin/aloo
+mv output/etc/aloo/aloocli.py output/usr/bin/aloocli
+chmod +x output/usr/bin/*
+
 cp -r include output/usr/include/aloo
 echo "PKG_CONFIG_PATH=/usr/share/pkgconfig/aloo.pc" >output/etc/aloo.conf
 mkdir -p output/usr/share/pkgconfig
@@ -33,8 +42,8 @@ Architecture: all
 Maintainer: Jaipal <jaipalbhanwariya001@gmail.com>
 Description: This a library based on Gtk4 written in C to make things easier
 Depends: libgtk-4-dev, libsqlite3-dev, python3, python3-pip" >DEBIAN/control
-	sudo dpkg-deb --root-owner-group --build . libaloo-v$1.deb
-	mv libaloo-v$1.deb ..
+	sudo dpkg-deb --root-owner-group --build . libaloo-v$1-$(arch).deb
+	mv libaloo-v$1-$(arch).deb ..
 	cd ..
 
 elif [ $(which rpm) && $(which dnf) ]; then
@@ -62,7 +71,7 @@ else
 pkgver=$1
 pkgrel=1
 pkgdesc="This a Gtk4 based library written in C to make things easier"
-arch=("x86_64")
+arch=("$(arch)")
 url="https://github.com/BhJaipal/libaloo"
 license=('MIT')
 depends=(gtk4 sqlite python python-pip)

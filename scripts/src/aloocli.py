@@ -40,7 +40,7 @@ def createApp(projectOption: str) -> None:
 
     currFilePath = "/".join(__file__.split("/")[:-1])
     if currFilePath.endswith("bin"):
-        currFilePath = "/".join(__file__.split("/")[:-2]) + "/etc/aloo/"
+        currFilePath = "/".join(__file__.split("/")[:-3]) + "/etc/aloo/"
 
     if "aloo.config.yaml" in os.listdir(os.getcwd()):
         os.system("clear")

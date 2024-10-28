@@ -635,7 +635,7 @@ def createApp() -> None:
                         currFilePath = "/".join(__file__.split("/")[:-1])
                         if currFilePath.endswith("bin"):
                             currFilePath = (
-                                "/".join(__file__.split("/")[:-2]) + "/etc/aloo/"
+                                "/".join(__file__.split("/")[:-3]) + "/etc/aloo/"
                             )
                         projectName = ""
                         if appOptions.selectedAppOption != "Path":
@@ -709,15 +709,27 @@ def createApp() -> None:
                             "r",
                         ).read()
 
-                        while colorsCSS.index("\t") != -1:
-                            colorsCSS = colorsCSS.replace("\t", "")
-                        while colorsCSS.index("\n") != -1:
-                            colorsCSS = colorsCSS.replace("\n", "")
+                        try:
+                            while colorsCSS.index("\t") != -1:
+                                colorsCSS = colorsCSS.replace("\t", "")
+                        except:
+                            pass
+                        try:
+                            while colorsCSS.index("\n") != -1:
+                                colorsCSS = colorsCSS.replace("\n", "")
+                        except:
+                            pass
 
-                        while materialCSS.index("\t") != -1:
-                            materialCSS = materialCSS.replace("\t", "")
-                        while materialCSS.index("\n") != -1:
-                            materialCSS = materialCSS.replace("\n", "")
+                        try:
+                            while materialCSS.index("\t") != -1:
+                                materialCSS = materialCSS.replace("\t", "")
+                        except:
+                            pass
+                        try:
+                            while materialCSS.index("\n") != -1:
+                                materialCSS = materialCSS.replace("\n", "")
+                        except:
+                            pass
                         os.mkdir(appInfo["project-name"] + "styles")
                         cssBundle = open(
                             appInfo["project-name"] + "styles/material.bundle.min.css",
