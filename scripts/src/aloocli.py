@@ -104,27 +104,60 @@ def createApp(projectOption: str) -> None:
         currFilePath + "styles/colors.css",
         "r",
     ).read()
-    materialCSS = open(
-        currFilePath + "styles/material.css",
+
+    lightCSS = open(
+        currFilePath + "styles/light.css",
+        "r",
+    ).read()
+    darkCSS = open(
+        currFilePath + "styles/dark.css",
         "r",
     ).read()
 
-    while colorsCSS.index("\t") != -1:
-        colorsCSS = colorsCSS.replace("\t", "")
-    while colorsCSS.index("\n") != -1:
-        colorsCSS = colorsCSS.replace("\n", "")
-
-    while materialCSS.index("\t") != -1:
-        materialCSS = materialCSS.replace("\t", "")
-    while materialCSS.index("\n") != -1:
-        materialCSS = materialCSS.replace("\n", "")
+    try:
+        while colorsCSS.index("\t") != -1:
+            colorsCSS = colorsCSS.replace("\t", "")
+    except:
+        pass
+    try:
+        while colorsCSS.index("\n") != -1:
+            colorsCSS = colorsCSS.replace("\n", "")
+    except:
+        pass
+    try:
+        while lightCSS.index("\t") != -1:
+            lightCSS = lightCSS.replace("\t", "")
+    except:
+        pass
+    try:
+        while lightCSS.index("\n") != -1:
+            lightCSS = lightCSS.replace("\n", "")
+    except:
+        pass
+    try:
+        while darkCSS.index("\t") != -1:
+            darkCSS = darkCSS.replace("\t", "")
+    except:
+        pass
+    try:
+        while darkCSS.index("\n") != -1:
+            darkCSS = darkCSS.replace("\n", "")
+    except:
+        pass
 
     os.mkdir(projectPath + "styles")
-    cssBundle = open(
-        projectPath + "styles/material.bundle.min.css",
+    open(
+        projectPath + "styles/colors.bundle.min.css",
         "w+",
-    )
-    cssBundle.write(materialCSS + colorsCSS)
+    ).write(colorsCSS)
+    open(
+        projectPath + "styles/light.bundle.min.css",
+        "w+",
+    ).write(lightCSS)
+    open(
+        projectPath + "styles/dark.bundle.min.css",
+        "w+",
+    ).write(darkCSS)
 
     print("\t\033[1;32m󰄭 Aloo project created successfully\033[0m")
 
@@ -193,9 +226,12 @@ def run(runWhat_App_Test: str) -> None:
 
 def cssMainLatest():
     h1 = http.client.HTTPSConnection("raw.githubusercontent.com")
-    h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/material.css")
+    h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/light.css")
     response = h1.getresponse()
-    materialCSSBytes: bytes = response.read()
+    lightCSSBytes: bytes = response.read()
+    h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/dark.css")
+    response = h1.getresponse()
+    darkCSSBytes: bytes = response.read()
     h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/colors.css")
     response = h1.getresponse()
     colorsCSSBytes: bytes = response.read()
@@ -212,27 +248,47 @@ def cssMainLatest():
         pass
 
     try:
-        while materialCSSBytes.index(b"\t") != -1:
-            materialCSSBytes = materialCSSBytes.replace(b"\t", b"")
+        while lightCSSBytes.index(b"\t") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\t", b"")
     except:
         pass
     try:
-        while materialCSSBytes.index(b"\n") != -1:
-            materialCSSBytes = materialCSSBytes.replace(b"\n", b"")
+        while lightCSSBytes.index(b"\n") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\n", b"")
     except:
         pass
-    cssBundle = open(
-        "styles/material.bundle.min.css",
+    try:
+        while darkCSSBytes.index(b"\t") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while darkCSSBytes.index(b"\n") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+    open(
+        "styles/colors.bundle.min.css",
         "w+",
-    )
-    cssBundle.write(materialCSSBytes.decode() + colorsCSSBytes.decode())
+    ).write(colorsCSSBytes.decode())
+    open(
+        "styles/light.bundle.min.css",
+        "w+",
+    ).write(lightCSSBytes.decode())
+    open(
+        "styles/dark.bundle.min.css",
+        "w+",
+    ).write(darkCSSBytes.decode())
 
 
 def cssStableLatest():
     h1 = http.client.HTTPSConnection("raw.githubusercontent.com")
-    h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/material.css")
+    h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/light.css")
     response = h1.getresponse()
-    materialCSSBytes: bytes = response.read()
+    lightCSSBytes: bytes = response.read()
+    h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/dark.css")
+    response = h1.getresponse()
+    darkCSSBytes: bytes = response.read()
     h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/colors.css")
     response = h1.getresponse()
     colorsCSSBytes: bytes = response.read()
@@ -249,21 +305,37 @@ def cssStableLatest():
         pass
 
     try:
-        while materialCSSBytes.index(b"\t") != -1:
-            materialCSSBytes = materialCSSBytes.replace(b"\t", b"")
+        while lightCSSBytes.index(b"\t") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\t", b"")
     except:
         pass
     try:
-        while materialCSSBytes.index(b"\n") != -1:
-            materialCSSBytes = materialCSSBytes.replace(b"\n", b"")
+        while lightCSSBytes.index(b"\n") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\n", b"")
     except:
         pass
-    cssBundle = open(
-        "styles/material.bundle.min.css",
+    try:
+        while darkCSSBytes.index(b"\t") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while darkCSSBytes.index(b"\n") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+    open(
+        "styles/colors.bundle.min.css",
         "w+",
-    )
-    cssBundle.write(materialCSSBytes.decode() + colorsCSSBytes.decode())
-    pass
+    ).write(colorsCSSBytes.decode())
+    open(
+        "styles/light.bundle.min.css",
+        "w+",
+    ).write(lightCSSBytes.decode())
+    open(
+        "styles/dark.bundle.min.css",
+        "w+",
+    ).write(darkCSSBytes.decode())
 
 
 term = blessed.Terminal()

@@ -4,7 +4,7 @@ on:
 
 env:
     BUILD_TYPE: Release
-    tag: "0.1.2"
+    tag: "0.1.3"
 
 name: libaloo releases
 
@@ -40,7 +40,8 @@ jobs:
                   tag_name: v${{ env.tag }}
                   release_name: Release v${{ env.tag }}
                   body: |
-                      Added Create App to python TUI
+                      As Vala already exists, I don't actually need to create a new framework
+                      But maybe I will continue it someday, for now it is paused
                   draft: false
                   prerelease: false
             - name: Lib aloo deb file

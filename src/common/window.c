@@ -59,19 +59,7 @@ const char *readLine(FILE *file) {
 }
 
 AlooWidget *__alooApplicationNewWindow(AlooApplication *app) {
-	CSS.importPath("styles/material.bundle.min.css");
-	char *home = getenv("$HOME");
-	strcat(home, "/.config/gtk-4.0/settings.ini");
-	FILE *settingsIni = fopen(home, "r");
-	while (!feof(settingsIni)) {
-		const char *line = readLine(settingsIni);
-		if (strncmp("gtk-application-prefer-dark-theme", line,
-					strlen("gtk-application-prefer-dark-theme"))) {
-			if (home[strlen(home) - 1] == '0')
-				CSS.importPath("styles/light.bundle.min.css");
-			else CSS.importPath("styles/dark.bundle.min.css");
-		}
-	}
+	CSS.importPath("styles/colors.bundle.min.css");
 	return Widget.gtk_to_aloo(gtk_application_window_new(app->app));
 }
 AlooWidget *__alooSetWindowTitle(AlooWidget *window, const char *title) {
@@ -91,19 +79,7 @@ AlooWidget *__getWindowSize(AlooWidget *window, int *width, int *height) {
 }
 
 AlooWidget *__setWindowApplication(AlooWidget *window, AlooApplication *app) {
-	CSS.importPath("styles/material.bundle.min.css");
-	char *home = getenv("$HOME");
-	strcat(home, "/.config/gtk-4.0/settings.ini");
-	FILE *settingsIni = fopen(home, "r");
-	while (!feof(settingsIni)) {
-		const char *line = readLine(settingsIni);
-		if (strncmp("gtk-application-prefer-dark-theme", line,
-					strlen("gtk-application-prefer-dark-theme"))) {
-			if (home[strlen(home) - 1] == '0')
-				CSS.importPath("styles/light.bundle.min.css");
-			else CSS.importPath("styles/dark.bundle.min.css");
-		}
-	}
+	CSS.importPath("styles/colors.bundle.min.css");
 	gtk_window_set_application(GTK_WINDOW(window->child), app->app);
 	return window;
 }
