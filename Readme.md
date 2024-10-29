@@ -8,8 +8,7 @@
 ![App](assets/sample-app.png)
 
 ```c
-#include "aloo.h"
-#include "common/app.h"
+#include <aloo.h>
 AlooApplication *app;
 
 static void activate() {
@@ -38,7 +37,7 @@ int main(int argc, char *argv[]) {
 ![Test](assets/sample-test.png)
 
 ```c
-#include "aloo.h"
+#include <aloo.h>
 #include <stdio.h>
 AlooApplication *app;
 Test *t;

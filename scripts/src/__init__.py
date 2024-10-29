@@ -704,11 +704,14 @@ def createApp() -> None:
                             currFilePath + "styles/colors.css",
                             "r",
                         ).read()
-                        materialCSS = open(
-                            currFilePath + "styles/material.css",
+                        lightCSS = open(
+                            currFilePath + "styles/light.css",
                             "r",
                         ).read()
-
+                        darkCSS = open(
+                            currFilePath + "styles/dark.css",
+                            "r",
+                        ).read()
                         try:
                             while colorsCSS.index("\t") != -1:
                                 colorsCSS = colorsCSS.replace("\t", "")
@@ -719,23 +722,39 @@ def createApp() -> None:
                                 colorsCSS = colorsCSS.replace("\n", "")
                         except:
                             pass
-
                         try:
-                            while materialCSS.index("\t") != -1:
-                                materialCSS = materialCSS.replace("\t", "")
+                            while lightCSS.index("\t") != -1:
+                                lightCSS = lightCSS.replace("\t", "")
                         except:
                             pass
                         try:
-                            while materialCSS.index("\n") != -1:
-                                materialCSS = materialCSS.replace("\n", "")
+                            while lightCSS.index("\n") != -1:
+                                lightCSS = lightCSS.replace("\n", "")
+                        except:
+                            pass
+                        try:
+                            while darkCSS.index("\t") != -1:
+                                darkCSS = darkCSS.replace("\t", "")
+                        except:
+                            pass
+                        try:
+                            while darkCSS.index("\n") != -1:
+                                darkCSS = darkCSS.replace("\n", "")
                         except:
                             pass
                         os.mkdir(appInfo["project-name"] + "styles")
-                        cssBundle = open(
-                            appInfo["project-name"] + "styles/material.bundle.min.css",
+                        open(
+                            appInfo["project-name"] + "styles/colors.bundle.min.css",
                             "w+",
-                        )
-                        cssBundle.write(materialCSS + colorsCSS)
+                        ).write(colorsCSS)
+                        open(
+                            appInfo["project-name"] + "styles/light.bundle.min.css",
+                            "w+",
+                        ).write(lightCSS)
+                        open(
+                            appInfo["project-name"] + "styles/dark.bundle.min.css",
+                            "w+",
+                        ).write(darkCSS)
 
                         print("\t\033[1;32m󰄭 Aloo project created successfully\033[0m")
                         os.system("tput smcup")

@@ -6,6 +6,7 @@ import threading
 import time
 import subprocess
 import blessed
+import http.client
 
 
 def alooHelp() -> None:
@@ -17,10 +18,17 @@ def alooHelp() -> None:
     )
     print()
     print("options:")
-    print("  -h, --help               show this help message and exit")
-    print("  create-app               creates new template project")
-    print("  build                    build aloo project")
-    print("  run [app | test ]        runs aloo project [app | tests]")
+    print("  -h, --help                     show this help message and exit")
+    print(
+        "  create-app [--name | --path]   creates new template project [--path: at current path | --name: in project-name folder]"
+    )
+    print("  build                          build aloo project")
+    print("  run [app | test ]              runs aloo project [app | tests]")
+    print(
+        "  update-css                     update material css bundle on your app according to given options"
+    )
+    print("    stable-latest                    based on release branch")
+    print("    main-latest                      based on main branch")
 
 
 def createApp(projectOption: str) -> None:
@@ -96,27 +104,60 @@ def createApp(projectOption: str) -> None:
         currFilePath + "styles/colors.css",
         "r",
     ).read()
-    materialCSS = open(
-        currFilePath + "styles/material.css",
+
+    lightCSS = open(
+        currFilePath + "styles/light.css",
+        "r",
+    ).read()
+    darkCSS = open(
+        currFilePath + "styles/dark.css",
         "r",
     ).read()
 
-    while colorsCSS.index("\t") != -1:
-        colorsCSS = colorsCSS.replace("\t", "")
-    while colorsCSS.index("\n") != -1:
-        colorsCSS = colorsCSS.replace("\n", "")
-
-    while materialCSS.index("\t") != -1:
-        materialCSS = materialCSS.replace("\t", "")
-    while materialCSS.index("\n") != -1:
-        materialCSS = materialCSS.replace("\n", "")
+    try:
+        while colorsCSS.index("\t") != -1:
+            colorsCSS = colorsCSS.replace("\t", "")
+    except:
+        pass
+    try:
+        while colorsCSS.index("\n") != -1:
+            colorsCSS = colorsCSS.replace("\n", "")
+    except:
+        pass
+    try:
+        while lightCSS.index("\t") != -1:
+            lightCSS = lightCSS.replace("\t", "")
+    except:
+        pass
+    try:
+        while lightCSS.index("\n") != -1:
+            lightCSS = lightCSS.replace("\n", "")
+    except:
+        pass
+    try:
+        while darkCSS.index("\t") != -1:
+            darkCSS = darkCSS.replace("\t", "")
+    except:
+        pass
+    try:
+        while darkCSS.index("\n") != -1:
+            darkCSS = darkCSS.replace("\n", "")
+    except:
+        pass
 
     os.mkdir(projectPath + "styles")
-    cssBundle = open(
-        projectPath + "styles/material.bundle.min.css",
+    open(
+        projectPath + "styles/colors.bundle.min.css",
         "w+",
-    )
-    cssBundle.write(materialCSS + colorsCSS)
+    ).write(colorsCSS)
+    open(
+        projectPath + "styles/light.bundle.min.css",
+        "w+",
+    ).write(lightCSS)
+    open(
+        projectPath + "styles/dark.bundle.min.css",
+        "w+",
+    ).write(darkCSS)
 
     print("\t\033[1;32m󰄭 Aloo project created successfully\033[0m")
 
@@ -183,6 +224,120 @@ def run(runWhat_App_Test: str) -> None:
     print(term.green("\nApp exited"))
 
 
+def cssMainLatest():
+    h1 = http.client.HTTPSConnection("raw.githubusercontent.com")
+    h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/light.css")
+    response = h1.getresponse()
+    lightCSSBytes: bytes = response.read()
+    h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/dark.css")
+    response = h1.getresponse()
+    darkCSSBytes: bytes = response.read()
+    h1.request("GET", "/BhJaipal/libaloo/main/scripts/src/styles/colors.css")
+    response = h1.getresponse()
+    colorsCSSBytes: bytes = response.read()
+
+    try:
+        while colorsCSSBytes.index(b"\t") != -1:
+            colorsCSSBytes = colorsCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while colorsCSSBytes.index(b"\n") != -1:
+            colorsCSSBytes = colorsCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+
+    try:
+        while lightCSSBytes.index(b"\t") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while lightCSSBytes.index(b"\n") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+    try:
+        while darkCSSBytes.index(b"\t") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while darkCSSBytes.index(b"\n") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+    open(
+        "styles/colors.bundle.min.css",
+        "w+",
+    ).write(colorsCSSBytes.decode())
+    open(
+        "styles/light.bundle.min.css",
+        "w+",
+    ).write(lightCSSBytes.decode())
+    open(
+        "styles/dark.bundle.min.css",
+        "w+",
+    ).write(darkCSSBytes.decode())
+
+
+def cssStableLatest():
+    h1 = http.client.HTTPSConnection("raw.githubusercontent.com")
+    h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/light.css")
+    response = h1.getresponse()
+    lightCSSBytes: bytes = response.read()
+    h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/dark.css")
+    response = h1.getresponse()
+    darkCSSBytes: bytes = response.read()
+    h1.request("GET", "/BhJaipal/libaloo/release/scripts/src/styles/colors.css")
+    response = h1.getresponse()
+    colorsCSSBytes: bytes = response.read()
+
+    try:
+        while colorsCSSBytes.index(b"\t") != -1:
+            colorsCSSBytes = colorsCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while colorsCSSBytes.index(b"\n") != -1:
+            colorsCSSBytes = colorsCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+
+    try:
+        while lightCSSBytes.index(b"\t") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while lightCSSBytes.index(b"\n") != -1:
+            lightCSSBytes = lightCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+    try:
+        while darkCSSBytes.index(b"\t") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\t", b"")
+    except:
+        pass
+    try:
+        while darkCSSBytes.index(b"\n") != -1:
+            darkCSSBytes = darkCSSBytes.replace(b"\n", b"")
+    except:
+        pass
+    open(
+        "styles/colors.bundle.min.css",
+        "w+",
+    ).write(colorsCSSBytes.decode())
+    open(
+        "styles/light.bundle.min.css",
+        "w+",
+    ).write(lightCSSBytes.decode())
+    open(
+        "styles/dark.bundle.min.css",
+        "w+",
+    ).write(darkCSSBytes.decode())
+
+
 term = blessed.Terminal()
 buildStarted = False
 if sys.argv.__len__() == 1:
@@ -213,5 +368,23 @@ else:
                 exit(1)
             else:
                 run(sys.argv[2])
+        case "update-css":
+            if sys.argv.__len__() == 2:
+                print(
+                    "Please give with one of the options: [stable-latest | main-latest]"
+                )
+                exit(1)
+            elif (
+                sys.argv[2] != "stable-latest"
+                and sys.argv[2] != "main-latest"
+                and sys.argv[2] != "system"
+            ):
+                print("Option must be either stable-latest or main-latest")
+                exit(1)
+            else:
+                if sys.argv[2] == "stable-latest":
+                    cssStableLatest()
+                elif sys.argv[2] == "main-latest":
+                    cssMainLatest()
         case _:
             print("Invalid command", sys.argv[1])
