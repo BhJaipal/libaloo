@@ -2,8 +2,8 @@
 AlooApplication *app;
 
 static void activate() {
-	AlooWidget *label = Label.new("Hello World!");
-	AlooWidget *win = Window.new(app);
+	AlooWidget label = Label.new("Hello World!");
+	AlooWidget win = Window.new(app);
 	Window.setChild(win, label);
 	Window.setSize(win, 400, 300);
 	Window.setTitle(win, "$appName");

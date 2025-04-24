@@ -12,8 +12,8 @@
 AlooApplication *app;
 
 static void activate() {
-	AlooWidget *label = Label.new("Hello World!");
-	AlooWidget *win = Window.new(app);
+	AlooWidget label = Label.new("Hello World!");
+	AlooWidget win = Window.new(app);
 	Window.setChild(win, label);
 	Window.setSize(win, 400, 300);
 	Window.setTitle(win, "Example App");
@@ -43,8 +43,8 @@ AlooApplication *app;
 Test *t;
 
 static void activate() {
-	AlooWidget *label = Label.new("Hello World!");
-	AlooWidget *win = Window.new(app);
+	AlooWidget label = Label.new("Hello World!");
+	AlooWidget win = Window.new(app);
 	Window.set.child(win, label);
 	Window.set.size(win, 400, 300);
 	Window.set.title(win, "Example App");

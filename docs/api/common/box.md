@@ -98,9 +98,9 @@ Brief: Aloo Button related functions
 
 #### `_alooBox::remove`
 
-| Returns        | Brief                              |
-| -------------- | ---------------------------------- |
-| `AlooWidget *` | Removes AlooWidget child from box. |
+| Returns       | Brief                              |
+| ------------- | ---------------------------------- |
+| `AlooWidget ` | Removes AlooWidget child from box. |
 
 | Parameters Type | Brief |
 | --------------- | ----- |

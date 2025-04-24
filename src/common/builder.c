@@ -25,7 +25,7 @@ GObject *__alooGetBuilderObject(AlooBuilder *builder, const char *name) {
 	return gtk_builder_get_object(builder->builder, name);
 }
 
-AlooWidget *__AlooWidgetFromBuilder(AlooBuilder *builder, const char *name) {
+AlooWidget __AlooWidgetFromBuilder(AlooBuilder *builder, const char *name) {
 	return Widget.obj_to_aloo(gtk_builder_get_object(builder->builder, name));
 }
 

@@ -9,8 +9,8 @@
 
 /******************** Private Funcs ********************/
 
-AlooWidget *__Label_new(const char *val);
-GtkLabel *__Label_toGtk(AlooWidget *wid);
+AlooWidget __Label_new(const char *val);
+GtkLabel *__Label_toGtk(AlooWidget wid);
 
 /******************** Private Types ********************/
 
@@ -27,7 +27,7 @@ struct __alooLabel {
 	 *
 	 * `gtk_label_new` with out label parameter
 	 */
-	AlooWidget *(*new)(const char *label);
+	AlooWidget (*new)(const char *label);
 	/**
 	 * @brief Converts Aloo label to GtkLabel and return it
 	 * @param widget AlooWidget whose GtkLabel you want to obtain
@@ -40,7 +40,7 @@ struct __alooLabel {
 	 *
 	 * Else creates a New AlooWidget Label and return `GtkLabel` of it
 	 */
-	GtkLabel *(*toGtk)(AlooWidget *widget);
+	GtkLabel *(*toGtk)(AlooWidget widget);
 };
 
 /******************** Public ********************/

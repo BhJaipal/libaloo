@@ -55,7 +55,7 @@ typedef struct AlooWidget {
 	 * @brief Type of widget
 	 */
 	WidgetType type;
-} AlooWidget;
+} *AlooWidget;
 
 /// @public
 typedef struct {

@@ -13,19 +13,19 @@
 
 /******************** Private Funcs ********************/
 
-AlooWidget *__newButton(AlooButtonType type);
-AlooWidget *__newButtonWithLabel(const char *label, AlooButtonType type);
-GtkButton *__toButtonGtk(AlooWidget *wid);
+AlooWidget __newButton(AlooButtonType type);
+AlooWidget __newButtonWithLabel(const char *label, AlooButtonType type);
+GtkButton *__toButtonGtk(AlooWidget wid);
 
-AlooWidget *__setLabel(AlooWidget *btn, char const *name);
-AlooWidget *__setChild(AlooWidget *btn, AlooWidget *child);
-AlooWidget *__setIcon(AlooWidget *btn, const char *child);
-AlooWidget *__setUseUnderline(AlooWidget *btn, gboolean yes);
+AlooWidget __setLabel(AlooWidget btn, char const *name);
+AlooWidget __setChild(AlooWidget btn, AlooWidget child);
+AlooWidget __setIcon(AlooWidget btn, const char *child);
+AlooWidget __setUseUnderline(AlooWidget btn, gboolean yes);
 
-const char *__getLabel(AlooWidget *btn);
-AlooWidget *__getChild(AlooWidget *btn);
-const char *__getIcon(AlooWidget *btn);
-gboolean __getUseUnderline(AlooWidget *btn);
+const char *__getLabel(AlooWidget btn);
+AlooWidget __getChild(AlooWidget btn);
+const char *__getIcon(AlooWidget btn);
+gboolean __getUseUnderline(AlooWidget btn);
 
 /******************** Private Types ********************/
 
@@ -36,30 +36,30 @@ gboolean __getUseUnderline(AlooWidget *btn);
  */
 struct _alooButton {
 	/// @brief Creates new Aloo Button without label
-	AlooWidget *(*new)(AlooButtonType type);
+	AlooWidget (*new)(AlooButtonType type);
 	/// @brief Creates new Aloo Button with label
-	AlooWidget *(*newWithLabel)(const char *label, AlooButtonType type);
+	AlooWidget (*newWithLabel)(const char *label, AlooButtonType type);
 	/// @brief Converts Aloo Button to Gtk Button
-	GtkButton *(*toGtk)(AlooWidget *wid);
+	GtkButton *(*toGtk)(AlooWidget wid);
 	struct {
 		/// @brief Sets the label of the button
-		AlooWidget *(*label)(AlooWidget *btn, char const *name);
+		AlooWidget (*label)(AlooWidget btn, char const *name);
 		/// @brief Sets the child of the button
-		AlooWidget *(*child)(AlooWidget *btn, AlooWidget *child);
+		AlooWidget (*child)(AlooWidget btn, AlooWidget child);
 		/// @brief Sets the icon of the button
-		AlooWidget *(*icon)(AlooWidget *btn, const char *iconName);
+		AlooWidget (*icon)(AlooWidget btn, const char *iconName);
 		/// @brief Sets whether to use underline or not in the button
-		AlooWidget *(*useUnderline)(AlooWidget *btn, gboolean yes);
+		AlooWidget (*useUnderline)(AlooWidget btn, gboolean yes);
 	} set;
 	struct {
 		/// @brief Gets the label of the button
-		const char *(*label)(AlooWidget *btn);
+		const char *(*label)(AlooWidget btn);
 		/// @brief Gets the child of the button
-		AlooWidget *(*child)(AlooWidget *btn);
+		AlooWidget (*child)(AlooWidget btn);
 		/// @brief Gets the icon of the button
-		const char *(*icon)(AlooWidget *btn);
+		const char *(*icon)(AlooWidget btn);
 		/// @brief Gets whether to use underline or not in the button
-		gboolean (*useUnderline)(AlooWidget *btn);
+		gboolean (*useUnderline)(AlooWidget btn);
 	} get;
 };
 

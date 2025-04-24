@@ -25,20 +25,20 @@ void __importCssFromData(const char *content, gssize length);
 void __importCssFromFile(GFile *file);
 
 /** @brief Set the Width of widget */
-AlooWidget *__setWidth(AlooWidget *wid, int width);
+AlooWidget __setWidth(AlooWidget wid, int width);
 /** @brief Set the Height of widget */
-AlooWidget *__setHeight(AlooWidget *wid, int height);
+AlooWidget __setHeight(AlooWidget wid, int height);
 /** @brief Set the Width and Height of widget */
-AlooWidget *__setSize(AlooWidget *wid, int width, int height);
+AlooWidget __setSize(AlooWidget wid, int width, int height);
 
 /** @brief Adds class to widget */
-AlooWidget *__widgetAddClass(AlooWidget *widget, char *class);
+AlooWidget __widgetAddClass(AlooWidget widget, char *class);
 /** @brief Removes class from widget */
-AlooWidget *__widgetRemoveClass(AlooWidget *widget, char *class);
+AlooWidget __widgetRemoveClass(AlooWidget widget, char *class);
 /** @brief Gets classes of widget */
-char **__getWidgetClasses(AlooWidget *widget);
+char **__getWidgetClasses(AlooWidget widget);
 /** @brief Sets classes of widget */
-AlooWidget *__setWidgetClasses(AlooWidget *widget, char **classes);
+AlooWidget __setWidgetClasses(AlooWidget widget, char **classes);
 
 /******************** Private Types ********************/
 
@@ -54,19 +54,19 @@ struct _alooCSS {
 	/// @param file CSS GFile
 	void (*importFile)(GFile *file);
 	/** @brief Set the Width of widget */
-	AlooWidget *(*setWidth)(AlooWidget *wid, int width);
+	AlooWidget (*setWidth)(AlooWidget wid, int width);
 	/** @brief Set the Height of widget */
-	AlooWidget *(*setHeight)(AlooWidget *wid, int height);
+	AlooWidget (*setHeight)(AlooWidget wid, int height);
 	/** @brief Set the Width and Height of widget */
-	AlooWidget *(*setSize)(AlooWidget *wid, int width, int height);
+	AlooWidget (*setSize)(AlooWidget wid, int width, int height);
 	/** @brief Adds class to widget */
-	AlooWidget *(*addClass)(AlooWidget *widget, char *class);
+	AlooWidget (*addClass)(AlooWidget widget, char *class);
 	/** @brief Removes class from widget */
-	AlooWidget *(*removeClass)(AlooWidget *widget, char *class);
+	AlooWidget (*removeClass)(AlooWidget widget, char *class);
 	/** @brief Gets classes of widget */
-	char **(*getClasses)(AlooWidget *widget);
+	char **(*getClasses)(AlooWidget widget);
 	/** @brief Sets classes of widget */
-	AlooWidget *(*setClasses)(AlooWidget *widget, char **classes);
+	AlooWidget (*setClasses)(AlooWidget widget, char **classes);
 };
 
 /******************** Public ********************/

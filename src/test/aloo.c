@@ -10,7 +10,7 @@ int __expectInt(int expected, int actual) {
 	return 1;
 }
 
-char *widgetStr(AlooWidget *widget) {
+char *widgetStr(AlooWidget widget) {
 	char *wid;
 	switch (widget->type) {
 	case ALOO_BOX: wid = "AlooBox"; break;
@@ -24,7 +24,7 @@ char *widgetStr(AlooWidget *widget) {
 	return wid;
 }
 
-int __expectWidget(AlooWidget *expected, AlooWidget *actual) {
+int __expectWidget(AlooWidget expected, AlooWidget actual) {
 	if (expected->child != actual->child ||
 		(expected->type == ALOO_NEW_WIDGET || actual->type == ALOO_NEW_WIDGET ||
 		 expected->type != actual->type)) {
@@ -38,8 +38,8 @@ int __expectWidget(AlooWidget *expected, AlooWidget *actual) {
 	}
 	return 1;
 }
-int __expectGtkWidget(GtkWidget *expected, AlooWidget *actual) {
-	AlooWidget *out = Widget.gtk_to_aloo(expected);
+int __expectGtkWidget(GtkWidget *expected, AlooWidget actual) {
+	AlooWidget out = Widget.gtk_to_aloo(expected);
 	if (expected != actual->child ||
 		(out->type == ALOO_NEW_WIDGET || actual->type == ALOO_NEW_WIDGET ||
 		 out->type != actual->type)) {

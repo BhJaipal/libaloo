@@ -2,7 +2,7 @@
 #include "common/widget.h"
 #include "utils/error.h"
 
-AlooWidget *__gridAttach(AlooWidget *grid, AlooWidget *child, int column,
+AlooWidget __gridAttach(AlooWidget grid, AlooWidget child, int column,
 						 int row, int width, int height) {
 	if (!Widget.check.isGrid(grid)) {
 		throw_error("Invalid grid");
@@ -12,7 +12,7 @@ AlooWidget *__gridAttach(AlooWidget *grid, AlooWidget *child, int column,
 					height);
 	return grid;
 }
-AlooWidget *__gridAttachGtk(AlooWidget *grid, GtkWidget *child, int column,
+AlooWidget __gridAttachGtk(AlooWidget grid, GtkWidget *child, int column,
 							int row, int width, int height) {
 	if (!Widget.check.isGrid(grid)) {
 		throw_error("Invalid grid");
@@ -22,7 +22,7 @@ AlooWidget *__gridAttachGtk(AlooWidget *grid, GtkWidget *child, int column,
 	return grid;
 }
 
-AlooWidget *__gridRemove(AlooWidget *grid, AlooWidget *child) {
+AlooWidget __gridRemove(AlooWidget grid, AlooWidget child) {
 	if (!Widget.check.isGrid(grid)) {
 		throw_error("Invalid grid");
 		return grid;
@@ -30,7 +30,7 @@ AlooWidget *__gridRemove(AlooWidget *grid, AlooWidget *child) {
 	gtk_grid_remove(__toGridGtk(grid), Widget.to_gtk(child));
 	return grid;
 }
-AlooWidget *__gridRemoveGtk(AlooWidget *grid, GtkWidget *child) {
+AlooWidget __gridRemoveGtk(AlooWidget grid, GtkWidget *child) {
 	if (!Widget.check.isGrid(grid)) {
 		throw_error("Invalid grid");
 		return grid;
@@ -39,9 +39,9 @@ AlooWidget *__gridRemoveGtk(AlooWidget *grid, GtkWidget *child) {
 	return grid;
 }
 
-AlooWidget *__alooGridNew() { return Widget.new(ALOO_GRID, gtk_grid_new()); }
+AlooWidget __alooGridNew() { return Widget.new(ALOO_GRID, gtk_grid_new()); }
 
-AlooWidget *__setGridColumnSpacing(AlooWidget *grid, int space) {
+AlooWidget __setGridColumnSpacing(AlooWidget grid, int space) {
 	if (!Widget.check.isGrid(grid)) {
 		throw_error("Invalid grid");
 		return grid;
@@ -50,7 +50,7 @@ AlooWidget *__setGridColumnSpacing(AlooWidget *grid, int space) {
 	return grid;
 }
 
-AlooWidget *__setGridRowSpacing(AlooWidget *grid, int space) {
+AlooWidget __setGridRowSpacing(AlooWidget grid, int space) {
 	if (!Widget.check.isGrid(grid)) {
 		throw_error("Invalid grid");
 		return grid;
@@ -59,7 +59,7 @@ AlooWidget *__setGridRowSpacing(AlooWidget *grid, int space) {
 	return grid;
 }
 
-GtkGrid *__toGridGtk(AlooWidget *wid) {
+GtkGrid *__toGridGtk(AlooWidget wid) {
 	if (!Widget.check.isGrid(wid)) {
 		throw_error("Invalid grid");
 		return GTK_GRID(Grid.new()->child);

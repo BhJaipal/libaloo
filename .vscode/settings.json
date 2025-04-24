@@ -99,5 +99,5 @@
 	"Lua.hint.enable": true,
 	"Lua.hint.paramType": true,
 	"Lua.type.inferParamType": true,
-	"clang-format.executable": "clang-format-14"
+	"clang-format.executable": "clang-format-18"
 }

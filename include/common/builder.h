@@ -59,7 +59,7 @@ GObject *__alooGetBuilderObject(AlooBuilder *builder, const char *name);
 /**
  * @brief Creates AlooWidget from builder
  */
-AlooWidget *__AlooWidgetFromBuilder(AlooBuilder *builder, const char *name);
+AlooWidget __AlooWidgetFromBuilder(AlooBuilder *builder, const char *name);
 
 /******************** Private Types ********************/
 
@@ -95,7 +95,7 @@ struct _AlooBuilder {
 	/// @brief Gets GObject from builder
 	GObject *(*getBuilderObject)(AlooBuilder *builder, const char *name);
 	/// @brief Creates AlooWidget from builder
-	AlooWidget *(*alooFromBuilder)(AlooBuilder *builder, const char *name);
+	AlooWidget (*alooFromBuilder)(AlooBuilder *builder, const char *name);
 };
 
 /******************** Public ********************/

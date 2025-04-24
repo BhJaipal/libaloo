@@ -23,32 +23,32 @@ void __importCssFromFile(GFile *file) {
 		GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
 
-AlooWidget *__setWidth(AlooWidget *wid, int width) {
+AlooWidget __setWidth(AlooWidget wid, int width) {
 	gtk_widget_set_size_request(wid->child, width, -1);
 	return wid;
 }
-AlooWidget *__setHeight(AlooWidget *wid, int height) {
+AlooWidget __setHeight(AlooWidget wid, int height) {
 	gtk_widget_set_size_request(wid->child, -1, height);
 	return wid;
 }
-AlooWidget *__setSize(AlooWidget *wid, int width, int height) {
+AlooWidget __setSize(AlooWidget wid, int width, int height) {
 	gtk_widget_set_size_request(wid->child, width, height);
 	return wid;
 }
 
-AlooWidget *__widgetAddClass(AlooWidget *widget, char *class) {
+AlooWidget __widgetAddClass(AlooWidget widget, char *class) {
 	gtk_widget_add_css_class(Widget.to_gtk(widget), class);
 	return widget;
 }
 
-AlooWidget *__widgetRemoveClass(AlooWidget *widget, char *class) {
+AlooWidget __widgetRemoveClass(AlooWidget widget, char *class) {
 	gtk_widget_remove_css_class(Widget.to_gtk(widget), class);
 	return widget;
 }
-char **__getWidgetClasses(AlooWidget *widget) {
+char **__getWidgetClasses(AlooWidget widget) {
 	return gtk_widget_get_css_classes(Widget.to_gtk(widget));
 }
-AlooWidget *__setWidgetClasses(AlooWidget *widget, char **classes) {
+AlooWidget __setWidgetClasses(AlooWidget widget, char **classes) {
 	gtk_widget_set_css_classes(Widget.to_gtk(widget), (const char **)classes);
 	return widget;
 }

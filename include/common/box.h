@@ -19,75 +19,75 @@
  * @param orientation Box orientation
  * @param spacing space in child
  */
-AlooWidget *__new_alooBox(GtkOrientation orientation, int spacing);
+AlooWidget __new_alooBox(GtkOrientation orientation, int spacing);
 /**
  * @brief Sets Box Orientation
  */
-AlooWidget *__setBoxOrientation(AlooWidget *box, GtkOrientation orientation);
+AlooWidget __setBoxOrientation(AlooWidget box, GtkOrientation orientation);
 /**
  * @brief Gets Box Orientation
  */
-GtkOrientation __getBoxOrientation(AlooWidget *box);
+GtkOrientation __getBoxOrientation(AlooWidget box);
 /**
  * @brief Appends `GtkWidget` child to box
  */
-AlooWidget *__boxAppendGtk(AlooWidget *box, GtkWidget *widget);
+AlooWidget __boxAppendGtk(AlooWidget box, GtkWidget *widget);
 /**
  * @brief Prepends `GtkWidget` child to box
  */
-AlooWidget *__boxPrependGtk(AlooWidget *box, GtkWidget *widget);
+AlooWidget __boxPrependGtk(AlooWidget box, GtkWidget *widget);
 /**
  * @brief Removes `GtkWidget` child from box
  */
-AlooWidget *__boxRemoveGtk(AlooWidget *box, GtkWidget *widget);
+AlooWidget __boxRemoveGtk(AlooWidget box, GtkWidget *widget);
 /**
  * @brief Appends `AlooWidget` child to box
  */
-AlooWidget *__boxAppend(AlooWidget *box, AlooWidget *widget);
+AlooWidget __boxAppend(AlooWidget box, AlooWidget widget);
 /**
  * @brief Prepends `AlooWidget` child to box
  */
-AlooWidget *__boxPrepend(AlooWidget *box, AlooWidget *widget);
+AlooWidget __boxPrepend(AlooWidget box, AlooWidget widget);
 /**
  * @brief Removes `AlooWidget` child from box
  */
-AlooWidget *__boxRemove(AlooWidget *box, AlooWidget *widget);
+AlooWidget __boxRemove(AlooWidget box, AlooWidget widget);
 /**
  * @brief Adds child after a certain widget of box
  * @return returns box
  */
-AlooWidget *__boxInsertChildAfter(AlooWidget *box, AlooWidget *child,
-								  AlooWidget *after);
+AlooWidget __boxInsertChildAfter(AlooWidget box, AlooWidget child,
+								  AlooWidget after);
 /**
  * @brief Set Box Spacing
  */
-AlooWidget *__setBoxSpacing(AlooWidget *box, int spacing);
+AlooWidget __setBoxSpacing(AlooWidget box, int spacing);
 /**
  * @brief Gets box spacing
  */
-int __getBoxSpacing(AlooWidget *box);
+int __getBoxSpacing(AlooWidget box);
 /**
  * @brief Gets box homogeneous
  */
-gboolean __getBoxHomogeneous(AlooWidget *box);
+gboolean __getBoxHomogeneous(AlooWidget box);
 /**
  * @brief Sets box homogeneous
  */
-AlooWidget *__setBoxHomogeneous(AlooWidget *box, gboolean homogeneous);
+AlooWidget __setBoxHomogeneous(AlooWidget box, gboolean homogeneous);
 
 /**
  * @brief Gets Box baseline position
  */
-GtkBaselinePosition __getBoxBaselinePosition(AlooWidget *box);
+GtkBaselinePosition __getBoxBaselinePosition(AlooWidget box);
 /**
  * @brief Sets Box baseline position
  */
-AlooWidget *__setBoxBaselinePosition(AlooWidget *box,
+AlooWidget __setBoxBaselinePosition(AlooWidget box,
 									 GtkBaselinePosition position);
 /**
  * @brief Returns Gtk Box
  */
-GtkBox *__toGtk(AlooWidget *widget);
+GtkBox *__toGtk(AlooWidget widget);
 
 /******************** Private Types ********************/
 
@@ -96,48 +96,48 @@ GtkBox *__toGtk(AlooWidget *widget);
  */
 struct _alooBox {
 	/// @brief Creates new Aloo Box
-	AlooWidget *(*new)(GtkOrientation orientation, int spacing);
+	AlooWidget (*new)(GtkOrientation orientation, int spacing);
 	/// @brief Appends `GtkWidget` child to box
-	AlooWidget *(*appendGtk)(AlooWidget *box, GtkWidget *widget);
+	AlooWidget (*appendGtk)(AlooWidget box, GtkWidget *widget);
 	/// @brief Prepends `GtkWidget` child to box
-	AlooWidget *(*prependGtk)(AlooWidget *box, GtkWidget *widget);
+	AlooWidget (*prependGtk)(AlooWidget box, GtkWidget *widget);
 	/// @brief Removes `GtkWidget` child from box
-	AlooWidget *(*removeGtk)(AlooWidget *box, GtkWidget *widget);
+	AlooWidget (*removeGtk)(AlooWidget box, GtkWidget *widget);
 	/// @brief Appends `AlooWidget` child to box
-	AlooWidget *(*append)(AlooWidget *box, AlooWidget *widget);
+	AlooWidget (*append)(AlooWidget box, AlooWidget widget);
 	/// @brief Prepends `AlooWidget` child to box
-	AlooWidget *(*prepend)(AlooWidget *box, AlooWidget *widget);
+	AlooWidget (*prepend)(AlooWidget box, AlooWidget widget);
 	/// @brief Removes `AlooWidget` child from box
-	AlooWidget *(*remove)(AlooWidget *box, AlooWidget *widget);
+	AlooWidget (*remove)(AlooWidget box, AlooWidget widget);
 	/**
 	 * @brief Adds child after a certain widget of box
 	 * @return returns box
 	 */
-	AlooWidget *(*insertChildAfter)(AlooWidget *box, AlooWidget *child,
-									AlooWidget *after);
+	AlooWidget (*insertChildAfter)(AlooWidget box, AlooWidget child,
+									AlooWidget after);
 	struct {
 		/// @brief Sets Box Orientation
-		AlooWidget *(*orientation)(AlooWidget *box, GtkOrientation orientation);
+		AlooWidget (*orientation)(AlooWidget box, GtkOrientation orientation);
 		/// @brief Sets Box Spacing
-		AlooWidget *(*spacing)(AlooWidget *box, int spacing);
+		AlooWidget (*spacing)(AlooWidget box, int spacing);
 		/// @brief Sets box homogeneous
-		AlooWidget *(*homogeneous)(AlooWidget *box, gboolean homogeneous);
+		AlooWidget (*homogeneous)(AlooWidget box, gboolean homogeneous);
 		/// @brief Sets Box baseline position
-		AlooWidget *(*baselinePosition)(AlooWidget *box,
+		AlooWidget (*baselinePosition)(AlooWidget box,
 										GtkBaselinePosition position);
 	} set;
 	struct {
 		/// @brief Gets Box Orientation
-		GtkOrientation (*orientation)(AlooWidget *box);
+		GtkOrientation (*orientation)(AlooWidget box);
 		/// @brief Gets Box Spacing
-		int (*spacing)(AlooWidget *box);
+		int (*spacing)(AlooWidget box);
 		/// @brief Gets box homogeneous
-		gboolean (*homogeneous)(AlooWidget *box);
+		gboolean (*homogeneous)(AlooWidget box);
 		/// @brief Gets Box baseline position
-		GtkBaselinePosition (*baselinePosition)(AlooWidget *box);
+		GtkBaselinePosition (*baselinePosition)(AlooWidget box);
 		/// @brief Returns Gtk Box
 	} get;
-	GtkBox *(*toGtk)(AlooWidget *widget);
+	GtkBox *(*toGtk)(AlooWidget widget);
 };
 
 /******************** Public ********************/
